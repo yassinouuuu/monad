@@ -85,24 +85,43 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
   </div>
 ));
 
-const CoinItem = React.memo(({ coin, index, type }) => {
+const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
   const isNad = type === 'nad';
   const colorClass = isNad ? 'monad-purple' : 'orange-400';
   const linkBase = isNad ? 'https://nad.fun/tokens/' : 'https://something.tools/token/';
   
+  const changeStr = coin.displayChange1h || '+0.00%';
+  const changeValue = parseFloat(changeStr.replace(/[+%]/g, ''));
+  const isPositive = changeValue >= 0;
+
   return (
     <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] transition-all border border-transparent hover:border-white/5 group">
-      <span className={`w-8 text-xl font-black italic text-white/5 group-hover:text-${colorClass}/30 transition-colors`}>{(index + 1).toString().padStart(2, '0')}</span>
-      <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-${colorClass}/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" />
+      {index !== undefined && (
+        <span className={`w-8 text-xl font-black italic text-white/5 group-hover:text-${isNad ? 'monad-purple' : 'orange-400'}/30 transition-colors`}>
+          {(index + 1).toString().padStart(2, '0')}
+        </span>
+      )}
+      <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-${isNad ? 'monad-purple' : 'orange-400'}/30 transition-all shadow-xl shadow-black/40`}>
+        <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://nad.fun/logo.png'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{coin.symbol}</span>
-        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest mt-1.5 truncate max-w-[120px]">{coin.name}</span>
+        {isLatest ? (
+           <span className={`text-[9px] font-black text-${isNad ? 'monad-purple' : 'orange-400'} uppercase mt-1.5`}>{getAge(coin.createdAt)} OLD</span>
+        ) : (
+           <span className="text-[10px] font-black text-white/20 uppercase tracking-widest mt-1.5 truncate max-w-[120px]">{coin.name}</span>
+        )}
       </div>
       <div className="flex flex-col items-end gap-1">
-        <span className="text-base font-black text-white tracking-widest">{coin.displayPrice}</span>
-        <span className={`text-[11px] font-black text-${isNad ? 'monad-purple' : 'orange-400'} px-2 py-0.5 rounded-lg bg-${isNad ? 'monad-purple' : 'orange-400'}/5 border border-${isNad ? 'monad-purple' : 'orange-400'}/10`}>{coin.displayMC}</span>
+        <div className="flex items-center gap-3">
+          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${isPositive ? 'text-emerald-400 bg-emerald-400/5' : 'text-red-400 bg-red-400/5'}`}>
+            {changeStr}
+          </span>
+          <span className="text-base font-black text-white tracking-widest">{coin.displayPrice}</span>
+        </div>
+        <span className={`text-[11px] font-black text-${isNad ? 'monad-purple' : 'orange-400'} px-2 py-0.5 rounded-lg bg-${isNad ? 'monad-purple' : 'orange-400'}/5 border border-${isNad ? 'monad-purple' : 'orange-400'}/10`}>
+          {coin.displayMC}
+        </span>
       </div>
       <a href={`${linkBase}${coin.address}`} target="_blank" rel="noopener noreferrer" className={`ml-4 p-3 bg-${isNad ? 'monad-purple' : 'orange-400'}/10 text-${isNad ? 'monad-purple' : 'orange-400'} rounded-xl hover:bg-${isNad ? 'monad-purple' : 'orange-400'} hover:text-white transition-all shadow-xl shadow-black/40`}>
         <ExternalLink size={16} />
@@ -171,7 +190,7 @@ const App = () => {
     fetchEcosystemData();
 
     const livePulseInterval = setInterval(fetchLiveStats, 2000);
-    const ecosystemInterval = setInterval(fetchEcosystemData, 30000);
+    const ecosystemInterval = setInterval(fetchEcosystemData, 300000);
 
     return () => {
       isMounted = false;
@@ -361,7 +380,7 @@ const App = () => {
                            </div>
                            <h4 className="text-xl font-black uppercase tracking-tight italic">Nad.fun Market</h4>
                         </div>
-                        <span className="text-[10px] font-black text-monad-purple tracking-widest leading-none">BY VOLUME</span>
+                        <span className="text-[10px] font-black text-monad-purple tracking-widest leading-none">BY MARKET CAP</span>
                      </div>
                      <div className="feed-container p-4 flex flex-col gap-2">
                         {nadFunCoins.slice(0, 15).map((coin, i) => (
@@ -414,29 +433,14 @@ const App = () => {
                    <div className="glass-card p-8 bg-monad-purple/[0.02] border-monad-purple/10">
                       <div className="flex items-center justify-between mb-8">
                          <div className="flex items-center gap-4 uppercase font-black italic text-monad-purple tracking-widest text-sm">
-                            <Activity size={18} />
-                            Top 30 by Volume
+                             <Activity size={18} />
+                            Top 30 by Market Cap
                          </div>
                          <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Platform Rank</span>
                       </div>
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {nadFunCoins.map((coin, i) => (
-                           <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-all border border-transparent hover:border-white/5">
-                              <div className="flex items-center gap-5">
-                                 <span className="text-lg font-black italic text-white/5 w-6">{(i+1).toString().padStart(2, '0')}</span>
-                                 <div className="w-12 h-12 rounded-xl ring-1 ring-white/5 overflow-hidden">
-                                    <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" />
-                                 </div>
-                                 <div className="flex flex-col">
-                                    <span className="font-black text-white text-base tracking-tight">{coin.symbol}</span>
-                                    <span className="text-[9px] font-black text-white/20 uppercase truncate max-w-[100px]">{coin.name}</span>
-                                 </div>
-                              </div>
-                              <div className="flex flex-col items-end gap-1 text-right">
-                                 <span className="text-base font-black text-white">{coin.displayPrice}</span>
-                                 <span className="text-[10px] font-black text-monad-purple">{coin.displayMC}</span>
-                              </div>
-                           </div>
+                           <CoinItem key={coin.address || i} coin={coin} index={i} type="nad" showPriceChange={true} />
                          ))}
                       </div>
                    </div>
@@ -452,21 +456,7 @@ const App = () => {
                       </div>
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {latestNadFun.map((coin, i) => (
-                           <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-all border border-transparent hover:border-white/5">
-                              <div className="flex items-center gap-5">
-                                 <div className="w-12 h-12 rounded-xl ring-1 ring-white/5 overflow-hidden">
-                                    <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" />
-                                 </div>
-                                 <div className="flex flex-col">
-                                    <span className="font-black text-white text-base tracking-tight">{coin.symbol}</span>
-                                    <span className="text-[9px] font-black text-monad-purple uppercase">{getAge(coin.createdAt)} OLD</span>
-                                 </div>
-                              </div>
-                              <div className="flex flex-col items-end gap-1 text-right">
-                                 <span className="text-base font-black text-white">{coin.displayPrice}</span>
-                                 <span className="text-[10px] font-black text-white/20">{coin.displayMC} MCAP</span>
-                              </div>
-                           </div>
+                           <CoinItem key={coin.address || i} coin={coin} type="nad" isLatest={true} />
                          ))}
                       </div>
                    </div>
@@ -492,22 +482,7 @@ const App = () => {
                       </div>
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {smtCoins.map((coin, i) => (
-                           <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-all border border-transparent hover:border-white/5">
-                              <div className="flex items-center gap-5">
-                                 <span className="text-lg font-black italic text-white/5 w-6">{(i+1).toString().padStart(2, '0')}</span>
-                                 <div className="w-12 h-12 rounded-xl ring-1 ring-white/5 overflow-hidden">
-                                    <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" />
-                                 </div>
-                                 <div className="flex flex-col">
-                                    <span className="font-black text-white text-base tracking-tight">{coin.symbol}</span>
-                                    <span className="text-[9px] font-black text-white/20 uppercase truncate max-w-[100px]">{coin.name}</span>
-                                 </div>
-                              </div>
-                              <div className="flex flex-col items-end gap-1 text-right">
-                                 <span className="text-base font-black text-white">{coin.displayPrice}</span>
-                                 <span className="text-[10px] font-black text-orange-400">{coin.displayMC}</span>
-                              </div>
-                           </div>
+                           <CoinItem key={coin.address || i} coin={coin} index={i} type="smt" />
                          ))}
                       </div>
                    </div>
@@ -523,21 +498,7 @@ const App = () => {
                       </div>
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {latestSmt.map((coin, i) => (
-                           <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] transition-all border border-transparent hover:border-white/5">
-                              <div className="flex items-center gap-5">
-                                 <div className="w-12 h-12 rounded-xl ring-1 ring-white/5 overflow-hidden">
-                                    <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" />
-                                 </div>
-                                 <div className="flex flex-col">
-                                    <span className="font-black text-white text-base tracking-tight">{coin.symbol}</span>
-                                    <span className="text-[9px] font-black text-orange-400 uppercase">{getAge(coin.createdAt)} OLD</span>
-                                 </div>
-                              </div>
-                              <div className="flex flex-col items-end gap-1 text-right">
-                                 <span className="text-base font-black text-white">{coin.displayPrice}</span>
-                                 <span className="text-[10px] font-black text-white/20">{coin.displayMC} MCAP</span>
-                              </div>
-                           </div>
+                           <CoinItem key={coin.address || i} coin={coin} type="smt" isLatest={true} />
                          ))}
                       </div>
                    </div>
