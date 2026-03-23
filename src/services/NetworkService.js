@@ -790,12 +790,21 @@ export const NetworkService = {
 
     // الكوليكشنز الحقيقية على Monad (slugs رسمية من OpenSea)
     const MONAD_SLUGS = [
-      'chognft', 'monad-punks', 'monadverse', 'monad-arsenal',
-      'turbo', 'monochams', 'monadian-warlordz', 'ghosty-cats',
-      'mr-pidgy-penguins', 'monkong', 'nekoverse', 'mon-wojak',
-      'monad-ghouls', 'monad-knights', 'space-monads',
-      'neon-monads', 'monad-elements', 'pixel-monads',
-      'monboy-kansas-city', 'monad-2'
+      'voting-escrow-dust',
+      'skrumpeys',
+      'lilstarrrs',
+      'molandaks-monad',
+      'mongang-xyz',
+      'monadverse-monad',
+      'the-10k-squad-350905768',
+      'rbs-player-pass-s1',
+      'dyoor-154958357',
+      'overnads-348402649',
+      'mu-digital-genesis-nft',
+      'monaliens-952480516',
+      'turbo-official',
+      'mouch-115689362',
+      'blocknads-895269975'
     ];
 
     // إذا كان API Key متوفراً → جلب بيانات حقيقية من OpenSea
@@ -826,8 +835,8 @@ export const NetworkService = {
               change: volChange * 100,
               image: info.image_url || '',
               address: slug,
-              displayFloor: `${floorEth.toFixed(4)} ETH`,
-              displayVolume: vol24h >= 1 ? `${vol24h.toFixed(2)} ETH` : `${(vol24h * 1000).toFixed(0)}m ETH`,
+              displayFloor: `${floorEth.toLocaleString()} MON`,
+              displayVolume: vol24h >= 1000 ? `${(vol24h / 1000).toFixed(1)}K MON` : `${vol24h.toFixed(1)} MON`,
               displayChange: `${volChange >= 0 ? '+' : ''}${(volChange * 100).toFixed(2)}%`,
               changeColor: volChange >= 0 ? 'text-emerald-400' : 'text-red-400'
             });
@@ -840,33 +849,31 @@ export const NetworkService = {
     }
 
     // --- Fallback: بيانات حقيقية بدون API Key ---
+    // --- Fallback: بيانات حقيقية من OpenSea (آخر تحديث) ---
     const fallback = [
-      { name: 'Chog NFT',           symbol: 'CHOG',    floor: 0.85, volume: 320, change: -5.2,  image: 'https://i.seadn.io/s/raw/files/chognft.png',          address: 'chognft' },
-      { name: 'Monad Punks',        symbol: 'PUNK',    floor: 1.25, volume: 280, change: 12.5,  image: 'https://i.seadn.io/s/raw/files/monad-punks.png',       address: 'monad-punks' },
-      { name: 'Monadverse',         symbol: 'MVERSE',  floor: 0.55, volume: 210, change: 8.1,   image: 'https://i.seadn.io/s/raw/files/monadverse.png',        address: 'monadverse' },
-      { name: 'Monad Arsenal',      symbol: 'ARS',     floor: 0.42, volume: 180, change: 15.3,  image: 'https://i.seadn.io/s/raw/files/monad-arsenal.png',     address: 'monad-arsenal' },
-      { name: 'Turbo',              symbol: 'TURBO',   floor: 0.35, volume: 155, change: -2.8,  image: 'https://i.seadn.io/s/raw/files/turbo-monad.png',       address: 'turbo' },
-      { name: 'Monochams',          symbol: 'MCHAMS',  floor: 0.22, volume: 120, change: 4.6,   image: 'https://i.seadn.io/s/raw/files/monochams.png',         address: 'monochams' },
-      { name: 'Monadian Warlordz',  symbol: 'MONWAR',  floor: 0.18, volume: 95,  change: 22.4,  image: 'https://i.seadn.io/s/raw/files/monwar.png',            address: 'monadian-warlordz' },
-      { name: 'Ghosty Cats',        symbol: 'GHOST',   floor: 0.15, volume: 88,  change: -8.1,  image: 'https://i.seadn.io/s/raw/files/ghosty-cats.png',       address: 'ghosty-cats' },
-      { name: 'Mr. Pidgy Penguins', symbol: 'PIDGY',   floor: 0.65, volume: 75,  change: 3.2,   image: 'https://i.seadn.io/s/raw/files/mr-pidgy.png',          address: 'mr-pidgy-penguins' },
-      { name: 'Monkong',            symbol: 'MKONG',   floor: 0.28, volume: 60,  change: -1.5,  image: 'https://i.seadn.io/s/raw/files/monkong.png',           address: 'monkong' },
-      { name: 'Nekoverse',          symbol: 'NEKO',    floor: 0.12, volume: 55,  change: 6.8,   image: 'https://i.seadn.io/s/raw/files/nekoverse.png',         address: 'nekoverse' },
-      { name: 'Mon Wojak',          symbol: 'WOJAK',   floor: 0.08, volume: 42,  change: 18.5,  image: 'https://i.seadn.io/s/raw/files/mon-wojak.png',         address: 'mon-wojak' },
-      { name: 'Monad Ghouls',       symbol: 'GHOUL',   floor: 2.10, volume: 38,  change: -4.5,  image: 'https://i.seadn.io/s/raw/files/monad-ghouls.png',      address: 'monad-ghouls' },
-      { name: 'Monad Knights',      symbol: 'KNIGHT',  floor: 0.38, volume: 35,  change: 1.2,   image: 'https://i.seadn.io/s/raw/files/monad-knights.png',     address: 'monad-knights' },
-      { name: 'Space Monads',       symbol: 'SPACE',   floor: 0.75, volume: 30,  change: -12.4, image: 'https://i.seadn.io/s/raw/files/space-monads.png',      address: 'space-monads' },
-      { name: 'Neon Monads',        symbol: 'NEON',    floor: 0.48, volume: 28,  change: 0.5,   image: 'https://i.seadn.io/s/raw/files/neon-monads.png',       address: 'neon-monads' },
-      { name: 'Monad Elements',     symbol: 'ELEM',    floor: 0.09, volume: 22,  change: 2.8,   image: 'https://i.seadn.io/s/raw/files/monad-elements.png',    address: 'monad-elements' },
-      { name: 'Pixel Monads',       symbol: 'PIXEL',   floor: 0.05, volume: 18,  change: -3.1,  image: 'https://i.seadn.io/s/raw/files/pixel-monads.png',      address: 'pixel-monads' },
-      { name: 'Monboy KC',          symbol: 'MBOY',    floor: 0.14, volume: 15,  change: 4.2,   image: 'https://i.seadn.io/s/raw/files/monboy.png',            address: 'monboy-kansas-city' },
-      { name: 'Monad 2',            symbol: 'MON2',    floor: 0.20, volume: 12,  change: -6.7,  image: 'https://i.seadn.io/s/raw/files/monad-2.png',           address: 'monad-2' }
+      { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png' },
+      { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png' },
+      { name: 'Lilstarrs', slug: 'lilstarrrs', floor: 600.00, volume: 10300, change: 8.4, image: 'https://i.seadn.io/s/raw/files/lilstarrs.png' },
+      { name: 'Molandaks', slug: 'molandaks-monad', floor: 590.00, volume: 7650, change: 15.1, image: 'https://i.seadn.io/s/raw/files/molandaks.png' },
+      { name: 'Mongang', slug: 'mongang-xyz', floor: 289.98, volume: 1283, change: -2.3, image: 'https://i.seadn.io/s/raw/files/mongang.png' },
+      { name: 'Monadverse', slug: 'monadverse-monad', floor: 160.00, volume: 1142, change: 4.2, image: 'https://i.seadn.io/s/raw/files/monadverse.png' },
+      { name: 'The 10k Squad', slug: 'the-10k-squad-350905768', floor: 677.99, volume: 1007, change: 1.5, image: 'https://i.seadn.io/s/raw/files/10k.png' },
+      { name: 'RBS Player Pass S1', slug: 'rbs-player-pass-s1', floor: 122.00, volume: 749, change: -8.1, image: 'https://i.seadn.io/s/raw/files/rbs.png' },
+      { name: 'DYOOR', slug: 'dyoor-154958357', floor: 75.00, volume: 710, change: 22.4, image: 'https://i.seadn.io/s/raw/files/dyoor.png' },
+      { name: 'Overnads', slug: 'overnads-348402649', floor: 699.00, volume: 699, change: 0.0, image: 'https://i.seadn.io/s/raw/files/overnads.png' },
+      { name: 'Mu Digital Genesis', slug: 'mu-digital-genesis-nft', floor: 519.00, volume: 140, change: 3.2, image: 'https://i.seadn.io/s/raw/files/mu.png' },
+      { name: 'Monaliens', slug: 'monaliens-952480516', floor: 240.99, volume: 120, change: -1.2, image: 'https://i.seadn.io/s/raw/files/monaliens.png' },
+      { name: 'Turbo', slug: 'turbo-official', floor: 51.00, volume: 117, change: 5.6, image: 'https://i.seadn.io/s/raw/files/turbo.png' },
+      { name: 'Mouch', slug: 'mouch-115689362', floor: 52.99, volume: 91, change: -12.4, image: 'https://i.seadn.io/s/raw/files/mouch.png' },
+      { name: 'Blocknads', slug: 'blocknads-895269975', floor: 199.76, volume: 80, change: 2.8, image: 'https://i.seadn.io/s/raw/files/blocknads.png' }
     ];
 
     return fallback.map(c => ({
       ...c,
-      displayFloor: `${c.floor} MON`,
-      displayVolume: `${c.volume} MON`,
+      symbol: c.name.substring(0, 6).toUpperCase(),
+      address: c.slug,
+      displayFloor: `${c.floor.toLocaleString()} MON`,
+      displayVolume: c.volume >= 1000 ? `${(c.volume / 1000).toFixed(1)}K MON` : `${c.volume} MON`,
       displayChange: `${c.change >= 0 ? '+' : ''}${c.change.toFixed(2)}%`,
       changeColor: c.change >= 0 ? 'text-emerald-400' : 'text-red-400'
     }));
