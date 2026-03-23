@@ -227,7 +227,7 @@ const App = () => {
     fetchEcosystemData();
 
     const livePulseInterval = setInterval(fetchLiveStats, 2000);
-    const ecosystemInterval = setInterval(fetchEcosystemData, 300000);
+    const ecosystemInterval = setInterval(fetchEcosystemData, 60000);
 
     return () => {
       isMounted = false;
@@ -269,6 +269,12 @@ const App = () => {
              className={`nav-btn ${activePage === 'nft' ? 'active' : ''}`}
            >
              NFT Explorer
+           </button>
+           <button 
+             onClick={() => setActivePage('protocols')}
+             className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
+           >
+             Protocol Rankings
            </button>
         </div>
 
@@ -399,50 +405,6 @@ const App = () => {
                     </div>
                   </div>
                 ))}
-            </div>
-
-            {/* DeFiLlama TVL Leaders */}
-            <div className="mb-20">
-               <div className="flex items-center justify-between mb-8">
-                  <div className="flex flex-col">
-                     <h3 className="text-3xl font-black italic uppercase text-white tracking-widest">DeFiLlama Intelligence</h3>
-                     <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mt-2">Top Protocols by Value Locked</span>
-                  </div>
-                  <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-400 rounded-full text-[10px] font-black tracking-widest uppercase">
-                     <TrendingUp size={14} /> OFFICIAL DATA SOURCE
-                  </div>
-               </div>
-
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
-                 {topProtocols.map((protocol, i) => (
-                   <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group bg-gradient-to-r from-emerald-500/[0.02] to-transparent relative overflow-hidden">
-                     {/* Rank Number */}
-                     <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:opacity-10 transition-all font-black italic text-8xl -mt-6">
-                       #{i + 1}
-                     </div>
-                     
-                     <div className="flex items-center gap-6 relative z-10">
-                        <div className="w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-br from-white/10 to-transparent">
-                          <img src={protocol.logo} alt={protocol.name} className="w-full h-full rounded-2xl bg-black" />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                           <div className="flex items-center gap-3">
-                             <a href={protocol.url} target="_blank" rel="noopener noreferrer" className="text-2xl font-black text-white hover:text-emerald-400 transition-colors uppercase italic tracking-tight">{protocol.name}</a>
-                             <ExternalLink size={14} className="text-white/20" />
-                           </div>
-                           <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{protocol.category}</span>
-                        </div>
-                     </div>
-                     <div className="flex flex-col items-end gap-1 relative z-10">
-                        <span className="text-2xl font-black text-emerald-400 tracking-tighter">{protocol.displayTvl}</span>
-                        <div className="flex items-center gap-2">
-                           <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">1D Change</span>
-                           <span className={`text-xs font-black ${protocol.changeColor} py-0.5 px-2 bg-white/5 rounded-md`}>{protocol.displayChange}</span>
-                        </div>
-                     </div>
-                   </div>
-                 ))}
-               </div>
             </div>
 
             {/* Ecosystem spotlight and feeds */}
@@ -628,6 +590,54 @@ const App = () => {
                       <NFTItem key={col.address || i} collection={col} index={i} />
                    ))}
                 </div>
+             </div>
+          </div>
+        )}
+
+        {activePage === 'protocols' && (
+          <div className="animate-slide-up">
+             <div className="flex flex-col gap-4 mb-16">
+                <div className="flex items-center gap-3 w-fit bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
+                   <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                   <span className="text-[10px] font-black text-emerald-400 tracking-[0.2em] uppercase">DeFiLlama Auto-Sync Active</span>
+                </div>
+                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Protocol Rankings</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem DApps Ranked by Total Value Locked</p>
+             </div>
+
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
+                 {topProtocols.map((protocol, i) => (
+                   <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group bg-gradient-to-r from-emerald-500/[0.02] to-transparent relative overflow-hidden">
+                     {/* Rank Number */}
+                     <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:opacity-10 transition-all font-black italic text-8xl -mt-6">
+                       #{i + 1}
+                     </div>
+                     
+                     <div className="flex items-center gap-6 relative z-10">
+                        <div className="w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-br from-white/10 to-transparent">
+                          {protocol.logo ? (
+                            <img src={protocol.logo} alt={protocol.name} className="w-full h-full rounded-2xl bg-black" />
+                          ) : (
+                            <div className="w-full h-full rounded-2xl bg-black flex items-center justify-center text-white/20 font-black">{i + 1}</div>
+                          )}
+                        </div>
+                        <div className="flex flex-col gap-1">
+                           <div className="flex items-center gap-3">
+                             <a href={protocol.url} target="_blank" rel="noopener noreferrer" className="text-2xl font-black text-white hover:text-emerald-400 transition-colors uppercase italic tracking-tight">{protocol.name}</a>
+                             <ExternalLink size={14} className="text-white/20" />
+                           </div>
+                           <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{protocol.category}</span>
+                        </div>
+                     </div>
+                     <div className="flex flex-col items-end gap-1 relative z-10">
+                        <span className="text-2xl font-black text-emerald-400 tracking-tighter">{protocol.displayTvl}</span>
+                        <div className="flex items-center gap-2">
+                           <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">1D Change</span>
+                           <span className={`text-xs font-black ${protocol.changeColor} py-0.5 px-2 bg-white/5 rounded-md`}>{protocol.displayChange}</span>
+                        </div>
+                     </div>
+                   </div>
+                 ))}
              </div>
           </div>
         )}

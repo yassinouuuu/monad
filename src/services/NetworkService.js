@@ -171,7 +171,7 @@ export const NetworkService = {
         change_1d: p.change_1d || 0,
         url: p.url,
         logo: p.logo
-      })).filter(p => p.tvl > 0).sort((a, b) => b.tvl - a.tvl).slice(0, 10);
+      })).filter(p => p.tvl > 0).sort((a, b) => b.tvl - a.tvl).slice(0, 50);
 
       const formatTVL = (num) => {
         if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
