@@ -141,7 +141,13 @@ const NFTItem = React.memo(({ collection, index }) => {
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{collection.name}</span>
-        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest mt-1.5 truncate max-w-[120px]">{collection.symbol}</span>
+        <div className="flex items-center gap-2 mt-1.5 text-[9px] font-black uppercase tracking-widest text-white/30">
+          <span>{collection.symbol}</span>
+          <div className="w-1 h-1 rounded-full bg-white/10 mx-1"></div>
+          <span>{collection.owners?.toLocaleString() || '--'} OWNS</span>
+          <div className="w-1 h-1 rounded-full bg-white/10 mx-1"></div>
+          <span>{collection.sales?.toLocaleString() || '--'} SALES</span>
+        </div>
       </div>
       <div className="flex flex-col items-end gap-1">
         <div className="flex items-center gap-3">

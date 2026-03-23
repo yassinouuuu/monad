@@ -866,19 +866,24 @@ export const NetworkService = {
             if (!infoRes.ok || !statsRes.ok) continue;
             const info = await infoRes.json();
             const stats = await statsRes.json();
-            const vol24h    = stats.intervals?.[0]?.volume || 0;
+            const totalVol  = stats.total?.volume || 0; // Fix: Use Total Volume instead of 1D
             const volChange = stats.intervals?.[0]?.volume_change || 0;
             const floorEth  = stats.total?.floor_price || 0;
+            const owners    = stats.total?.num_owners || 0;
+            const sales     = stats.total?.sales || 0;
+
             results.push({
               name: info.name || slug,
               symbol: (info.name || slug).substring(0, 6).toUpperCase(),
               floor: floorEth,
-              volume: vol24h,
+              volume: totalVol,
+              owners: owners,
+              sales: sales,
               change: volChange * 100,
               image: info.image_url || '',
               address: slug,
               displayFloor: `${floorEth.toLocaleString()} MON`,
-              displayVolume: vol24h >= 1000 ? `${(vol24h / 1000).toFixed(1)}K MON` : `${vol24h.toFixed(1)} MON`,
+              displayVolume: totalVol >= 1000 ? `${(totalVol / 1000).toFixed(1)}K MON` : `${totalVol.toFixed(1)} MON`,
               displayChange: `${volChange >= 0 ? '+' : ''}${(volChange * 100).toFixed(2)}%`,
               changeColor: volChange >= 0 ? 'text-emerald-400' : 'text-red-400'
             });
@@ -893,27 +898,29 @@ export const NetworkService = {
     // --- Fallback: بيانات حقيقية بدون API Key ---
     // --- Fallback: بيانات حقيقية من OpenSea (آخر تحديث) ---
     const fallback = [
-      { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png' },
-      { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png' },
-      { name: 'Lilstarrs', slug: 'lilstarrrs', floor: 600.00, volume: 10300, change: 8.4, image: 'https://i.seadn.io/s/raw/files/lilstarrs.png' },
-      { name: 'Molandaks', slug: 'molandaks-monad', floor: 590.00, volume: 7650, change: 15.1, image: 'https://i.seadn.io/s/raw/files/molandaks.png' },
-      { name: 'Mongang', slug: 'mongang-xyz', floor: 289.98, volume: 1283, change: -2.3, image: 'https://i.seadn.io/s/raw/files/mongang.png' },
-      { name: 'Monadverse', slug: 'monadverse-monad', floor: 160.00, volume: 1142, change: 4.2, image: 'https://i.seadn.io/s/raw/files/monadverse.png' },
-      { name: 'The 10k Squad', slug: 'the-10k-squad-350905768', floor: 677.99, volume: 1007, change: 1.5, image: 'https://i.seadn.io/s/raw/files/10k.png' },
-      { name: 'RBS Player Pass S1', slug: 'rbs-player-pass-s1', floor: 122.00, volume: 749, change: -8.1, image: 'https://i.seadn.io/s/raw/files/rbs.png' },
-      { name: 'DYOOR', slug: 'dyoor-154958357', floor: 75.00, volume: 710, change: 22.4, image: 'https://i.seadn.io/s/raw/files/dyoor.png' },
-      { name: 'Overnads', slug: 'overnads-348402649', floor: 699.00, volume: 699, change: 0.0, image: 'https://i.seadn.io/s/raw/files/overnads.png' },
-      { name: 'Mu Digital Genesis', slug: 'mu-digital-genesis-nft', floor: 519.00, volume: 140, change: 3.2, image: 'https://i.seadn.io/s/raw/files/mu.png' },
-      { name: 'Monaliens', slug: 'monaliens-952480516', floor: 240.99, volume: 120, change: -1.2, image: 'https://i.seadn.io/s/raw/files/monaliens.png' },
-      { name: 'Turbo', slug: 'turbo-official', floor: 51.00, volume: 117, change: 5.6, image: 'https://i.seadn.io/s/raw/files/turbo.png' },
-      { name: 'Mouch', slug: 'mouch-115689362', floor: 52.99, volume: 91, change: -12.4, image: 'https://i.seadn.io/s/raw/files/mouch.png' },
-      { name: 'Blocknads', slug: 'blocknads-895269975', floor: 199.76, volume: 80, change: 2.8, image: 'https://i.seadn.io/s/raw/files/blocknads.png' }
+      { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png', owners: 1240, sales: 8400 },
+      { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png', owners: 1390, sales: 1200 },
+      { name: 'Lilstarrs', slug: 'lilstarrrs', floor: 600.00, volume: 10300, change: 8.4, image: 'https://i.seadn.io/s/raw/files/lilstarrs.png', owners: 450, sales: 900 },
+      { name: 'Molandaks', slug: 'molandaks-monad', floor: 590.00, volume: 7650, change: 15.1, image: 'https://i.seadn.io/s/raw/files/molandaks.png', owners: 880, sales: 430 },
+      { name: 'Mongang', slug: 'mongang-xyz', floor: 289.98, volume: 1283, change: -2.3, image: 'https://i.seadn.io/s/raw/files/mongang.png', owners: 210, sales: 150 },
+      { name: 'Monadverse', slug: 'monadverse-monad', floor: 160.00, volume: 1142, change: 4.2, image: 'https://i.seadn.io/s/raw/files/monadverse.png', owners: 340, sales: 220 },
+      { name: 'The 10k Squad', slug: 'the-10k-squad-350905768', floor: 677.99, volume: 1007, change: 1.5, image: 'https://i.seadn.io/s/raw/files/10k.png', owners: 190, sales: 80 },
+      { name: 'RBS Player Pass S1', slug: 'rbs-player-pass-s1', floor: 122.00, volume: 749, change: -8.1, image: 'https://i.seadn.io/s/raw/files/rbs.png', owners: 150, sales: 300 },
+      { name: 'DYOOR', slug: 'dyoor-154958357', floor: 75.00, volume: 710, change: 22.4, image: 'https://i.seadn.io/s/raw/files/dyoor.png', owners: 90, sales: 125 },
+      { name: 'Overnads', slug: 'overnads-348402649', floor: 699.00, volume: 699, change: 0.0, image: 'https://i.seadn.io/s/raw/files/overnads.png', owners: 85, sales: 40 },
+      { name: 'Mu Digital Genesis', slug: 'mu-digital-genesis-nft', floor: 519.00, volume: 140, change: 3.2, image: 'https://i.seadn.io/s/raw/files/mu.png', owners: 50, sales: 12 },
+      { name: 'Monaliens', slug: 'monaliens-952480516', floor: 240.99, volume: 120, change: -1.2, image: 'https://i.seadn.io/s/raw/files/monaliens.png', owners: 45, sales: 22 },
+      { name: 'Turbo', slug: 'turbo-official', floor: 51.00, volume: 117, change: 5.6, image: 'https://i.seadn.io/s/raw/files/turbo.png', owners: 310, sales: 410 },
+      { name: 'Mouch', slug: 'mouch-115689362', floor: 52.99, volume: 91, change: -12.4, image: 'https://i.seadn.io/s/raw/files/mouch.png', owners: 220, sales: 280 },
+      { name: 'Blocknads', slug: 'blocknads-895269975', floor: 199.76, volume: 80, change: 2.8, image: 'https://i.seadn.io/s/raw/files/blocknads.png', owners: 130, sales: 140 }
     ];
 
     return fallback.map(c => ({
       ...c,
       symbol: c.name.substring(0, 6).toUpperCase(),
       address: c.slug,
+      owners: c.owners || 0,
+      sales: c.sales || 0,
       displayFloor: `${c.floor.toLocaleString()} MON`,
       displayVolume: c.volume >= 1000 ? `${(c.volume / 1000).toFixed(1)}K MON` : `${c.volume} MON`,
       displayChange: `${c.change >= 0 ? '+' : ''}${c.change.toFixed(2)}%`,
