@@ -161,9 +161,16 @@ export const NetworkService = {
     try {
       const response = await fetch('https://api.llama.fi/protocols');
       const data = await response.json();
+      const defiCategories = [
+        'Dexes', 'Lending', 'Liquid Staking', 'Yield', 'Yield Aggregator', 
+        'Derivatives', 'CDP', 'Cross Chain', 'Options', 'Algo-Stables', 
+        'Farm', 'Staking Pool', 'Bridge', 'Money Market', 'Liquid Restaking'
+      ];
       
-      const monadProtocols = data.filter(p => p.chain === 'Monad' || (p.chains && p.chains.includes('Monad')));
-      
+      const monadProtocols = data.filter(p => 
+        (p.chain === 'Monad' || (p.chains && p.chains.includes('Monad'))) &&
+        defiCategories.includes(p.category)
+      );
       const mapped = monadProtocols.map(p => ({
         name: p.name,
         category: p.category,
