@@ -159,9 +159,6 @@ const NFTItem = React.memo(({ collection, index }) => {
              <span className="text-base font-black text-white tracking-widest">{collection.displayFloor}</span>
           </div>
         </div>
-        <span className="text-[11px] font-black text-monad-purple px-2 py-0.5 rounded-lg bg-monad-purple/5 border border-monad-purple/10">
-          Vol: {collection.displayVolume}
-        </span>
       </div>
       <a href={`https://opensea.io/collection/${collection.address || collection.name.toLowerCase().replace(/ /g, '-')}`} target="_blank" rel="noopener noreferrer" className="ml-4 p-3 bg-monad-purple/10 text-monad-purple rounded-xl hover:bg-monad-purple hover:text-white transition-all shadow-xl shadow-black/40">
         <ExternalLink size={16} />
