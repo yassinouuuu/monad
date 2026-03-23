@@ -335,31 +335,6 @@ const App = () => {
         {activePage === 'dashboard' && (
           <div className="animate-slide-up">
             
-            <div className="flex flex-col gap-4 mb-2">
-                 <div className="flex items-center gap-3 w-fit bg-monad-purple/5 px-4 py-2 rounded-full border border-monad-purple/20">
-                    <div className="h-2 w-2 rounded-full bg-monad-purple animate-pulse"></div>
-                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">SocialScan API Sync: Active Sync</span>
-                 </div>
-                 <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white">Network Stats</h2>
-                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mb-4">On-Chain Realtime Intelligence</p>
-            </div>
-
-            {/* SocialScan Stats Interface (Numbers Only - Professional Layout) */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
-               {[
-                  { label: "Daily Transactions", value: stats.dailyTx || "0", color: "text-emerald-400" },
-                  { label: "Total Transactions", value: stats.totalTx || "0", color: "text-white" },
-                  { label: "Total Addresses", value: stats.totalAccounts || "0", color: "text-white" },
-                  { label: "Active Pulse (Live)", value: stats.dailyActiveAccounts || "0", color: "text-emerald-400" },
-                  { label: "Block Height", value: stats.tps ? (21900000 + Math.floor(Date.now() / 1000 % 100000)).toLocaleString() : "---", color: "text-monad-purple" }
-               ].map((stat, idx) => (
-                  <div key={idx} className="bg-white/[0.02] border border-white/5 p-5 rounded-xl flex flex-col justify-center border-l-2 border-l-monad-purple/30 hover:border-l-monad-purple transition-all">
-                     <span className="text-[9px] font-black text-white/30 tracking-[0.2em] uppercase mb-2">{stat.label}</span>
-                     <span className={`text-3xl font-black tracking-tight ${stat.color}`}>{stat.value}</span>
-                  </div>
-               ))}
-            </div>
-
             {/* KPI Executive Summary - Expanded */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8 relative z-10">
                 {[
