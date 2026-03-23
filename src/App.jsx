@@ -274,7 +274,7 @@ const App = () => {
              onClick={() => setActivePage('protocols')}
              className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
            >
-             Protocol Rankings
+             DeFi Rankings
            </button>
         </div>
 
@@ -601,8 +601,8 @@ const App = () => {
                    <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></div>
                    <span className="text-[10px] font-black text-emerald-400 tracking-[0.2em] uppercase">DeFiLlama Auto-Sync Active</span>
                 </div>
-                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Protocol Rankings</h2>
-                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem DApps Ranked by Total Value Locked</p>
+                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">DeFi Rankings</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem DeFi Applications Ranked by TVL</p>
              </div>
 
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
