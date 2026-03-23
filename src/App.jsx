@@ -192,7 +192,7 @@ const App = () => {
   const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_hub_smt_cache', []));
   const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_hub_lnad_cache', []));
   const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_hub_lsmt_cache_v2', []));
-  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache_v2', []));
+  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache_v3', []));
   const [news, setNews] = useState(() => initFromLS('monad_hub_news_cache', []));
   const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_hub_protocols_cache', []));
 
@@ -223,7 +223,7 @@ const App = () => {
           if (smt) { setSmtCoins(smt); localStorage.setItem('monad_hub_smt_cache', JSON.stringify(smt)); }
           if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_hub_lnad_cache', JSON.stringify(lNad)); }
           if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_hub_lsmt_cache_v2', JSON.stringify(lSmt)); }
-          if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache_v2', JSON.stringify(nft)); }
+          if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache_v3', JSON.stringify(nft)); }
           if (newsData) { setNews(newsData); localStorage.setItem('monad_hub_news_cache', JSON.stringify(newsData)); }
           if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_hub_protocols_cache', JSON.stringify(protocolsData)); }
         }

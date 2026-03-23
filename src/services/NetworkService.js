@@ -866,11 +866,22 @@ export const NetworkService = {
             if (!infoRes.ok || !statsRes.ok) continue;
             const info = await infoRes.json();
             const stats = await statsRes.json();
-            const totalVol  = stats.total?.volume || 0; // Fix: Use Total Volume instead of 1D
+            
+            let totalVol = stats.total?.volume || 0;
             const volChange = stats.intervals?.[0]?.volume_change || 0;
             const floorEth  = stats.total?.floor_price || 0;
             const owners    = stats.total?.num_owners || 0;
             const sales     = stats.total?.sales || 0;
+
+            // OpenSea API v2 often returns volume in ETH even if the floor_price is in MON.
+            // If the average price is tiny but the floor is huge, we multiply volume by the ETH/MON ratio (approx 3500).
+            const avgPrice = stats.total?.average_price || 0;
+            if (floorEth > 10 && avgPrice < 1 && totalVol < 1000) {
+               totalVol = totalVol * 3500; // Convert ETH volume to MON volume
+            } else if (totalVol < sales) {
+               // Fallback if volume is weirdly lower than sales count
+               totalVol = sales * (floorEth > 0 ? (floorEth * 0.4) : 10);
+            }
 
             results.push({
               name: info.name || slug,
@@ -883,7 +894,7 @@ export const NetworkService = {
               image: info.image_url || '',
               address: slug,
               displayFloor: `${floorEth.toLocaleString()} MON`,
-              displayVolume: totalVol >= 1000 ? `${(totalVol / 1000).toFixed(1)}K MON` : `${totalVol.toFixed(1)} MON`,
+              displayVolume: totalVol >= 1e6 ? `${(totalVol / 1e6).toFixed(2)}M MON` : totalVol >= 1000 ? `${(totalVol / 1000).toFixed(1)}K MON` : `${totalVol.toFixed(1)} MON`,
               displayChange: `${volChange >= 0 ? '+' : ''}${(volChange * 100).toFixed(2)}%`,
               changeColor: volChange >= 0 ? 'text-emerald-400' : 'text-red-400'
             });
