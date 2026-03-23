@@ -151,10 +151,13 @@ const NFTItem = React.memo(({ collection, index }) => {
       </div>
       <div className="flex flex-col items-end gap-1">
         <div className="flex items-center gap-3">
-          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${collection.changeColor} bg-white/5`}>
-            {collection.displayChange}
+          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${collection.changeColor || 'text-white/40'} bg-white/5`}>
+            {collection.displayChange || '0%'}
           </span>
-          <span className="text-base font-black text-white tracking-widest">{collection.displayFloor}</span>
+          <div className="flex items-baseline gap-1.5">
+             <span className="text-[9px] font-black text-white/30 tracking-[0.2em] uppercase">Floor</span>
+             <span className="text-base font-black text-white tracking-widest">{collection.displayFloor}</span>
+          </div>
         </div>
         <span className="text-[11px] font-black text-monad-purple px-2 py-0.5 rounded-lg bg-monad-purple/5 border border-monad-purple/10">
           Vol: {collection.displayVolume}
@@ -188,8 +191,8 @@ const App = () => {
   const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_hub_nadfun_cache', []));
   const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_hub_smt_cache', []));
   const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_hub_lnad_cache', []));
-  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_hub_lsmt_cache', []));
-  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache', []));
+  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_hub_lsmt_cache_v2', []));
+  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache_v2', []));
   const [news, setNews] = useState(() => initFromLS('monad_hub_news_cache', []));
   const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_hub_protocols_cache', []));
 
@@ -219,8 +222,8 @@ const App = () => {
           if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_hub_nadfun_cache', JSON.stringify(nad)); }
           if (smt) { setSmtCoins(smt); localStorage.setItem('monad_hub_smt_cache', JSON.stringify(smt)); }
           if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_hub_lnad_cache', JSON.stringify(lNad)); }
-          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_hub_lsmt_cache', JSON.stringify(lSmt)); }
-          if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache', JSON.stringify(nft)); }
+          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_hub_lsmt_cache_v2', JSON.stringify(lSmt)); }
+          if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache_v2', JSON.stringify(nft)); }
           if (newsData) { setNews(newsData); localStorage.setItem('monad_hub_news_cache', JSON.stringify(newsData)); }
           if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_hub_protocols_cache', JSON.stringify(protocolsData)); }
         }
