@@ -155,6 +155,44 @@ export const NetworkService = {
   },
 
   /**
+   * Fetch TVL and Top Protocols explicitly for Monad from DeFiLlama.
+   */
+  async getTopProtocols() {
+    try {
+      const response = await fetch('https://api.llama.fi/protocols');
+      const data = await response.json();
+      
+      const monadProtocols = data.filter(p => p.chain === 'Monad' || (p.chains && p.chains.includes('Monad')));
+      
+      const mapped = monadProtocols.map(p => ({
+        name: p.name,
+        category: p.category,
+        tvl: p.chainTvls && p.chainTvls.Monad ? p.chainTvls.Monad : 0,
+        change_1d: p.change_1d || 0,
+        url: p.url,
+        logo: p.logo
+      })).filter(p => p.tvl > 0).sort((a, b) => b.tvl - a.tvl).slice(0, 10);
+
+      const formatTVL = (num) => {
+        if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
+        if (num >= 1e6) return '$' + (num / 1e6).toFixed(2) + 'M';
+        if (num >= 1e3) return '$' + (num / 1e3).toFixed(2) + 'K';
+        return '$' + num.toFixed(0);
+      };
+
+      return mapped.map(p => ({
+        ...p,
+        displayTvl: formatTVL(p.tvl),
+        displayChange: `${p.change_1d >= 0 ? '+' : ''}${p.change_1d.toFixed(2)}%`,
+        changeColor: p.change_1d >= 0 ? 'text-emerald-400' : 'text-red-400'
+      }));
+    } catch (error) {
+      console.error('Error fetching Top Protocols:', error);
+      return [];
+    }
+  },
+
+  /**
    * Fetch TVL and Protocol count from DeFiLlama.
    */
   async getChainData() {

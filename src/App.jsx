@@ -185,6 +185,7 @@ const App = () => {
   const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_hub_lsmt_cache', []));
   const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache', []));
   const [news, setNews] = useState(() => initFromLS('monad_hub_news_cache', []));
+  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_hub_protocols_cache', []));
 
   useEffect(() => {
     let isMounted = true;
@@ -198,13 +199,14 @@ const App = () => {
 
     const fetchEcosystemData = async () => {
       try {
-        const [nad, smt, lNad, lSmt, nft, newsData] = await Promise.all([
+        const [nad, smt, lNad, lSmt, nft, newsData, protocolsData] = await Promise.all([
           NetworkService.getNadFunCoins(30),
           NetworkService.getSomethingToolsCoins(30),
           NetworkService.getLatestNadFunCoins(30),
           NetworkService.getLatestSomethingToolsCoins(30),
           NetworkService.getMonadNFTs(),
-          NetworkService.getMonadNews()
+          NetworkService.getMonadNews(),
+          NetworkService.getTopProtocols()
         ]);
         
         if (isMounted) {
@@ -214,6 +216,7 @@ const App = () => {
           if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_hub_lsmt_cache', JSON.stringify(lSmt)); }
           if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache', JSON.stringify(nft)); }
           if (newsData) { setNews(newsData); localStorage.setItem('monad_hub_news_cache', JSON.stringify(newsData)); }
+          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_hub_protocols_cache', JSON.stringify(protocolsData)); }
         }
       } catch (err) {
         console.error("Critical Ecosystem Fetch Error:", err);
@@ -396,6 +399,50 @@ const App = () => {
                     </div>
                   </div>
                 ))}
+            </div>
+
+            {/* DeFiLlama TVL Leaders */}
+            <div className="mb-20">
+               <div className="flex items-center justify-between mb-8">
+                  <div className="flex flex-col">
+                     <h3 className="text-3xl font-black italic uppercase text-white tracking-widest">DeFiLlama Intelligence</h3>
+                     <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] mt-2">Top Protocols by Value Locked</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 text-emerald-400 rounded-full text-[10px] font-black tracking-widest uppercase">
+                     <TrendingUp size={14} /> OFFICIAL DATA SOURCE
+                  </div>
+               </div>
+
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10">
+                 {topProtocols.map((protocol, i) => (
+                   <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group bg-gradient-to-r from-emerald-500/[0.02] to-transparent relative overflow-hidden">
+                     {/* Rank Number */}
+                     <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:opacity-10 transition-all font-black italic text-8xl -mt-6">
+                       #{i + 1}
+                     </div>
+                     
+                     <div className="flex items-center gap-6 relative z-10">
+                        <div className="w-16 h-16 rounded-2xl p-0.5 bg-gradient-to-br from-white/10 to-transparent">
+                          <img src={protocol.logo} alt={protocol.name} className="w-full h-full rounded-2xl bg-black" />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                           <div className="flex items-center gap-3">
+                             <a href={protocol.url} target="_blank" rel="noopener noreferrer" className="text-2xl font-black text-white hover:text-emerald-400 transition-colors uppercase italic tracking-tight">{protocol.name}</a>
+                             <ExternalLink size={14} className="text-white/20" />
+                           </div>
+                           <span className="text-[10px] font-black text-white/30 uppercase tracking-widest">{protocol.category}</span>
+                        </div>
+                     </div>
+                     <div className="flex flex-col items-end gap-1 relative z-10">
+                        <span className="text-2xl font-black text-emerald-400 tracking-tighter">{protocol.displayTvl}</span>
+                        <div className="flex items-center gap-2">
+                           <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">1D Change</span>
+                           <span className={`text-xs font-black ${protocol.changeColor} py-0.5 px-2 bg-white/5 rounded-md`}>{protocol.displayChange}</span>
+                        </div>
+                     </div>
+                   </div>
+                 ))}
+               </div>
             </div>
 
             {/* Ecosystem spotlight and feeds */}
