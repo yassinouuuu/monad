@@ -786,7 +786,7 @@ export const NetworkService = {
    */
   async getMonadNFTs() {
     // ← ضع API Key هنا بعد الحصول عليه من OpenSea
-    const OPENSEA_API_KEY = '';
+    const OPENSEA_API_KEY = 'c0e82d6e56a44b389058fa3f52701264';
 
     // الكوليكشنز الحقيقية على Monad (slugs رسمية من OpenSea)
     const MONAD_SLUGS = [
