@@ -130,6 +130,37 @@ const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
   );
 });
 
+const NFTItem = React.memo(({ collection, index }) => {
+  return (
+    <div className="flex items-center gap-5 p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] transition-all border border-transparent hover:border-white/5 group">
+      <span className={`w-8 text-xl font-black italic text-white/5 group-hover:text-monad-purple/30 transition-colors`}>
+        {(index + 1).toString().padStart(2, '0')}
+      </span>
+      <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-monad-purple/30 transition-all shadow-xl shadow-black/40`}>
+        <img src={collection.image} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://opensea.io/static/images/logos/opensea.svg'; }} />
+      </div>
+      <div className="flex flex-col flex-1 pl-1">
+        <span className="font-black text-white text-base leading-none tracking-tight">{collection.name}</span>
+        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest mt-1.5 truncate max-w-[120px]">{collection.symbol}</span>
+      </div>
+      <div className="flex flex-col items-end gap-1">
+        <div className="flex items-center gap-3">
+          <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${collection.changeColor} bg-white/5`}>
+            {collection.displayChange}
+          </span>
+          <span className="text-base font-black text-white tracking-widest">{collection.displayFloor}</span>
+        </div>
+        <span className="text-[11px] font-black text-monad-purple px-2 py-0.5 rounded-lg bg-monad-purple/5 border border-monad-purple/10">
+          Vol: {collection.displayVolume}
+        </span>
+      </div>
+      <a href={`https://opensea.io/collection/${collection.address || collection.name.toLowerCase().replace(/ /g, '-')}`} target="_blank" rel="noopener noreferrer" className="ml-4 p-3 bg-monad-purple/10 text-monad-purple rounded-xl hover:bg-monad-purple hover:text-white transition-all shadow-xl shadow-black/40">
+        <ExternalLink size={16} />
+      </a>
+    </div>
+  );
+});
+
 const App = () => {
   const [activePage, setActivePage] = useState('dashboard');
   const [stats, setStats] = useState(() => initFromLS('monad_hub_stats_cache', {
@@ -152,6 +183,7 @@ const App = () => {
   const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_hub_smt_cache', []));
   const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_hub_lnad_cache', []));
   const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_hub_lsmt_cache', []));
+  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache', []));
   const [news, setNews] = useState(() => initFromLS('monad_hub_news_cache', []));
 
   useEffect(() => {
@@ -166,11 +198,12 @@ const App = () => {
 
     const fetchEcosystemData = async () => {
       try {
-        const [nad, smt, lNad, lSmt, newsData] = await Promise.all([
+        const [nad, smt, lNad, lSmt, nft, newsData] = await Promise.all([
           NetworkService.getNadFunCoins(30),
           NetworkService.getSomethingToolsCoins(30),
           NetworkService.getLatestNadFunCoins(30),
           NetworkService.getLatestSomethingToolsCoins(30),
+          NetworkService.getMonadNFTs(),
           NetworkService.getMonadNews()
         ]);
         
@@ -179,6 +212,7 @@ const App = () => {
           if (smt) { setSmtCoins(smt); localStorage.setItem('monad_hub_smt_cache', JSON.stringify(smt)); }
           if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_hub_lnad_cache', JSON.stringify(lNad)); }
           if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_hub_lsmt_cache', JSON.stringify(lSmt)); }
+          if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache', JSON.stringify(nft)); }
           if (newsData) { setNews(newsData); localStorage.setItem('monad_hub_news_cache', JSON.stringify(newsData)); }
         }
       } catch (err) {
@@ -226,6 +260,12 @@ const App = () => {
              className={`nav-btn ${activePage === 'memes' ? 'active' : ''}`}
            >
              Meme Explorer
+           </button>
+           <button 
+             onClick={() => setActivePage('nft')}
+             className={`nav-btn ${activePage === 'nft' ? 'active' : ''}`}
+           >
+             NFT Explorer
            </button>
         </div>
 
@@ -502,6 +542,44 @@ const App = () => {
                          ))}
                       </div>
                    </div>
+                </div>
+             </div>
+          </div>
+        )}
+
+         {activePage === 'nft' && (
+          <div className="animate-slide-up">
+             <div className="flex flex-col gap-4 mb-16">
+                <div className="flex items-center gap-3 w-fit bg-monad-purple/5 px-4 py-2 rounded-full border border-monad-purple/20">
+                   <div className="h-2 w-2 rounded-full bg-monad-purple animate-pulse"></div>
+                   <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">NFT Liquidity Active</span>
+                </div>
+                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">NFT Ecosystem Hub</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Collections • Real-time Floor & Volume</p>
+             </div>
+             
+             <div className="glass-card p-10 bg-monad-purple/[0.02] border-monad-purple/10">
+                <div className="flex items-center justify-between mb-10">
+                   <div className="flex items-center gap-4 uppercase font-black italic text-monad-purple tracking-widest text-base">
+                      <Image size={24} />
+                      Top 20 Monad Collections by Volume
+                   </div>
+                   <div className="flex items-center gap-10">
+                      <div className="flex flex-col items-end">
+                         <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Network</span>
+                         <span className="text-xs font-black text-white px-3 py-1 bg-white/5 rounded-lg mt-1">MONAD MAINNET</span>
+                      </div>
+                      <div className="flex flex-col items-end">
+                         <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Aggregator</span>
+                         <span className="text-xs font-black text-monad-purple px-3 py-1 bg-monad-purple/10 rounded-lg mt-1">OPENSEA / RESERVOIR</span>
+                      </div>
+                   </div>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                   {nftCollections.map((col, i) => (
+                      <NFTItem key={col.address || i} collection={col} index={i} />
+                   ))}
                 </div>
              </div>
           </div>
