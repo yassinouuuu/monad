@@ -341,9 +341,6 @@ const App = () => {
            <div className="p-2.5 bg-white/5 rounded-lg hover:bg-white/10 transition-all cursor-pointer">
               <Search size={16} className="text-white/40" />
            </div>
-           <div className="w-9 h-9 rounded-full bg-monad-purple/20 flex items-center justify-center text-monad-purple ring-1 ring-monad-purple/30">
-              <User size={16} />
-           </div>
         </div>
       </header>
 
