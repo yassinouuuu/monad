@@ -152,8 +152,6 @@ export const NetworkService = {
       console.error('Error fetching Stablecoins:', error);
       return { marketCap: 0, change: null };
     }
-      return { marketCap: 0, change: null };
-    }
   },
 
   /**
