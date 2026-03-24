@@ -3,7 +3,7 @@ import {
   Activity, Clock, Box, Database, Globe, RefreshCw, 
   Search, User, LayoutGrid, Coins, Image, Link, 
   BarChart3, Users, TrendingUp, MoreHorizontal, Plus,
-  ChevronDown, Filter, Zap, Bell, Smile, ExternalLink,
+  ChevronDown, Filter, Bell, Smile, ExternalLink,
   PieChart, Settings, LogOut, ChevronRight
 } from 'lucide-react';
 import {
@@ -266,9 +266,6 @@ const App = () => {
       {/* --- TOP FIXED HEADER --- */}
       <header className="main-header">
         <div className="flex items-center gap-4">
-           <div className="w-10 h-10 bg-monad-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 rotate-3 transform hover:rotate-0 transition-all">
-             <Zap size={20} className="fill-white" />
-           </div>
            <div className="hidden sm:flex flex-col select-none">
              <span className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats</span>
              <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
@@ -381,11 +378,11 @@ const App = () => {
             {/* KPI Executive Summary - Expanded */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-6 mb-8 relative z-10">
                 {[
-                  { title: 'Monad (MON) Price', value: coinStats.displayPrice, change: coinStats.displayChange, icon: <Zap size={14} />, color: 'purple', textColor: 'text-monad-purple', highlight: true },
+                  { title: 'Monad (MON) Price', value: coinStats.displayPrice, change: coinStats.displayChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple', highlight: true },
                   { title: 'Monad Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={14} />, color: 'purple' },
                   { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <TrendingUp size={14} />, color: 'emerald' },
                   { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple' },
-                  { title: 'Daily Transactions', value: stats.dailyTx, change: '● LIVE TICKET', icon: <Zap size={14} />, color: 'emerald', highlight: true },
+                  { title: 'Daily Transactions', value: stats.dailyTx, change: '● LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
                   { title: 'Total Network Tx', value: stats.totalTx, change: 'Aggregate Chain Data', icon: <Database size={14} />, color: 'white' },
                   { title: 'Total Addresses', value: stats.totalAccounts, change: 'Unique Identity Layer', icon: <Users size={14} />, color: 'white' },
                   { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: '▲ LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
