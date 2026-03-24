@@ -3,7 +3,7 @@ import {
   Activity, Clock, Box, Database, Globe, RefreshCw, 
   Search, User, LayoutGrid, Coins, Image, Link, 
   BarChart3, Users, TrendingUp, MoreHorizontal, Plus,
-  ChevronDown, Filter, Bell, Smile, ExternalLink,
+  ChevronDown, Filter, Zap, Bell, Smile, ExternalLink,
   PieChart, Settings, LogOut, ChevronRight
 } from 'lucide-react';
 import {
@@ -266,6 +266,9 @@ const App = () => {
       {/* --- TOP FIXED HEADER --- */}
       <header className="main-header">
         <div className="flex items-center gap-4">
+           <div className="w-10 h-10 bg-monad-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 rotate-3 transform hover:rotate-0 transition-all">
+             <Zap size={20} className="fill-white" />
+           </div>
            <div className="hidden sm:flex flex-col select-none">
              <span className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats</span>
              <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
