@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yassinouuuu.github.io/monad/sitemap.xml
+Sitemap: https://monadstats.vercel.app/sitemap.xml
