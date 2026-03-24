@@ -270,7 +270,7 @@ const App = () => {
              <Zap size={20} className="fill-white" />
            </div>
            <div className="hidden sm:flex flex-col select-none">
-             <span className="text-lg font-black tracking-tight italic uppercase leading-none">Monad Hub</span>
+             <span className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats</span>
              <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
            </div>
         </div>
@@ -780,7 +780,7 @@ const App = () => {
          <div className="flex items-center gap-6">
             <span>Aggregated Chain Intelligence</span>
             <div className="w-[1px] h-4 bg-white/10"></div>
-            <span className="text-white/30">Monad Hub Interface &copy; 2026</span>
+            <span className="text-white/30">MonadStats Interface &copy; 2026</span>
          </div>
       </footer>
 
