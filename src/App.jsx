@@ -251,7 +251,7 @@ const App = () => {
     fetchEcosystemData();
 
     const livePulseInterval = setInterval(fetchLiveStats, 2000);
-    const ecosystemInterval = setInterval(fetchEcosystemData, 60000);
+    const ecosystemInterval = setInterval(fetchEcosystemData, 3600000);
 
     return () => {
       isMounted = false;
