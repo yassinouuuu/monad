@@ -149,7 +149,7 @@ const NFTItem = React.memo(({ collection, index }) => {
           <span>{collection.sales?.toLocaleString() || '--'} SALES</span>
         </div>
       </div>
-      <div className="flex flex-col items-end gap-1">
+      <div className="flex flex-col items-end gap-1.5">
         <div className="flex items-center gap-3">
           <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${collection.changeColor || 'text-white/40'} bg-white/5`}>
             {collection.displayChange || '0%'}
@@ -158,6 +158,10 @@ const NFTItem = React.memo(({ collection, index }) => {
              <span className="text-[9px] font-black text-white/30 tracking-[0.2em] uppercase">Floor</span>
              <span className="text-base font-black text-white tracking-widest">{collection.displayFloor}</span>
           </div>
+        </div>
+        <div className="flex items-baseline gap-1.5">
+           <span className="text-[9px] font-black text-monad-purple/50 tracking-[0.2em] uppercase">24H Vol</span>
+           <span className="text-xs font-black text-monad-purple tracking-widest">{collection.displayVolume}</span>
         </div>
       </div>
       <a href={`https://opensea.io/collection/${collection.address || collection.name.toLowerCase().replace(/ /g, '-')}`} target="_blank" rel="noopener noreferrer" className="ml-4 p-3 bg-monad-purple/10 text-monad-purple rounded-xl hover:bg-monad-purple hover:text-white transition-all shadow-xl shadow-black/40">

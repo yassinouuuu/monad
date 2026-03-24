@@ -1028,7 +1028,8 @@ export const NetworkService = {
             const info = await infoRes.json();
             const stats = await statsRes.json();
             
-            let totalVol = stats.total?.volume || 0;
+            // Daily Volume from OpenSea intervals
+            let dailyVol  = stats.intervals?.[0]?.volume || 0;
             const volChange = stats.intervals?.[0]?.volume_change || 0;
             const floorEth  = stats.total?.floor_price || 0;
             const owners    = stats.total?.num_owners || 0;
@@ -1037,25 +1038,25 @@ export const NetworkService = {
             // OpenSea API v2 often returns volume in ETH even if the floor_price is in MON.
             // If the average price is tiny but the floor is huge, we multiply volume by the ETH/MON ratio (approx 3500).
             const avgPrice = stats.total?.average_price || 0;
-            if (floorEth > 10 && avgPrice < 1 && totalVol < 1000) {
-               totalVol = totalVol * 3500; // Convert ETH volume to MON volume
-            } else if (totalVol < sales) {
-               // Fallback if volume is weirdly lower than sales count
-               totalVol = sales * (floorEth > 0 ? (floorEth * 0.4) : 10);
+            if (floorEth > 10 && avgPrice < 1 && dailyVol < 1000 && dailyVol > 0) {
+               dailyVol = dailyVol * 3500; // Convert ETH volume to MON volume
+            } else if (dailyVol === 0 && sales > 0) {
+               // Fallback if 24h volume missing but there are total sales
+               dailyVol = (sales / 30) * (floorEth > 0 ? (floorEth * 0.4) : 10);
             }
 
             results.push({
               name: info.name || slug,
               symbol: (info.name || slug).substring(0, 6).toUpperCase(),
               floor: floorEth,
-              volume: totalVol,
+              volume: dailyVol,
               owners: owners,
               sales: sales,
               change: volChange * 100,
               image: info.image_url || '',
               address: slug,
               displayFloor: `${floorEth.toLocaleString()} MON`,
-              displayVolume: totalVol >= 1e6 ? `${(totalVol / 1e6).toFixed(2)}M MON` : totalVol >= 1000 ? `${(totalVol / 1000).toFixed(1)}K MON` : `${totalVol.toFixed(1)} MON`,
+              displayVolume: dailyVol >= 1e6 ? `${(dailyVol / 1e6).toFixed(2)}M MON` : dailyVol >= 1000 ? `${(dailyVol / 1000).toFixed(1)}K MON` : `${dailyVol.toFixed(1)} MON`,
               displayChange: `${volChange >= 0 ? '+' : ''}${(volChange * 100).toFixed(2)}%`,
               changeColor: volChange >= 0 ? 'text-emerald-400' : 'text-red-400'
             });
