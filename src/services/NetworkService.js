@@ -995,14 +995,14 @@ export const NetworkService = {
     const MONAD_SLUGS = [
       'voting-escrow-dust',
       'skrumpeys',
-      'lilstarrrs',
       'molandaks-monad',
-      'mongang-xyz',
-      'monadverse-monad',
       'the-10k-squad-350905768',
-      'rbs-player-pass-s1',
-      'dyoor-154958357',
       'overnads-348402649',
+      'mongang-xyz',
+      'lootgo-compass-genesis',
+      'monadverse-monad',
+      'lilstarrrs',
+      'chads-189754625',
       'mu-digital-genesis-nft',
       'monaliens-952480516',
       'turbo-official',
@@ -1028,9 +1028,18 @@ export const NetworkService = {
             const info = await infoRes.json();
             const stats = await statsRes.json();
             
-            // Daily Volume from OpenSea intervals
-            let dailyVol  = stats.intervals?.[0]?.volume || 0;
-            const volChange = stats.intervals?.[0]?.volume_change || 0;
+            // Daily Volume from OpenSea intervals - look for 'one_day' specifically
+            let dailyVol = 0;
+            let volChange = 0;
+            
+            if (stats.intervals && Array.isArray(stats.intervals)) {
+               const dayInterval = stats.intervals.find(i => i.interval === 'one_day') || stats.intervals[0];
+               dailyVol = dayInterval?.volume || 0;
+               volChange = dayInterval?.volume_change || 0;
+            } else if (stats.total) {
+               dailyVol = stats.total.volume / 30; // Approximation if only total is available
+            }
+
             const floorEth  = stats.total?.floor_price || 0;
             const owners    = stats.total?.num_owners || 0;
             const sales     = stats.total?.sales || 0;
