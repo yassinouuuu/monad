@@ -337,11 +337,6 @@ const App = () => {
            </div>
         </div>
 
-        <div className="flex items-center gap-3">
-           <div className="p-2.5 bg-white/5 rounded-lg hover:bg-white/10 transition-all cursor-pointer">
-              <Search size={16} className="text-white/40" />
-           </div>
-        </div>
       </header>
 
       {/* --- CONTENT AREA --- */}
