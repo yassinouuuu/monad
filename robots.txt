@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yassinouuuu.github.io/monad/sitemap.xml
