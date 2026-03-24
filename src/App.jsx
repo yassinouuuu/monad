@@ -192,6 +192,12 @@ const App = () => {
   const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache_v3', []));
   const [news, setNews] = useState(() => initFromLS('monad_hub_news_cache', []));
   const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_hub_protocols_cache', []));
+  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_hub_vol_protocols_cache', []));
+  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_hub_fees_protocols_cache', []));
+  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_hub_rev_protocols_cache', []));
+  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_hub_coin_cache', {
+     displayPrice: '$0.0225', displayMcap: '$244.1M', displayChange: '+0.00%', changeColor: 'text-emerald-400'
+  }));
 
   useEffect(() => {
     let isMounted = true;
@@ -205,14 +211,18 @@ const App = () => {
 
     const fetchEcosystemData = async () => {
       try {
-        const [nad, smt, lNad, lSmt, nft, newsData, protocolsData] = await Promise.all([
+        const [nad, smt, lNad, lSmt, nft, newsData, protocolsData, vol, fees, rev, coin] = await Promise.all([
           NetworkService.getNadFunCoins(30),
           NetworkService.getSomethingToolsCoins(30),
           NetworkService.getLatestNadFunCoins(30),
           NetworkService.getLatestSomethingToolsCoins(30),
           NetworkService.getMonadNFTs(),
           NetworkService.getMonadNews(),
-          NetworkService.getTopProtocols()
+          NetworkService.getTopProtocols(),
+          NetworkService.getTopProtocolsByVolume(),
+          NetworkService.getTopProtocolsByFees(),
+          NetworkService.getTopProtocolsByRevenue(),
+          NetworkService.getMonadCoinStats()
         ]);
         
         if (isMounted) {
@@ -223,6 +233,10 @@ const App = () => {
           if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache_v3', JSON.stringify(nft)); }
           if (newsData) { setNews(newsData); localStorage.setItem('monad_hub_news_cache', JSON.stringify(newsData)); }
           if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_hub_protocols_cache', JSON.stringify(protocolsData)); }
+          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_hub_vol_protocols_cache', JSON.stringify(vol)); }
+          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_hub_fees_protocols_cache', JSON.stringify(fees)); }
+          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_hub_rev_protocols_cache', JSON.stringify(rev)); }
+          if (coin) { setCoinStats(coin); localStorage.setItem('monad_hub_coin_cache', JSON.stringify(coin)); }
         }
       } catch (err) {
         console.error("Critical Ecosystem Fetch Error:", err);
@@ -281,6 +295,24 @@ const App = () => {
              className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
            >
              DeFi Rankings
+           </button>
+           <button 
+             onClick={() => setActivePage('volume')}
+             className={`nav-btn ${activePage === 'volume' ? 'active' : ''}`}
+           >
+             Volume
+           </button>
+           <button 
+             onClick={() => setActivePage('fees')}
+             className={`nav-btn ${activePage === 'fees' ? 'active' : ''}`}
+           >
+             Fees
+           </button>
+           <button 
+             onClick={() => setActivePage('revenue')}
+             className={`nav-btn ${activePage === 'revenue' ? 'active' : ''}`}
+           >
+             Revenue
            </button>
         </div>
 
@@ -351,8 +383,10 @@ const App = () => {
           <div className="animate-slide-up">
             
             {/* KPI Executive Summary - Expanded */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-6 mb-8 relative z-10">
                 {[
+                  { title: 'Monad (MON) Price', value: coinStats.displayPrice, change: coinStats.displayChange, icon: <Zap size={14} />, color: 'purple', textColor: 'text-monad-purple', highlight: true },
+                  { title: 'Monad Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={14} />, color: 'purple' },
                   { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <TrendingUp size={14} />, color: 'emerald' },
                   { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple' },
                   { title: 'Daily Transactions', value: stats.dailyTx, change: '● LIVE TICKET', icon: <Zap size={14} />, color: 'emerald', highlight: true },
@@ -596,6 +630,90 @@ const App = () => {
                       <NFTItem key={col.address || i} collection={col} index={i} />
                    ))}
                 </div>
+             </div>
+          </div>
+        )}
+
+        {activePage === 'volume' && (
+          <div className="animate-slide-up">
+             <div className="flex flex-col gap-4 mb-16">
+                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Volume Rankings</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem Apps by 24h Trading Volume</p>
+             </div>
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
+                 {volProtocols.map((p, i) => (
+                   <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 bg-gradient-to-r from-monad-purple/[0.02] to-transparent">
+                      <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 rounded-2xl bg-black">
+                           <img src={p.logo} alt="" className="w-full h-full rounded-2xl" />
+                        </div>
+                        <div className="flex flex-col">
+                           <a href={p.url} target="_blank" className="text-2xl font-black text-white italic uppercase">{p.name}</a>
+                           <span className="text-[9px] font-black text-white/30 uppercase tracking-widest">{p.category}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                         <span className="text-2xl font-black text-monad-purple tracking-tighter">{p.displayValue}</span>
+                         <span className={`text-xs font-black ${p.changeColor}`}>{p.displayChange}</span>
+                      </div>
+                   </div>
+                 ))}
+             </div>
+          </div>
+        )}
+
+        {activePage === 'fees' && (
+          <div className="animate-slide-up">
+             <div className="flex flex-col gap-4 mb-16">
+                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Fees Rankings</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Protocols Generating Highest Daily Fees on Monad</p>
+             </div>
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
+                 {feesProtocols.map((p, i) => (
+                   <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 bg-gradient-to-r from-emerald-500/[0.02] to-transparent">
+                      <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 rounded-2xl bg-black">
+                           <img src={p.logo} alt="" className="w-full h-full rounded-2xl" />
+                        </div>
+                        <div className="flex flex-col">
+                           <a href={p.url} target="_blank" className="text-2xl font-black text-white italic uppercase">{p.name}</a>
+                           <span className="text-[9px] font-black text-white/30 uppercase tracking-widest">{p.category}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                         <span className="text-2xl font-black text-emerald-400 tracking-tighter">{p.displayValue}</span>
+                         <span className={`text-xs font-black ${p.changeColor}`}>{p.displayChange}</span>
+                      </div>
+                   </div>
+                 ))}
+             </div>
+          </div>
+        )}
+
+        {activePage === 'revenue' && (
+          <div className="animate-slide-up">
+             <div className="flex flex-col gap-4 mb-16">
+                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Revenue Rankings</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Revenue Generating Protocols (Protocol Earnings)</p>
+             </div>
+             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
+                 {revProtocols.map((p, i) => (
+                   <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 bg-gradient-to-r from-orange-400/[0.02] to-transparent">
+                      <div className="flex items-center gap-6">
+                        <div className="w-16 h-16 rounded-2xl bg-black">
+                           <img src={p.logo} alt="" className="w-full h-full rounded-2xl" />
+                        </div>
+                        <div className="flex flex-col">
+                           <a href={p.url} target="_blank" className="text-2xl font-black text-white italic uppercase">{p.name}</a>
+                           <span className="text-[9px] font-black text-white/30 uppercase tracking-widest">{p.category}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                         <span className="text-2xl font-black text-orange-400 tracking-tighter">{p.displayValue}</span>
+                         <span className={`text-xs font-black ${p.changeColor}`}>{p.displayChange}</span>
+                      </div>
+                   </div>
+                 ))}
              </div>
           </div>
         )}
