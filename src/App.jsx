@@ -290,30 +290,37 @@ const App = () => {
            >
              NFT Explorer
            </button>
-           <button 
-             onClick={() => setActivePage('protocols')}
-             className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
-           >
-             DeFi Rankings
-           </button>
-           <button 
-             onClick={() => setActivePage('volume')}
-             className={`nav-btn ${activePage === 'volume' ? 'active' : ''}`}
-           >
-             Volume
-           </button>
-           <button 
-             onClick={() => setActivePage('fees')}
-             className={`nav-btn ${activePage === 'fees' ? 'active' : ''}`}
-           >
-             Fees
-           </button>
-           <button 
-             onClick={() => setActivePage('revenue')}
-             className={`nav-btn ${activePage === 'revenue' ? 'active' : ''}`}
-           >
-             Revenue
-           </button>
+           <div className="relative group">
+             <button className={`nav-btn flex items-center gap-1.5 ${['protocols', 'volume', 'fees', 'revenue'].includes(activePage) ? 'active' : ''}`}>
+               Top Apps <ChevronDown size={14} className="opacity-60" />
+             </button>
+             <div className="absolute top-full left-0 mt-2 w-48 bg-[#141419] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all flex flex-col p-2 z-50">
+                <button 
+                  onClick={() => setActivePage('protocols')} 
+                  className={`text-left px-4 py-2.5 my-0.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors ${activePage === 'protocols' ? 'bg-monad-purple text-white' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                >
+                  DeFi Rankings
+                </button>
+                <button 
+                  onClick={() => setActivePage('volume')} 
+                  className={`text-left px-4 py-2.5 my-0.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors ${activePage === 'volume' ? 'bg-monad-purple text-white' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                >
+                  Volume Rankings
+                </button>
+                <button 
+                  onClick={() => setActivePage('fees')} 
+                  className={`text-left px-4 py-2.5 my-0.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors ${activePage === 'fees' ? 'bg-monad-purple text-white' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                >
+                  Top Fees
+                </button>
+                <button 
+                  onClick={() => setActivePage('revenue')} 
+                  className={`text-left px-4 py-2.5 my-0.5 text-[10px] font-black uppercase tracking-widest rounded-lg transition-colors ${activePage === 'revenue' ? 'bg-monad-purple text-white' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                >
+                  Top Revenue
+                </button>
+             </div>
+           </div>
         </div>
 
         <div className="hidden lg:flex items-center gap-6 bg-white/[0.02] px-6 py-2 rounded-xl border border-white/5">
