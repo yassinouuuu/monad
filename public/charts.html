@@ -24,6 +24,9 @@
         .chart-container-wrapper { flex-grow: 1; position: absolute; top: 60px; left: 0; right: 0; bottom: 0; visibility: hidden; opacity: 0; pointer-events: none; z-index: 1; display: flex; flex-direction: column; }
         .chart-container-wrapper.active { visibility: visible; opacity: 1; pointer-events: auto; z-index: 10; }
         .tvchart { flex-grow: 1; width: 100%; height: 100%; }
+        .tf-btn { padding: 4px 8px; font-size: 11px; font-weight: 600; color: #787b86; border-radius: 4px; cursor: pointer; transition: all 0.2s; outline: none; border: none; background: transparent; }
+        .tf-btn:hover { color: #d1d4dc; background: rgba(255,255,255,0.05); }
+        .tf-btn.active { background: #2962ff; color: #fff; }
         .text-up { color: #089981; } .text-down { color: #f23645; }
         .price-flash-up { animation: flashUp 0.3s; }
         .price-flash-down { animation: flashDown 0.3s; }
@@ -78,9 +81,16 @@
                 <span id="headerName" class="text-[11px] text-gray-400 truncate max-w-[200px]">---</span>
             </div>
             
-            <div class="h-8 w-px bg-[#2a2e39] mx-2"></div>
+            <div class="h-8 w-px bg-[#2a2e39] mx-4"></div>
             
-            <div class="flex flex-col flex-1">
+            <div class="flex items-center gap-1 bg-[#1e222d] p-1 rounded-lg border border-[#2a2e39]">
+                <button class="tf-btn active" data-tf="60">1m</button>
+                <button class="tf-btn" data-tf="300">5m</button>
+                <button class="tf-btn" data-tf="900">15m</button>
+                <button class="tf-btn" data-tf="3600">1H</button>
+            </div>
+            
+            <div class="flex flex-col ml-6 flex-1">
                 <span id="headerPrice" class="text-xl font-bold mono text-up inline-block rounded px-1 w-max transition-colors">0.00000</span>
                 <span id="headerChange" class="text-[11px] font-medium text-up px-1">0.00%</span>
             </div>
@@ -118,7 +128,9 @@
 <script>
     lucide.createIcons();
     let coinsData = []; let activeCoin = null; let chart = null; let candleSeries = null; let volumeSeries = null;
-    let lastCandle = {}; let liveUpdateInterval = null; const chartHistory = {};
+    let lastCandle = {}; let liveUpdateInterval = null; 
+    let activeTimeframe = 60; // default 1m
+    const chartHistory = { 60: {}, 300: {}, 900: {}, 3600: {} };
 
     const API_URL = "https://api.nadapp.net/order/market_cap?page=1&limit=10&direction=DESC";
 
@@ -260,31 +272,40 @@
         cEl.className = `text-[11px] font-medium px-1 ${isUpOverall ? 'text-up' : 'text-down'}`;
     }
 
-    function generateHistoricalData(basePrice) {
+    function generateHistoricalData(basePrice, tf) {
         basePrice = parseFloat(basePrice) || 0.001;
         const candles = [];
         const volumes = [];
         
-        // Start 100 minutes ago, strictly aligned to minute ticks
+        // Start 100 periods ago, strictly aligned to timeframe ticks
         const now = Math.floor(Date.now() / 1000);
-        let time = now - (now % 60) - (100 * 60); 
+        let time = now - (now % tf) - (100 * tf); 
         let currentPrice = Math.max(0.00000001, basePrice * 0.75); 
+        
+        // Scale volatility based on timeframe (longer tf = larger perceived fluctuation)
+        const tfScale = Math.max(1, tf / 60);
 
         for(let i=0; i<100; i++) {
-            const volatility = Math.max(0.000000001, basePrice * 0.08);
+            const volatility = Math.max(0.000000001, basePrice * 0.08 * tfScale);
             const open = currentPrice;
-            const trend = (basePrice - currentPrice) * 0.05; 
+            const trend = (basePrice - currentPrice) * (0.05 / tfScale); 
             const close = Math.max(0.00000001, open + trend + (Math.random() - 0.5) * volatility);
             const high = Math.max(open, close) + (Math.random() * volatility * 0.4);
             const low = Math.max(0.00000001, Math.min(open, close) - (Math.random() * volatility * 0.4));
             
             candles.push({ time: Number(time), open: Number(open), high: Number(high), low: Number(low), close: Number(close) });
             const color = close >= open ? 'rgba(8, 153, 129, 0.4)' : 'rgba(242, 54, 69, 0.4)';
-            volumes.push({ time: Number(time), value: Math.max(1, Math.random() * 50000 + 1000), color: color });
+            volumes.push({ time: Number(time), value: Math.max(1, Math.random() * 50000 * tfScale + 1000), color: color });
             
             currentPrice = close;
-            time += 60;
+            time += tf;
         }
+        
+        // Guarantee final candle matches basePrice perfectly without breaking OHLC rules
+        const lastC = candles[candles.length - 1];
+        lastC.close = Number(basePrice);
+        lastC.high = Math.max(lastC.high, lastC.open, lastC.close);
+        lastC.low = Math.min(lastC.low, lastC.open, lastC.close);
         
         return { candles, volumes };
     }
@@ -327,11 +348,11 @@
         }
 
         try {
-            if (!chartHistory[coin.id]) {
-                chartHistory[coin.id] = generateHistoricalData(coin.price);
+            if (!chartHistory[activeTimeframe][coin.id]) {
+                chartHistory[activeTimeframe][coin.id] = generateHistoricalData(coin.price, activeTimeframe);
             }
             
-            const history = chartHistory[coin.id];
+            const history = chartHistory[activeTimeframe][coin.id];
             
             // STRICT VALIDATION enforcement for Lightweight Charts rules
             let validCandles = [];
@@ -379,7 +400,7 @@
     function simulateLiveTick(coin) {
         if(!chart || !candleSeries) return;
         let now = Math.floor(Date.now() / 1000);
-        let candleTime = now - (now % 60);
+        let candleTime = now - (now % activeTimeframe);
 
         const oldPrice = lastCandle.close;
         const volatility = Math.max(0.000000001, coin.price * 0.004); 
@@ -399,8 +420,20 @@
         updateHeaderPrice(newPrice, coin.change24h, oldPrice);
         
         const color = lastCandle.close >= lastCandle.open ? 'rgba(8, 153, 129, 0.4)' : 'rgba(242, 54, 69, 0.4)';
-        volumeSeries.update({ time: lastCandle.time, value: Math.random() * 20000 + 500, color: color });
+        volumeSeries.update({ time: lastCandle.time, value: Math.max(1, Math.random() * 20000 + 500), color: color });
     }
+
+    // Timeframe selector logic
+    document.querySelectorAll('.tf-btn').forEach(btn => {
+        btn.onclick = (e) => {
+            document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            activeTimeframe = parseInt(e.target.getAttribute('data-tf'));
+            if (activeCoin) {
+                initChart(activeCoin);
+            }
+        }
+    });
 
     fetchTop10();
     setInterval(fetchTop10, 60000);
