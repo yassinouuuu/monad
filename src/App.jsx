@@ -78,7 +78,7 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
         <span className={`text-[10px] font-black ${color === 'purple' ? 'text-monad-purple/40' : 'text-emerald-400'}`}>
-          {color === 'purple' ? '●' : (parseFloat(coin.displayChange1h) >= 0 ? '▲' : '▼')}
+          {color === 'purple' ? 'â—' : (parseFloat(coin.displayChange1h) >= 0 ? 'â–²' : 'â–¼')}
         </span>
       </div>
     ))}
@@ -88,7 +88,7 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
 const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
   const isNad = type === 'nad';
   const colorClass = isNad ? 'monad-purple' : 'orange-400';
-  const linkBase = isNad ? 'https://nad.fun/tokens/' : 'https://something.tools/token/';
+  const linkBase = isNad ? 'https://monadstats/tokens/' : 'https://monadstats/token/';
   
   const changeStr = coin.displayChange1h || '+0.00%';
   const changeValue = parseFloat(changeStr.replace(/[+%]/g, ''));
@@ -102,7 +102,7 @@ const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
         </span>
       )}
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-${isNad ? 'monad-purple' : 'orange-400'}/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://nad.fun/logo.png'; }} />
+        <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://monadstats/logo.png'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{coin.symbol}</span>
@@ -137,7 +137,7 @@ const NFTItem = React.memo(({ collection, index }) => {
         {(index + 1).toString().padStart(2, '0')}
       </span>
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-monad-purple/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={collection.image} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://opensea.io/static/images/logos/opensea.svg'; }} />
+        <img src={collection.image} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://monadstats.vercel.app/logo.svg'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{collection.name}</span>
@@ -164,7 +164,7 @@ const NFTItem = React.memo(({ collection, index }) => {
            <span className="text-xs font-black text-monad-purple tracking-widest">{collection.displayVolume}</span>
         </div>
       </div>
-      <a href={`https://opensea.io/collection/${collection.address || collection.name.toLowerCase().replace(/ /g, '-')}`} target="_blank" rel="noopener noreferrer" className="ml-4 p-3 bg-monad-purple/10 text-monad-purple rounded-xl hover:bg-monad-purple hover:text-white transition-all shadow-xl shadow-black/40">
+      <a href={`https://monadexplorer.com/collection/${collection.address || collection.name.toLowerCase().replace(/ /g, '-')}`} target="_blank" rel="noopener noreferrer" className="ml-4 p-3 bg-monad-purple/10 text-monad-purple rounded-xl hover:bg-monad-purple hover:text-white transition-all shadow-xl shadow-black/40">
         <ExternalLink size={16} />
       </a>
     </div>
@@ -340,10 +340,10 @@ const App = () => {
       </header>
 
       {/* --- CONTENT AREA --- */}
-      <main style={{ paddingTop: '280px' }} className="pb-24 px-10 max-w-[1750px] mx-auto w-full">
+      <main className="pt-[280px] pb-24 px-4 md:px-10 max-w-[1750px] mx-auto w-full">
 
         {/* --- TICKERS AREA (Positioned below fixed header) --- */}
-        <div className="fixed top-[90px] left-0 right-0 z-[100] flex flex-col pointer-events-none">
+        <div className="fixed top-[120px] md:top-[90px] left-0 right-0 z-[100] flex flex-col pointer-events-none">
            {/* News Ticker */}
            <div className="news-bar pointer-events-auto flex items-center">
               <div className="bg-white/10 px-6 h-full flex items-center border-r border-white/5 whitespace-nowrap">
@@ -354,10 +354,10 @@ const App = () => {
               </div>
            </div>
            
-           {/* Price Bar 1 (Nad.fun assets) */}
+           {/* Price Bar 1 (monadstats assets) */}
            <div className="price-bar bg-black/40 backdrop-blur-md pointer-events-auto border-b border-white/5 flex items-center">
               <div className="bg-emerald-400/10 px-6 h-full flex items-center border-r border-white/5 whitespace-nowrap">
-                 <span className="text-[10px] font-black tracking-[0.3em] text-emerald-400">MONAD ASSETS // NAD.FUN</span>
+                 <span className="text-[10px] font-black tracking-[0.3em] text-emerald-400">MONAD ASSETS // ECOSYSTEM</span>
               </div>
               <div className="ticker-container h-full flex-1">
                  <PriceTicker coins={nadFunCoins} direction="right" color="emerald" />
@@ -379,16 +379,16 @@ const App = () => {
           <div className="animate-slide-up">
             
             {/* KPI Executive Summary - Expanded */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-6 mb-8 relative z-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-4 md:gap-6 mb-8 relative z-10">
                 {[
                   { title: 'Monad (MON) Price', value: coinStats.displayPrice, change: coinStats.displayChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple', highlight: true },
                   { title: 'Monad Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={14} />, color: 'purple' },
                   { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <TrendingUp size={14} />, color: 'emerald' },
                   { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple' },
-                  { title: 'Daily Transactions', value: stats.dailyTx, change: '● LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
+                  { title: 'Daily Transactions', value: stats.dailyTx, change: 'â— LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
                   { title: 'Total Network Tx', value: stats.totalTx, change: 'Aggregate Chain Data', icon: <Database size={14} />, color: 'white' },
                   { title: 'Total Addresses', value: stats.totalAccounts, change: 'Unique Identity Layer', icon: <Users size={14} />, color: 'white' },
-                  { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: '▲ LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
+                  { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: 'â–² LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
                 ].map((kpi, i) => (
                   <div key={i} className={`glass-card p-6 flex flex-col justify-between min-h-[160px] border-white/5 hover:border-white/20 transition-all ${kpi.highlight ? 'ring-1 ring-emerald-500/20' : ''}`}>
                     <div className="flex items-center justify-between mb-4">
@@ -413,7 +413,7 @@ const App = () => {
             </div>
 
             {/* Additional Ecosystem Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-20 relative z-10">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6 mb-20 relative z-10">
                 {[
                   { title: 'Stablecoins MCAP', value: stats.stablecoinMC, change: '+0.02% LIVE', icon: <Coins size={14} />, color: 'emerald', tick: true },
                   { title: '24h Network Fees', value: stats.fees24h, change: stats.feesChange, icon: <Database size={14} />, color: 'purple', textColor: 'text-monad-purple' },
@@ -445,9 +445,9 @@ const App = () => {
 
             {/* Ecosystem spotlight and feeds */}
             <div className="mb-20">
-               <div className="flex items-center justify-between mb-10">
+               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0 mb-10">
                   <div className="flex flex-col">
-                     <h3 className="text-3xl font-black italic uppercase text-white tracking-widest">Ecosystem Spotlight</h3>
+                     <h3 className="text-2xl md:text-3xl font-black italic uppercase text-white tracking-widest">Ecosystem Spotlight</h3>
                      <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.4em] mt-2">Institutional Liquidity Monitoring</span>
                   </div>
                   <div className="flex items-center gap-3 text-[10px] font-black uppercase text-white/20 tracking-widest bg-white/5 py-2.5 px-5 rounded-xl border border-white/5">
@@ -463,7 +463,7 @@ const App = () => {
                            <div className="p-3 bg-monad-purple/10 text-monad-purple rounded-2xl">
                               <Activity size={20} />
                            </div>
-                           <h4 className="text-xl font-black uppercase tracking-tight italic">Nad.fun Market</h4>
+                           <h4 className="text-xl font-black uppercase tracking-tight italic">Ecosystem Market</h4>
                         </div>
                         <span className="text-[10px] font-black text-monad-purple tracking-widest leading-none">BY MARKET CAP</span>
                      </div>
@@ -480,7 +480,7 @@ const App = () => {
                            <div className="p-3 bg-orange-400/10 text-orange-400 rounded-2xl">
                               <Coins size={20} />
                            </div>
-                           <h4 className="text-xl font-black uppercase tracking-tight italic">Something Liquidity</h4>
+                           <h4 className="text-xl font-black uppercase tracking-tight italic">Secondary Liquidity</h4>
                         </div>
                         <span className="text-[10px] font-black text-orange-400 tracking-widest leading-none">LIVE FEED</span>
                      </div>
@@ -502,26 +502,26 @@ const App = () => {
                    <div className="h-2 w-2 rounded-full bg-monad-purple animate-pulse"></div>
                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">Liquidity Stream Active</span>
                 </div>
-                <h2 className="text-6xl font-black italic uppercase italic tracking-tighter text-white">Meme Ecosystem Hub</h2>
-                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Real-time Creation Pipeline • Verified Liquidity</p>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Meme Ecosystem Hub</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Real-time Creation Pipeline â€¢ Verified Liquidity</p>
              </div>
              
-             {/* Platform 1: NAD.FUN */}
+             {/* Platform 1: monadstats */}
              <div className="mb-24">
                 <div className="flex items-center gap-4 mb-10">
-                   <img src="https://nad.fun/logo.png" className="w-8 h-8 rounded-lg" alt="" onError={(e) => e.target.style.display='none'} />
-                   <h3 className="text-3xl font-black italic uppercase text-monad-purple">NAD.FUN Ecosystem</h3>
+                   <img src="https://monadstats/logo.png" className="w-8 h-8 rounded-lg" alt="" onError={(e) => e.target.style.display='none'} />
+                   <h3 className="text-3xl font-black italic uppercase text-monad-purple">Primary Ecosystem</h3>
                 </div>
                 
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-                   {/* Top 30 Nad.fun */}
+                   {/* Top 30 monadstats */}
                    <div className="glass-card p-8 bg-monad-purple/[0.02] border-monad-purple/10">
                       <div className="flex items-center justify-between mb-8">
                          <div className="flex items-center gap-4 uppercase font-black italic text-monad-purple tracking-widest text-sm">
                              <Activity size={18} />
                             Top 30 by Market Cap
                          </div>
-                         <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Platform Rank</span>
+                         <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Ecosystem Rank</span>
                       </div>
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {nadFunCoins.map((coin, i) => (
@@ -530,7 +530,7 @@ const App = () => {
                       </div>
                    </div>
 
-                   {/* Latest Nad.fun */}
+                   {/* Latest monadstats */}
                    <div className="glass-card p-8 bg-white/[0.01] border-white/5">
                       <div className="flex items-center justify-between mb-8">
                          <div className="flex items-center gap-4 uppercase font-black italic text-white/40 tracking-widest text-sm">
@@ -548,11 +548,11 @@ const App = () => {
                 </div>
              </div>
 
-             {/* Platform 2: SOMETHING.TOOLS */}
+             {/* Platform 2: monadstats */}
              <div className="mb-24">
                 <div className="flex items-center gap-4 mb-10">
                    <div className="w-8 h-8 rounded-lg bg-orange-400"></div>
-                   <h3 className="text-3xl font-black italic uppercase text-orange-400">Something.tools Ecosystem</h3>
+                   <h3 className="text-3xl font-black italic uppercase text-orange-400">Secondary Ecosystem</h3>
                 </div>
                 
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
@@ -563,7 +563,7 @@ const App = () => {
                             <Coins size={18} />
                             Top 30 by MCAP
                          </div>
-                         <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Platform Leaders</span>
+                         <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Ecosystem Leaders</span>
                       </div>
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {smtCoins.map((coin, i) => (
@@ -599,8 +599,8 @@ const App = () => {
                    <div className="h-2 w-2 rounded-full bg-monad-purple animate-pulse"></div>
                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">NFT Liquidity Active</span>
                 </div>
-                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">NFT Ecosystem Hub</h2>
-                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Collections • Real-time Floor & Volume</p>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">NFT Ecosystem Hub</h2>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Collections â€¢ Real-time Floor & Volume</p>
              </div>
              
              <div className="glass-card p-10 bg-monad-purple/[0.02] border-monad-purple/10">
@@ -616,7 +616,7 @@ const App = () => {
                       </div>
                       <div className="flex flex-col items-end">
                          <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">Aggregator</span>
-                         <span className="text-xs font-black text-monad-purple px-3 py-1 bg-monad-purple/10 rounded-lg mt-1">OPENSEA / RESERVOIR</span>
+                         <span className="text-xs font-black text-monad-purple px-3 py-1 bg-monad-purple/10 rounded-lg mt-1">AGGREGATED DATA</span>
                       </div>
                    </div>
                 </div>
@@ -633,7 +633,7 @@ const App = () => {
         {activePage === 'volume' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Volume Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Volume Rankings</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem Apps by 24h Trading Volume</p>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
@@ -661,7 +661,7 @@ const App = () => {
         {activePage === 'fees' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Fees Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Fees Rankings</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Protocols Generating Highest Daily Fees on Monad</p>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
@@ -689,7 +689,7 @@ const App = () => {
         {activePage === 'revenue' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">Revenue Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Revenue Rankings</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Revenue Generating Protocols (Protocol Earnings)</p>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
@@ -717,7 +717,7 @@ const App = () => {
         {activePage === 'protocols' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-6xl font-black italic uppercase tracking-tighter text-white">DeFi Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">DeFi Rankings</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem DeFi Applications Ranked by TVL</p>
              </div>
 
@@ -760,7 +760,7 @@ const App = () => {
 
       </main>
 
-      <footer className="py-12 px-10 border-t border-white/5 flex items-center justify-between text-[10px] text-white/10 font-black uppercase tracking-[0.4em] relative z-20">
+      <footer className="py-12 px-4 md:px-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-[10px] text-white/10 font-black uppercase tracking-[0.4em] relative z-20 text-center md:text-left">
          <div className="flex items-center gap-8">
             <div className="flex items-center gap-3">
                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/40"></div>
@@ -781,3 +781,5 @@ const App = () => {
 };
 
 export default App;
+
+

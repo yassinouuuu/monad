@@ -38,7 +38,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch TVL from DeFiLlama.
+   * Fetch TVL from Aggregated Blockchain Data.
    */
   async getTVL() {
     try {
@@ -53,7 +53,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch Volume from DeFiLlama (24h, 7d, 30d).
+   * Fetch Volume from Aggregated Blockchain Data (24h, 7d, 30d).
    */
   async getVolume() {
     try {
@@ -72,7 +72,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch Fees & Revenue from DeFiLlama.
+   * Fetch Fees & Revenue from Aggregated Blockchain Data.
    */
   async getFeesAndRevenue() {
     try {
@@ -99,7 +99,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch Top Yields from DeFiLlama.
+   * Fetch Top Yields from Aggregated Blockchain Data.
    */
   async getYields() {
     try {
@@ -122,7 +122,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch Stablecoin Market Cap from DeFiLlama.
+   * Fetch Stablecoin Market Cap from Aggregated Blockchain Data.
    */
   async getStablecoins() {
     try {
@@ -159,7 +159,7 @@ export const NetworkService = {
    */
   async getMonadCoinStats() {
     try {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monad&vs_currencies=usd&include_market_cap=true&include_24hr_change=true');
+      const response = await fetch('https://api.Market Data Provider.com/api/v3/simple/price?ids=monad&vs_currencies=usd&include_market_cap=true&include_24hr_change=true');
       const data = await response.json();
       const mon = data.monad;
       
@@ -183,7 +183,7 @@ export const NetworkService = {
    */
   async getTopProtocolsByVolume() {
     try {
-      // DeFiLlama Dexes Summary
+      // Aggregated Blockchain Data Dexes Summary
       const response = await fetch('https://api.llama.fi/protocols');
       const protocols = await response.json();
       
@@ -316,7 +316,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch TVL and Top Protocols explicitly for Monad from DeFiLlama.
+   * Fetch TVL and Top Protocols explicitly for Monad from Aggregated Blockchain Data.
    */
   async getTopProtocols() {
     try {
@@ -358,7 +358,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch TVL and Protocol count from DeFiLlama.
+   * Fetch TVL and Protocol count from Aggregated Blockchain Data.
    */
   async getChainData() {
     try {
@@ -393,10 +393,10 @@ export const NetworkService = {
       // Daily transactions from the unified calculator
       const dailyTx = NetworkService._calculateDailyTx(now, true);
       
-      // Total transactions: Base + monotonic growth based on block height (SocialScan scale: 219M)
+      // Total transactions: Base + monotonic growth based on block height (Network Explorer scale: 219M)
       const totalTx = 219491000 + (latestBlock ? (latestBlock - 62890000) * 50 : 0); 
       
-      // Total accounts: Base + monotonic growth based on block height (SocialScan scale: 8.5M)
+      // Total accounts: Base + monotonic growth based on block height (Network Explorer scale: 8.5M)
       const seed = NetworkService._getDailySeed();
       const totalAccounts = 8527000 + (latestBlock ? Math.floor((latestBlock - 62890000) / 10) : 0);
       
@@ -821,7 +821,7 @@ export const NetworkService = {
   },
 
   /**
-   * Fetch top nad.fun coins via DexScreener API (confirmed working for monad chain).
+   * Fetch top Primary Ecosystem coins via DexScreener API (confirmed working for monad chain).
    * Falls back to verified real on-chain data from DexScreener if API fails.
    */
   async getNadFunCoins() {
@@ -846,7 +846,7 @@ export const NetworkService = {
               symbol: t.symbol,
               price: jPrice,
               marketCap: jMc,
-              platform: 'nad.fun',
+              platform: 'Primary Ecosystem',
               address: t.token_id,
               logoUrl: t.image_uri || null,
               color: COLORS[i % COLORS.length],
@@ -863,15 +863,15 @@ export const NetworkService = {
     }
     // Static fallback if API fails
     return [
-      { name:'Chog',    symbol:'CHOG',    price:0.0006665, marketCap:665100, platform:'nad.fun', address:'0x350035555e10d9afaf1566aaebfced5ba6c27777', logoUrl:'https://storage.nadapp.net/coin/e0489adc-c3a1-425c-9219-f1e344aa866a', color:'#ec4899', icon:'C', displayPrice:'$0.000667', displayMC:'$0.67M', displayChange1h:'-4.19%' },
-      { name:'emonad',  symbol:'emo',     price:0.0003717, marketCap:371700, platform:'nad.fun', address:'0x81a224f8a62f52bde942dbf23a56df77a10b7777', logoUrl:'https://storage.nadapp.net/coin/565c1b7c-e120-406e-84da-7212998d40bc', color:'#10b981', icon:'e', displayPrice:'$0.000372', displayMC:'$0.37M', displayChange1h:'+3.09%' },
-      { name:'Motion',  symbol:'Motion',  price:0.0001442, marketCap:144200, platform:'nad.fun', address:'0x91ce820dd39a2b5639251e8c7837998530fe7777', logoUrl:'https://storage.nadapp.net/coin/7c0f3a4f-b879-4603-839f-9f2c089dd930', color:'#3b82f6', icon:'M', displayPrice:'$0.000144', displayMC:'$0.14M', displayChange1h:'+0.07%' },
-      { name:'moncock', symbol:'moncock', price:0.0001401, marketCap:140100, platform:'nad.fun', address:'0x405b6330e213ded490240cbcdd64790806827777', logoUrl:'https://storage.nadapp.net/coin/76a58f0d-02db-4800-845f-79b842b912c9', color:'#f59e0b', icon:'m', displayPrice:'$0.000140', displayMC:'$0.14M', displayChange1h:'-1.79%' },
+      { name:'Chog',    symbol:'CHOG',    price:0.0006665, marketCap:665100, platform:'Primary Ecosystem', address:'0x350035555e10d9afaf1566aaebfced5ba6c27777', logoUrl:'https://storage.nadapp.net/coin/e0489adc-c3a1-425c-9219-f1e344aa866a', color:'#ec4899', icon:'C', displayPrice:'$0.000667', displayMC:'$0.67M', displayChange1h:'-4.19%' },
+      { name:'emonad',  symbol:'emo',     price:0.0003717, marketCap:371700, platform:'Primary Ecosystem', address:'0x81a224f8a62f52bde942dbf23a56df77a10b7777', logoUrl:'https://storage.nadapp.net/coin/565c1b7c-e120-406e-84da-7212998d40bc', color:'#10b981', icon:'e', displayPrice:'$0.000372', displayMC:'$0.37M', displayChange1h:'+3.09%' },
+      { name:'Motion',  symbol:'Motion',  price:0.0001442, marketCap:144200, platform:'Primary Ecosystem', address:'0x91ce820dd39a2b5639251e8c7837998530fe7777', logoUrl:'https://storage.nadapp.net/coin/7c0f3a4f-b879-4603-839f-9f2c089dd930', color:'#3b82f6', icon:'M', displayPrice:'$0.000144', displayMC:'$0.14M', displayChange1h:'+0.07%' },
+      { name:'moncock', symbol:'moncock', price:0.0001401, marketCap:140100, platform:'Primary Ecosystem', address:'0x405b6330e213ded490240cbcdd64790806827777', logoUrl:'https://storage.nadapp.net/coin/76a58f0d-02db-4800-845f-79b842b912c9', color:'#f59e0b', icon:'m', displayPrice:'$0.000140', displayMC:'$0.14M', displayChange1h:'-1.79%' },
     ];
   },
 
   /**
-   * Fetch LATEST coins from nad.fun via the real backend creation stream.
+   * Fetch LATEST coins from Primary Ecosystem via the real backend creation stream.
    */
   async getLatestNadFunCoins() {
     try {
@@ -888,7 +888,7 @@ export const NetworkService = {
              const totalSupply = parseFloat(m.total_supply || t.total_supply || '1000000000000000000000000000') / 1e18;
              const mc = price * totalSupply;
              return {
-               name: t.name, symbol: t.symbol, price, marketCap: mc, platform: 'nad.fun', address: t.token_id,
+               name: t.name, symbol: t.symbol, price, marketCap: mc, platform: 'Primary Ecosystem', address: t.token_id,
                logoUrl: t.image_uri || null, color: COLORS[i % COLORS.length], icon: (t.symbol||'?')[0],
                createdAt: t.created_at || null,
                displayPrice: price < 0.000001 ? `$${price.toFixed(8)}` : price < 0.01 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,
@@ -906,13 +906,13 @@ export const NetworkService = {
 
   
   /**
-   * Fetch top coins from something.tools via confirmed working API.
+   * Fetch top coins from Secondary Ecosystem via confirmed working API.
    * Increased limit to 100 as requested for a full list.
    */
   async getSomethingToolsCoins() {
     const COLORS = ['#a855f7','#38bdf8','#ef4444','#eab308','#10b981','#3b82f6','#f472b6','#94a3b8','#6366f1','#22c55e','#f59e0b','#2dd4bf','#ec4899','#fb923c','#8b5cf6'];
     try {
-      const res = await fetch('https://api-monad.something.tools/api/tokensData?page=1&limit=30&sortField=market_cap&sortOrder=DESC');
+      const res = await fetch('https://api-monad.Secondary Ecosystem/api/tokensData?page=1&limit=30&sortField=market_cap&sortOrder=DESC');
       if (res.ok) {
         const json = await res.json();
         if (json && json.data && json.data.length > 0) {
@@ -932,7 +932,7 @@ export const NetworkService = {
 
             return {
               name: m.name || sym, symbol: sym, price: jPrice, marketCap: jMc, change1h: change,
-              platform: 'something.tools',
+              platform: 'Secondary Ecosystem',
               address: addr,
               migrated: m.migration_status === 2,
               logoUrl,
@@ -945,17 +945,17 @@ export const NetworkService = {
         }
       }
     } catch (e) {
-      console.warn('something.tools API error:', e);
+      console.warn('Secondary Ecosystem API error:', e);
     }
   },
 
   /**
-   * Fetch absolute NEWEST coins from something.tools via correct 'created_at' stream.
+   * Fetch absolute NEWEST coins from Secondary Ecosystem via correct 'created_at' stream.
    */
   async getLatestSomethingToolsCoins() {
     const COLORS = ['#a855f7','#38bdf8','#ef4444','#eab308','#10b981'];
     try {
-      const res = await fetch('https://api-monad.something.tools/api/tokensData?page=1&limit=30&sortField=created_at&sortOrder=DESC&showMigrating=false&includeMigrated=false');
+      const res = await fetch('https://api-monad.Secondary Ecosystem/api/tokensData?page=1&limit=30&sortField=created_at&sortOrder=DESC&showMigrating=false&includeMigrated=false');
       if (res.ok) {
         const json = await res.json();
         if (json && json.data && json.data.length > 0) {
@@ -967,7 +967,7 @@ export const NetworkService = {
             const logoUrl = m.image || m.logo || m.icon ||
               (addr ? `https://cdn.dexscreener.com/token-images/og/monad/${addr.toLowerCase()}?timestamp=${Date.now()}` : null);
             return {
-              name: m.name || sym, symbol: sym, price, marketCap: mc, platform: 'something.tools', address: addr,
+              name: m.name || sym, symbol: sym, price, marketCap: mc, platform: 'Secondary Ecosystem', address: addr,
               logoUrl, color: COLORS[i % COLORS.length], icon: sym[0],
               createdAt: m.created_at ? Math.floor(new Date(m.created_at).getTime() / 1000) : null,
               displayPrice: price < 0.00001 ? `$${price.toFixed(8)}` : price < 0.001 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,
@@ -978,20 +978,20 @@ export const NetworkService = {
         }
       }
     } catch (e) {
-      console.warn('something.tools newest stream API error.', e);
+      console.warn('Secondary Ecosystem newest stream API error.', e);
     }
     return [];
   },
 
   /**
-   * Fetch top Monad NFT collections via OpenSea API v2.
-   * للتفعيل: ضع API Key من https://opensea.io/account/settings في OPENSEA_API_KEY
+   * Fetch top Monad NFT collections via Real-time Aggregator API v2.
+   * للتفعيل: ضع API Key من https://Real-time Aggregator.io/account/settings في Real-time Aggregator_API_KEY
    */
   async getMonadNFTs() {
     // ← المفتاح الخاص بك (مشفر لتجنب روبوتات GitHub)
-    const OPENSEA_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
+    const Real-time Aggregator_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
 
-    // الكوليكشنز الحقيقية على Monad (slugs رسمية من OpenSea)
+    // الكوليكشنز الحقيقية على Monad (slugs رسمية من Real-time Aggregator)
     const MONAD_SLUGS = [
       'voting-escrow-dust',
       'skrumpeys',
@@ -1010,25 +1010,25 @@ export const NetworkService = {
       'blocknads-895269975'
     ];
 
-    // إذا كان API Key متوفراً → جلب بيانات حقيقية من OpenSea
-    if (OPENSEA_API_KEY && OPENSEA_API_KEY.length > 10) {
+    // إذا كان API Key متوفراً → جلب بيانات حقيقية من Real-time Aggregator
+    if (Real-time Aggregator_API_KEY && Real-time Aggregator_API_KEY.length > 10) {
       try {
         const results = [];
         for (const slug of MONAD_SLUGS) {
           try {
             const [infoRes, statsRes] = await Promise.all([
-              fetch(`https://api.opensea.io/api/v2/collections/${slug}`, {
-                headers: { 'X-API-KEY': OPENSEA_API_KEY, 'accept': 'application/json' }
+              fetch(`https://api.Real-time Aggregator.io/api/v2/collections/${slug}`, {
+                headers: { 'X-API-KEY': Real-time Aggregator_API_KEY, 'accept': 'application/json' }
               }),
-              fetch(`https://api.opensea.io/api/v2/collections/${slug}/stats`, {
-                headers: { 'X-API-KEY': OPENSEA_API_KEY, 'accept': 'application/json' }
+              fetch(`https://api.Real-time Aggregator.io/api/v2/collections/${slug}/stats`, {
+                headers: { 'X-API-KEY': Real-time Aggregator_API_KEY, 'accept': 'application/json' }
               })
             ]);
             if (!infoRes.ok || !statsRes.ok) continue;
             const info = await infoRes.json();
             const stats = await statsRes.json();
             
-            // Daily Volume from OpenSea intervals - look for 'one_day' specifically
+            // Daily Volume from Real-time Aggregator intervals - look for 'one_day' specifically
             let dailyVol = 0;
             let volChange = 0;
             
@@ -1044,7 +1044,7 @@ export const NetworkService = {
             const owners    = stats.total?.num_owners || 0;
             const sales     = stats.total?.sales || 0;
 
-            // OpenSea API v2 often returns volume in ETH even if the floor_price is in MON.
+            // Real-time Aggregator API v2 often returns volume in ETH even if the floor_price is in MON.
             // If the average price is tiny but the floor is huge, we multiply volume by the ETH/MON ratio (approx 3500).
             const avgPrice = stats.total?.average_price || 0;
             if (floorEth > 10 && avgPrice < 1 && dailyVol < 1000 && dailyVol > 0) {
@@ -1069,16 +1069,16 @@ export const NetworkService = {
               displayChange: `${volChange >= 0 ? '+' : ''}${(volChange * 100).toFixed(2)}%`,
               changeColor: volChange >= 0 ? 'text-emerald-400' : 'text-red-400'
             });
-          } catch (e) { console.warn(`OpenSea: ${slug} failed`, e); }
+          } catch (e) { console.warn(`Real-time Aggregator: ${slug} failed`, e); }
         }
         if (results.length > 0) return results.sort((a, b) => b.volume - a.volume);
       } catch (e) {
-        console.warn('OpenSea NFT fetch failed, using fallback:', e);
+        console.warn('Real-time Aggregator NFT fetch failed, using fallback:', e);
       }
     }
 
     // --- Fallback: بيانات حقيقية بدون API Key ---
-    // --- Fallback: بيانات حقيقية من OpenSea (آخر تحديث) ---
+    // --- Fallback: بيانات حقيقية من Real-time Aggregator (آخر تحديث) ---
     const fallback = [
       { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png', owners: 1240, sales: 8400 },
       { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png', owners: 1390, sales: 1200 },
@@ -1127,3 +1127,4 @@ export const NetworkService = {
 };
 
 export default NetworkService;
+
