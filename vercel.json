@@ -1,5 +1,7 @@
 {
+  "cleanUrls": true,
   "rewrites": [
+    { "source": "/AIMEMES", "destination": "/AIMEMES.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }

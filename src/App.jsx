@@ -20,6 +20,7 @@ import {
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
 import NetworkService from './services/NetworkService';
+import MemeAgentDemo from './MemeAgentDemo';
 import './index.css';
 
 ChartJS.register(
