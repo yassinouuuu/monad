@@ -185,7 +185,7 @@ const App = () => {
     setActivePage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const [stats, setStats] = useState(() => initFromLS('monad_v4_stats_cache', {
+  const [stats, setStats] = useState(() => initFromLS('monad_vFINAL_stats_cache', {
     tps: '---',
     avgBlockTime: '---',
     latestBlock: '---',
@@ -201,17 +201,17 @@ const App = () => {
     totalAccounts: '---'
   }));
   
-  const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_v4_nadfun_cache', []));
-  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_v4_smt_cache', []));
-  const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_v4_lnad_cache', []));
-  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_v4_lsmt_cache_v2', []));
-  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_v4_nft_cache_v3', []));
-  const [news, setNews] = useState(() => initFromLS('monad_v4_news_cache', []));
-  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_v4_protocols_cache', []));
-  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_v4_vol_protocols_cache', []));
-  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_v4_fees_protocols_cache', []));
-  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_v4_rev_protocols_cache', []));
-  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_v4_coin_cache', {
+  const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_vFINAL_nadfun_cache', []));
+  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_vFINAL_smt_cache', []));
+  const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_vFINAL_lnad_cache', []));
+  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_vFINAL_lsmt_cache_v2', []));
+  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_vFINAL_nft_cache_v3', []));
+  const [news, setNews] = useState(() => initFromLS('monad_vFINAL_news_cache', []));
+  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_vFINAL_protocols_cache', []));
+  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_vFINAL_vol_protocols_cache', []));
+  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_vFINAL_fees_protocols_cache', []));
+  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_vFINAL_rev_protocols_cache', []));
+  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_vFINAL_coin_cache', {
      displayPrice: '$0.0225', displayMcap: '$244.1M', displayChange: '+0.00%', changeColor: 'text-emerald-400'
   }));
 
@@ -461,7 +461,7 @@ const App = () => {
                   { title: 'Monad Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={14} />, color: 'purple' },
                   { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <TrendingUp size={14} />, color: 'emerald' },
                   { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple' },
-                  { title: 'Daily Transactions', value: stats.dailyTx, change: '· LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
+                  { title: 'Daily Transactions', value: stats.dailyTx, change: ' LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
                   { title: 'Total Network Tx', value: stats.totalTx, change: 'Aggregate Chain Data', icon: <Database size={14} />, color: 'white' },
                   { title: 'Total Addresses', value: stats.totalAccounts, change: 'Unique Identity Layer', icon: <Users size={14} />, color: 'white' },
                   { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: '+ LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
@@ -579,7 +579,7 @@ const App = () => {
                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">Liquidity Stream Active</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Meme Ecosystem Hub</h2>
-                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Real-time Creation Pipeline • Verified Liquidity</p>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Real-time Creation Pipeline  Verified Liquidity</p>
              </div>
              
              {/* Platform 1: monadstats */}
@@ -676,7 +676,7 @@ const App = () => {
                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">NFT Liquidity Active</span>
                 </div>
                 <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">NFT Ecosystem Hub</h2>
-                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Collections • Real-time Floor & Volume</p>
+                <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Collections  Real-time Floor & Volume</p>
              </div>
              
              <div className="glass-card p-10 bg-monad-purple/[0.02] border-monad-purple/10">

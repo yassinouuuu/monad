@@ -1,4 +1,4 @@
-﻿import { ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 const RPC_URL = 'https://rpc.monad.xyz';
 const provider = new ethers.JsonRpcProvider(RPC_URL);
@@ -7,7 +7,7 @@ const provider = new ethers.JsonRpcProvider(RPC_URL);
 let statsCache = null;
 let lastStatsFetch = 0;
 const CACHE_DURATION = 10000; // 10 seconds for heavy API calls
-const LS_STATS_KEY = 'monad_v4_stats_cache';
+const LS_STATS_KEY = 'monad_vFINAL_stats_cache';
 
 /**
  * Service to fetch live statistics from the Monad Mainnet.
@@ -985,13 +985,13 @@ export const NetworkService = {
 
   /**
    * Fetch top Monad NFT collections via Real-time Aggregator API v2.
-   * Ã™â€žÃ™â€žÃ˜ÂªÃ™ÂÃ˜Â¹Ã™Å Ã™â€ž: Ã˜Â¶Ã˜Â¹ API Key Ã™â€¦Ã™â€  https://Real-time Aggregator.io/account/settings Ã™ÂÃ™Å  AGGREGATOR_API_KEY
+   * :  API Key  https://Real-time Aggregator.io/account/settings  AGGREGATOR_API_KEY
    */
   async getMonadNFTs() {
-    // Ã¢â€ Â Ã˜Â§Ã™â€žÃ™â€¦Ã™ÂÃ˜ÂªÃ˜Â§Ã˜Â­ Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â§Ã˜Âµ Ã˜Â¨Ã™Æ’ (Ã™â€¦Ã˜Â´Ã™ÂÃ˜Â± Ã™â€žÃ˜ÂªÃ˜Â¬Ã™â€ Ã˜Â¨ Ã˜Â±Ã™Ë†Ã˜Â¨Ã™Ë†Ã˜ÂªÃ˜Â§Ã˜Âª GitHub)
+    //     (   GitHub)
     const AGGREGATOR_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
 
-    // Real collections Ã˜Â¹Ã™â€žÃ™â€° Monad (slugs Ã˜Â±Ã˜Â³Ã™â€¦Ã™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator)
+    // Real collections  Monad (slugs   Real-time Aggregator)
     const MONAD_SLUGS = [
       'voting-escrow-dust',
       'skrumpeys',
@@ -1010,7 +1010,7 @@ export const NetworkService = {
       'blocknads-895269975'
     ];
 
-    // Ã˜Â¥Ã˜Â°Ã˜Â§ Ã™Æ’Ã˜Â§Ã™â€  API Key Ã™â€¦Ã˜ÂªÃ™Ë†Ã™ÂÃ˜Â±Ã˜Â§Ã™â€¹ Ã¢â€ â€™ Ã˜Â¬Ã™â€žÃ˜Â¨ Ã˜Â¨Ã™Å Ã˜Â§Ã™â€ Ã˜Â§Ã˜Âª Ã˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator
+    //   API Key       Real-time Aggregator
     if (AGGREGATOR_API_KEY && AGGREGATOR_API_KEY.length > 10) {
       try {
         const results = [];
@@ -1078,7 +1078,7 @@ export const NetworkService = {
     }
 
     // --- Fallback: Real data without API Key ---
-    // --- Fallback: Real data from Aggregator (Ã˜Â¢Ã˜Â®Ã˜Â± Ã˜ÂªÃ˜Â­Ã˜Â¯Ã™Å Ã˜Â«) ---
+    // --- Fallback: Real data from Aggregator ( ) ---
     const fallback = [
       { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png', owners: 1240, sales: 8400 },
       { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png', owners: 1390, sales: 1200 },
@@ -1115,11 +1115,11 @@ export const NetworkService = {
    */
   async getMonadNews() {
     return [
-      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for Monad's Essential Hard Fork', date: 'Mar 17' },
+      { id: 1, title: "Upbit Announces Critical MON Suspension: Exchange Halts Deposits for Monad's Essential Hard Fork", date: 'Mar 17' },
       { id: 2, title: 'Bithumb Suspends MON Deposits: Essential Guide to the Monad Network Upgrade', date: 'Mar 13' },
       { id: 3, title: 'Monad Integrates Chainlink CCIP: A Revolutionary Leap for Cross-Chain cbBTC Transfers', date: 'Mar 10' },
       { id: 4, title: 'MON outperforms market as upgrade, staking vaults drive demand', date: 'Feb 19' },
-      { id: 5, title: 'Monad Developer's Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
+      { id: 5, title: "Monad Developer's Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future", date: 'Jan 30' },
       { id: 6, title: 'MON rallies to one-week high as Monad holds record value locked', date: 'Jan 02' },
       { id: 7, title: 'Monad adds support for USD1 stablecoin: A Game-Changer for DeFi Liquidity', date: 'Jan 02' }
     ];
