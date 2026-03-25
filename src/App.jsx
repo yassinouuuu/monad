@@ -320,22 +320,63 @@ const App = () => {
                Analytics <ChevronDown size={12} className={`transition-all duration-300 ${isEconomyOpen ? 'rotate-180' : ''}`} />
              </button>
              
-             <div className="absolute top-[35px] left-1/2 -translate-x-1/2 w-48 pt-4 hidden group-hover:block z-[9999]">
-               <div className="bg-[#0b0c14] border border-white/10 rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.9)] overflow-hidden backdrop-blur-3xl min-w-[200px]">
-                 <div className="px-6 py-4 border-b border-white/5 bg-white/[0.02]">
-                   <span className="text-[10px] font-black text-monad-purple uppercase tracking-widest">Market Analytics</span>
+             <div className="absolute top-[40px] left-1/2 -translate-x-1/2 w-64 pt-4 hidden group-hover:block z-[9999] animate-in fade-in zoom-in-95 duration-200">
+               <div className="bg-[#0b0c14]/90 border border-white/10 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden backdrop-blur-3xl p-1.5">
+                 
+                 <div className="px-5 py-4 border-b border-white/5 mb-1.5 bg-gradient-to-r from-monad-purple/10 to-transparent rounded-t-xl">
+                   <div className="flex items-center gap-3">
+                      <div className="p-2 bg-monad-purple/10 rounded-lg">
+                        <Activity size={14} className="text-monad-purple" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-black text-white uppercase tracking-widest leading-none">Economics</span>
+                        <span className="text-[8px] font-bold text-white/30 uppercase mt-1">Live Metrics</span>
+                      </div>
+                   </div>
                  </div>
-                 <div className="flex flex-col p-2">
-                   <button onClick={() => handlePageChange('volume')} className="w-full text-left px-5 py-3.5 text-xs font-black uppercase text-white hover:bg-monad-purple hover:text-white rounded-xl transition-all cursor-pointer">
-                     Daily Volume
+
+                 <div className="flex flex-col gap-1">
+                   <button 
+                     onClick={() => handlePageChange('volume')} 
+                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                   >
+                     <div className="flex items-center gap-3">
+                       <BarChart3 size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
+                       Daily Volume
+                     </div>
+                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
                    </button>
-                   <button onClick={() => handlePageChange('fees')} className="w-full text-left px-5 py-3.5 text-xs font-black uppercase text-white hover:bg-monad-purple hover:text-white rounded-xl transition-all cursor-pointer">
-                     Protocol Fees
+
+                   <button 
+                     onClick={() => handlePageChange('fees')} 
+                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                   >
+                     <div className="flex items-center gap-3">
+                       <Coins size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
+                       Network Fees
+                     </div>
+                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
                    </button>
-                   <button onClick={() => handlePageChange('revenue')} className="w-full text-left px-5 py-3.5 text-xs font-black uppercase text-white hover:bg-monad-purple hover:text-white rounded-xl transition-all cursor-pointer">
-                     Network Revenue
+
+                   <button 
+                     onClick={() => handlePageChange('revenue')} 
+                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                   >
+                     <div className="flex items-center gap-3">
+                       <TrendingUp size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
+                       Protocol Revenue
+                     </div>
+                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
                    </button>
                  </div>
+
+                 <div className="mt-1.5 p-3 bg-white/5 rounded-b-xl border-t border-white/5">
+                    <div className="flex items-center justify-between opacity-40">
+                       <span className="text-[8px] font-black uppercase">Live Updates</span>
+                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                    </div>
+                 </div>
+
                </div>
              </div>
            </div>
