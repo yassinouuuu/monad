@@ -173,6 +173,11 @@ const NFTItem = React.memo(({ collection, index }) => {
 
 const App = () => {
   const [activePage, setActivePage] = useState('dashboard');
+  
+  const handlePageChange = (page) => {
+    setActivePage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [stats, setStats] = useState(() => initFromLS('monad_hub_stats_cache', {
     tps: '---',
     avgBlockTime: '---',
@@ -277,43 +282,43 @@ const App = () => {
 
         <div className="nav-segment">
            <button 
-             onClick={() => setActivePage('dashboard')}
+             onClick={() => handlePageChange('dashboard')}
              className={`nav-btn ${activePage === 'dashboard' ? 'active' : ''}`}
            >
              Dashboard
            </button>
            <button 
-             onClick={() => setActivePage('memes')}
+             onClick={() => handlePageChange('memes')}
              className={`nav-btn ${activePage === 'memes' ? 'active' : ''}`}
            >
              Meme Explorer
            </button>
            <button 
-             onClick={() => setActivePage('nft')}
+             onClick={() => handlePageChange('nft')}
              className={`nav-btn ${activePage === 'nft' ? 'active' : ''}`}
            >
              NFT Explorer
            </button>
            <button 
-             onClick={() => setActivePage('protocols')}
+             onClick={() => handlePageChange('protocols')}
              className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
            >
              DeFi Rankings
            </button>
            <button 
-             onClick={() => setActivePage('volume')}
+             onClick={() => handlePageChange('volume')}
              className={`nav-btn ${activePage === 'volume' ? 'active' : ''}`}
            >
              Volume
            </button>
            <button 
-             onClick={() => setActivePage('fees')}
+             onClick={() => handlePageChange('fees')}
              className={`nav-btn ${activePage === 'fees' ? 'active' : ''}`}
            >
              Fees
            </button>
            <button 
-             onClick={() => setActivePage('revenue')}
+             onClick={() => handlePageChange('revenue')}
              className={`nav-btn ${activePage === 'revenue' ? 'active' : ''}`}
            >
              Revenue
