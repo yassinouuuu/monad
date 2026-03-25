@@ -276,7 +276,7 @@ const App = () => {
     <div className="bg-[#0b0b0f] text-white selection:bg-monad-purple/30 selection:text-white">
       
       {/* --- TOP FIXED HEADER --- */}
-      <header className="main-header" style={{ overflow: 'visible' }}>
+      <header className="main-header" style={{ overflow: 'visible', zIndex: 1000 }}>
         <div className="flex items-center gap-4">
            <div className="w-10 h-10 bg-monad-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 rotate-3 transform hover:rotate-0 transition-all">
              <Zap size={20} className="fill-white" />
@@ -372,7 +372,7 @@ const App = () => {
       <main className="content-padding pb-24 px-4 md:px-10 max-w-[1750px] mx-auto w-full">
 
         {/* --- TICKERS AREA (Positioned below fixed header) --- */}
-        <div className="relative md:fixed md:top-[90px] w-full left-0 right-0 z-[100] flex flex-col pointer-events-none mb-6 md:mb-0">
+         <div className="relative md:fixed md:top-[90px] w-full left-0 right-0 z-[50] flex flex-col pointer-events-none mb-6 md:mb-0">
            {/* News Ticker */}
            <div className="news-bar pointer-events-auto flex items-center">
               <div className="bg-white/10 px-6 h-full flex items-center border-r border-white/5 whitespace-nowrap">
