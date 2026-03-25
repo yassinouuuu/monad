@@ -93,12 +93,13 @@ html, body {
 
 @media (max-width: 768px) {
   .main-header {
-    padding: 12px 16px;
-    height: 120px;
+    position: relative;
+    padding: 16px;
+    height: auto;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
   }
   .nav-segment {
     width: 100%;
