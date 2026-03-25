@@ -848,6 +848,7 @@ export const NetworkService = {
               marketCap: jMc,
               platform: 'Primary Ecosystem',
               address: t.token_id,
+              tradingUrl: `https://nad.fun/coin/${t.token_id}`,
               logoUrl: t.image_uri || null,
               color: COLORS[i % COLORS.length],
               icon: (t.symbol || '?')[0],
@@ -888,13 +889,14 @@ export const NetworkService = {
              const totalSupply = parseFloat(m.total_supply || t.total_supply || '1000000000000000000000000000') / 1e18;
              const mc = price * totalSupply;
              return {
-               name: t.name, symbol: t.symbol, price, marketCap: mc, platform: 'Primary Ecosystem', address: t.token_id,
-               logoUrl: t.image_uri || null, color: COLORS[i % COLORS.length], icon: (t.symbol||'?')[0],
-               createdAt: t.created_at || null,
-               displayPrice: price < 0.000001 ? `$${price.toFixed(8)}` : price < 0.01 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,
-               displayMC: mc >= 1e6 ? `$${(mc/1e6).toFixed(2)}M` : mc >= 1e3 ? `$${(mc/1e3).toFixed(1)}K` : `$${mc.toFixed(0)}`,
-               displayChange1h: `+0.00%`
-             };
+                name: t.name, symbol: t.symbol, price, marketCap: mc, platform: 'Primary Ecosystem', address: t.token_id,
+                tradingUrl: `https://nad.fun/coin/${t.token_id}`,
+                logoUrl: t.image_uri || null, color: COLORS[i % COLORS.length], icon: (t.symbol||'?')[0],
+                createdAt: t.created_at || null,
+                displayPrice: price < 0.000001 ? `$${price.toFixed(8)}` : price < 0.01 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,
+                displayMC: mc >= 1e6 ? `$${(mc/1e6).toFixed(2)}M` : mc >= 1e3 ? `$${(mc/1e3).toFixed(1)}K` : `$${mc.toFixed(0)}`,
+                displayChange1h: `+0.00%`
+              };
           });
         }
       }
@@ -934,6 +936,7 @@ export const NetworkService = {
               name: m.name || sym, symbol: sym, price: jPrice, marketCap: jMc, change1h: change,
               platform: 'Secondary Ecosystem',
               address: addr,
+              tradingUrl: `https://something.tools/token/${addr}`,
               migrated: m.migration_status === 2,
               logoUrl,
               color, icon: sym[0],
@@ -968,6 +971,7 @@ export const NetworkService = {
               (addr ? `https://cdn.dexscreener.com/token-images/og/monad/${addr.toLowerCase()}?timestamp=${Date.now()}` : null);
             return {
               name: m.name || sym, symbol: sym, price, marketCap: mc, platform: 'Secondary Ecosystem', address: addr,
+              tradingUrl: `https://something.tools/token/${addr}`,
               logoUrl, color: COLORS[i % COLORS.length], icon: sym[0],
               createdAt: m.created_at ? Math.floor(new Date(m.created_at).getTime() / 1000) : null,
               displayPrice: price < 0.00001 ? `$${price.toFixed(8)}` : price < 0.001 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,

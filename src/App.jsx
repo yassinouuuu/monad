@@ -74,14 +74,14 @@ const NewsTicker = React.memo(({ news }) => (
 const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }) => (
   <div className={`ticker-content-${direction} flex items-center`}>
     {[...coins, ...coins].map((coin, i) => (
-      <div key={i} className="ticker-item gap-3 border-r border-white/5 h-full">
+      <a key={i} href={coin.tradingUrl} target="_blank" rel="noopener noreferrer" className="ticker-item gap-3 border-r border-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer no-underline">
         {coin.logoUrl && <img src={coin.logoUrl} className="w-5 h-5 rounded-md" alt="" />}
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
         <span className={`text-[10px] font-black ${parseFloat(coin.displayChange1h) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
           {parseFloat(coin.displayChange1h) >= 0 ? '+' : ''}{coin.displayChange1h}
         </span>
-      </div>
+      </a>
     ))}
   </div>
 ));
@@ -89,7 +89,7 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
 const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
   const isNad = type === 'nad';
   const colorClass = isNad ? 'monad-purple' : 'orange-400';
-  const linkBase = isNad ? 'https://monadstats/tokens/' : 'https://monadstats/token/';
+  const tradeLink = coin.tradingUrl || (isNad ? `https://nad.fun/coin/${coin.address}` : `https://something.tools/token/${coin.address}`);
   
   const changeStr = coin.displayChange1h || '+0.00%';
   const changeValue = parseFloat(changeStr.replace(/[+%]/g, ''));
@@ -124,7 +124,7 @@ const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
           {coin.displayMC}
         </span>
       </div>
-      <a href={`${linkBase}${coin.address}`} target="_blank" rel="noopener noreferrer" className={`ml-4 p-3 bg-${isNad ? 'monad-purple' : 'orange-400'}/10 text-${isNad ? 'monad-purple' : 'orange-400'} rounded-xl hover:bg-${isNad ? 'monad-purple' : 'orange-400'} hover:text-white transition-all shadow-xl shadow-black/40`}>
+      <a href={tradeLink} target="_blank" rel="noopener noreferrer" className={`ml-4 p-3 bg-${isNad ? 'monad-purple' : 'orange-400'}/10 text-${isNad ? 'monad-purple' : 'orange-400'} rounded-xl hover:bg-${isNad ? 'monad-purple' : 'orange-400'} hover:text-white transition-all shadow-xl shadow-black/40`}>
         <ExternalLink size={16} />
       </a>
     </div>
