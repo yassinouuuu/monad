@@ -454,69 +454,101 @@ const App = () => {
         {activePage === 'dashboard' && (
           <div className="animate-slide-up">
             
-            {/* KPI Executive Summary - Expanded */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-4 md:gap-6 mb-8 relative z-10">
+            {/* KPI Executive Summary - Premium Layer */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 relative z-10 transition-all">
                 {[
-                  { title: 'Monad (MON) Price', value: coinStats.displayPrice, change: coinStats.displayChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple', highlight: true },
-                  { title: 'Monad Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={14} />, color: 'purple' },
-                  { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <TrendingUp size={14} />, color: 'emerald' },
-                  { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple' },
-                  { title: 'Daily Transactions', value: stats.dailyTx, change: ' LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
-                  { title: 'Total Network Tx', value: stats.totalTx, change: 'Aggregate Chain Data', icon: <Database size={14} />, color: 'white' },
-                  { title: 'Total Addresses', value: stats.totalAccounts, change: 'Unique Identity Layer', icon: <Users size={14} />, color: 'white' },
-                  { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: '+ LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
-                ].map((kpi, i) => (
-                  <div key={i} className={`glass-card p-6 flex flex-col justify-between min-h-[160px] border-white/5 hover:border-white/20 transition-all ${kpi.highlight ? 'ring-1 ring-emerald-500/20' : ''}`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30">{kpi.title}</span>
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${kpi.color === 'emerald' ? 'bg-emerald-400/10 text-emerald-400' : kpi.color === 'purple' ? 'bg-monad-purple/10 text-monad-purple' : 'bg-white/5 text-white/40'}`}>
-                        {kpi.icon}
+                  { title: 'Monad (MON)', value: coinStats.displayPrice, change: coinStats.displayChange, icon: <Activity size={18} strokeWidth={2.5} />, color: 'purple', highlight: true },
+                  { title: 'Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={18} strokeWidth={2.5} />, color: 'emerald' },
+                  { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <Box size={18} strokeWidth={2.5} />, color: 'blue' },
+                  { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <PieChart size={18} strokeWidth={2.5} />, color: 'purple' },
+                  { title: 'Daily Transactions', value: stats.dailyTx, change: 'ON-CHAIN METRIC', icon: <Zap size={18} strokeWidth={2.5} />, color: 'emerald', highlight: true, tick: true },
+                  { title: 'Network Tx (Total)', value: stats.totalTx, change: 'Aggregate Data', icon: <Globe size={18} strokeWidth={2.5} />, color: 'gray' },
+                  { title: 'Total Addresses', value: stats.totalAccounts, change: 'Identity Layer', icon: <Users size={18} strokeWidth={2.5} />, color: 'blue' },
+                  { title: 'Active Network Pulse', value: stats.dailyActiveAccounts || '---', change: 'LIVE SEC', icon: <TrendingUp size={18} strokeWidth={2.5} />, color: 'purple', tick: true }
+                ].map((kpi, i) => {
+                  let badgeColor = 'bg-white/5 text-white/40 border-white/5';
+                  let gradientClass = 'text-gradient-premium';
+                  let glowClass = '';
+                  
+                  if (kpi.color === 'purple') {
+                    badgeColor = 'bg-monad-purple/10 text-monad-purple border-monad-purple/20';
+                    gradientClass = 'text-gradient-purple';
+                    glowClass = kpi.highlight ? 'ring-1 ring-monad-purple/40 shadow-[0_0_20px_rgba(131,110,249,0.15)]' : '';
+                  } else if (kpi.color === 'emerald') {
+                    badgeColor = 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20';
+                    gradientClass = 'text-gradient-emerald';
+                    glowClass = kpi.highlight ? 'ring-1 ring-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.15)]' : '';
+                  } else if (kpi.color === 'blue') {
+                    badgeColor = 'bg-blue-400/10 text-blue-400 border-blue-400/20';
+                  }
+
+                  return (
+                    <div key={i} className={`premium-stat-card p-5 md:p-6 flex flex-col justify-between min-h-[160px] md:min-h-[180px] ${glowClass}`}>
+                      <div className="flex items-center justify-between mb-4 relative z-10 w-full">
+                        <span className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] text-white/50">{kpi.title}</span>
+                        <div className={`h-10 w-10 flex-shrink-0 rounded-xl flex items-center justify-center border backdrop-blur-md ${badgeColor}`}>
+                          {kpi.icon}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col gap-1.5 relative z-10 w-full mt-auto">
+                        <div className="flex items-end gap-3 flex-wrap">
+                          <span className={`font-outfit text-3xl xl:text-4xl font-black tracking-tight leading-none ${gradientClass}`}>{kpi.value}</span>
+                          {kpi.tick && <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-[pulse_1.5s_ease-in-out_infinite] mb-1.5 shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className={`font-outfit text-[11px] font-bold tracking-[0.1em] uppercase ${kpi.change && kpi.change.includes('+') ? 'text-emerald-400' : kpi.change && kpi.change.includes('-') ? 'text-red-400' : 'text-white/30'}`}>
+                            {kpi.change || '---'}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    
-                    
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-end gap-2">
-                        <span className={`text-2xl font-black tracking-tighter ${kpi.textColor || 'text-white'} break-words leading-none`}>{kpi.value}</span>
-                        {kpi.tick && <span className="text-[10px] font-black text-emerald-400 mb-0.5 animate-pulse">+0.01%</span>}
-                      </div>
-                      <span className={`text-[9px] font-black uppercase tracking-[0.2em] ${kpi.change.includes('LIVE') ? 'text-emerald-400' : 'text-white/10'}`}>
-                        {kpi.change}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
 
-            {/* Additional Ecosystem Metrics */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6 mb-20 relative z-10">
+            {/* Additional Ecosystem Metrics - Premium UI */}
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-5 mb-20 relative z-10 transition-all">
                 {[
-                  { title: 'Stablecoins MCAP', value: stats.stablecoinMC, change: '+0.02% LIVE', icon: <Coins size={14} />, color: 'emerald', tick: true },
-                  { title: '24h Network Fees', value: stats.fees24h, change: stats.feesChange, icon: <Database size={14} />, color: 'purple', textColor: 'text-monad-purple' },
-                  { title: '7d DEX Volume', value: stats.volume7d, change: '7-Day Aggregate', icon: <BarChart3 size={14} />, color: 'white' },
-                  { title: 'Protocol Yield', value: stats.topYield, change: '+0.1% TICK', icon: <TrendingUp size={14} />, color: 'emerald', tick: true },
-                  { title: 'Total Protocols', value: stats.protocolsCount, change: 'Ecosystem Count', icon: <Users size={14} />, color: 'white' },
-                  { title: 'Net Inflow', value: stats.netInflow, change: '+0.05% UPD', icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple', tick: true }
-                ].map((kpi, i) => (
-                  <div key={i} className={`glass-card p-6 flex flex-col justify-between min-h-[160px] border-white/5 hover:border-white/20 transition-all opacity-80 hover:opacity-100`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30">{kpi.title}</span>
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center opacity-40 group-hover:opacity-100`}>
-                         {kpi.icon}
+                  { title: 'Stablecoins MCAP', value: stats.stablecoinMC, change: '+0.02% LIVE', icon: <Coins size={16} />, color: 'emerald', tick: true },
+                  { title: '24h Network Fees', value: stats.fees24h, change: stats.feesChange, icon: <Database size={16} />, color: 'purple' },
+                  { title: '7d DEX Volume', value: stats.volume7d, change: '7-Day Aggregate', icon: <BarChart3 size={16} />, color: 'gray' },
+                  { title: 'Protocol Yield', value: stats.topYield, change: '+0.1% TICK', icon: <TrendingUp size={16} />, color: 'emerald', tick: true },
+                  { title: 'Total Protocols', value: stats.protocolsCount, change: 'Total Count', icon: <Users size={16} />, color: 'blue' },
+                  { title: 'Net Inflow', value: stats.netInflow, change: '+0.05% UPD', icon: <Activity size={16} />, color: 'purple', tick: true }
+                ].map((kpi, i) => {
+                  let badgeColor = 'bg-white/5 text-white/40 border-white/5';
+                  let gradientClass = 'text-white/70';
+                  
+                  if (kpi.color === 'purple') {
+                    badgeColor = 'bg-monad-purple/5 text-monad-purple/70 border-monad-purple/10';
+                    gradientClass = 'text-purple-100';
+                  } else if (kpi.color === 'emerald') {
+                    badgeColor = 'bg-emerald-400/5 text-emerald-400/70 border-emerald-400/10';
+                    gradientClass = 'text-emerald-100';
+                  }
+
+                  return (
+                    <div key={i} className={`premium-stat-card p-5 md:p-6 flex flex-col justify-between min-h-[140px] opacity-80 hover:opacity-100`}>
+                      <div className="flex items-center justify-between mb-4 relative z-10 w-full">
+                        <span className="text-[9px] font-black uppercase tracking-[0.15em] text-white/40">{kpi.title}</span>
+                        <div className={`h-8 w-8 rounded-lg flex-shrink-0 flex items-center justify-center opacity-60 group-hover:opacity-100 border backdrop-blur-sm ${badgeColor}`}>
+                           {kpi.icon}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col gap-1 mt-auto relative z-10 w-full">
+                         <div className="flex items-end gap-2 flex-wrap">
+                            <span className={`font-outfit text-2xl font-black tracking-tight leading-none ${gradientClass}`}>{kpi.value}</span>
+                            {kpi.tick && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-[pulse_1.5s_ease-in-out_infinite] mb-1.5 inline-block"></span>}
+                         </div>
+                        <span className="font-outfit text-[10px] font-bold tracking-[0.1em] uppercase text-white/30 mt-1">
+                          {kpi.change || '---'}
+                        </span>
                       </div>
                     </div>
-
-                    <div className="flex flex-col gap-2">
-                       <div className="flex items-end gap-2">
-                          <span className={`text-xl font-black tracking-tighter text-white/70 break-words leading-none`}>{kpi.value}</span>
-                          {kpi.tick && <span className="text-[9px] font-black text-emerald-400 mb-0.5 animate-pulse">+0.01%</span>}
-                       </div>
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/10">
-                        {kpi.change}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
 
             {/* Ecosystem spotlight and feeds */}
