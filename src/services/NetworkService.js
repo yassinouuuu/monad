@@ -159,7 +159,7 @@ export const NetworkService = {
    */
   async getMonadCoinStats() {
     try {
-      const response = await fetch('https://api.Market Data Provider.com/api/v3/simple/price?ids=monad&vs_currencies=usd&include_market_cap=true&include_24hr_change=true');
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=monad&vs_currencies=usd&include_market_cap=true&include_24hr_change=true');
       const data = await response.json();
       const mon = data.monad;
       
@@ -600,9 +600,9 @@ export const NetworkService = {
       };
 
       const formatChange = (change) => {
-        if (change === null || change === undefined || isNaN(change)) return 'â–² 0.0%';
+        if (change === null || change === undefined || isNaN(change)) return 'Ã¢â€“Â² 0.0%';
         const num = parseFloat(change);
-        const prefix = num >= 0 ? 'â–²' : 'â–¼';
+        const prefix = num >= 0 ? 'Ã¢â€“Â²' : 'Ã¢â€“Â¼';
         return `${prefix} ${Math.abs(num).toFixed(1)}%`;
       };
 
@@ -673,7 +673,7 @@ export const NetworkService = {
         dailyTxChange: formatChange(5.2),
         
         activeWallets: explorerStats?.dailyActiveAccounts || statsCache?.processed?.dailyActiveAccounts || '---',
-        activeWalletsChange: 'â–² 5.1%',
+        activeWalletsChange: 'Ã¢â€“Â² 5.1%',
         lastUpdate: new Date().toLocaleTimeString()
       };
       
@@ -796,7 +796,7 @@ export const NetworkService = {
       const variations = tokens.map(t => {
         // Simple deterministic random based on seed and symbol
         const hash = (seed + t.symbol.charCodeAt(0)) % 21;
-        const factor = 0.9 + (hash / 100); // Â±10% variation
+        const factor = 0.9 + (hash / 100); // Ã‚Â±10% variation
         return {
           ...t,
           volume: t.volume * factor,
@@ -912,7 +912,7 @@ export const NetworkService = {
   async getSomethingToolsCoins() {
     const COLORS = ['#a855f7','#38bdf8','#ef4444','#eab308','#10b981','#3b82f6','#f472b6','#94a3b8','#6366f1','#22c55e','#f59e0b','#2dd4bf','#ec4899','#fb923c','#8b5cf6'];
     try {
-      const res = await fetch('https://api-monad.Secondary Ecosystem/api/tokensData?page=1&limit=30&sortField=market_cap&sortOrder=DESC');
+      const res = await fetch('https://api-monad.something.tools/api/tokensData?page=1&limit=30&sortField=market_cap&sortOrder=DESC');
       if (res.ok) {
         const json = await res.json();
         if (json && json.data && json.data.length > 0) {
@@ -955,7 +955,7 @@ export const NetworkService = {
   async getLatestSomethingToolsCoins() {
     const COLORS = ['#a855f7','#38bdf8','#ef4444','#eab308','#10b981'];
     try {
-      const res = await fetch('https://api-monad.Secondary Ecosystem/api/tokensData?page=1&limit=30&sortField=created_at&sortOrder=DESC&showMigrating=false&includeMigrated=false');
+      const res = await fetch('https://api-monad.something.tools/api/tokensData?page=1&limit=30&sortField=created_at&sortOrder=DESC&showMigrating=false&includeMigrated=false');
       if (res.ok) {
         const json = await res.json();
         if (json && json.data && json.data.length > 0) {
@@ -985,13 +985,13 @@ export const NetworkService = {
 
   /**
    * Fetch top Monad NFT collections via Real-time Aggregator API v2.
-   * Ù„Ù„ØªÙØ¹ÙŠÙ„: Ø¶Ø¹ API Key Ù…Ù† https://Real-time Aggregator.io/account/settings ÙÙŠ AGGREGATOR_API_KEY
+   * Ã™â€žÃ™â€žÃ˜ÂªÃ™ÂÃ˜Â¹Ã™Å Ã™â€ž: Ã˜Â¶Ã˜Â¹ API Key Ã™â€¦Ã™â€  https://Real-time Aggregator.io/account/settings Ã™ÂÃ™Å  AGGREGATOR_API_KEY
    */
   async getMonadNFTs() {
-    // â† Ø§Ù„Ù…ÙØªØ§Ø­ Ø§Ù„Ø®Ø§Øµ Ø¨Ùƒ (Ù…Ø´ÙØ± Ù„ØªØ¬Ù†Ø¨ Ø±ÙˆØ¨ÙˆØªØ§Øª GitHub)
+    // Ã¢â€ Â Ã˜Â§Ã™â€žÃ™â€¦Ã™ÂÃ˜ÂªÃ˜Â§Ã˜Â­ Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â§Ã˜Âµ Ã˜Â¨Ã™Æ’ (Ã™â€¦Ã˜Â´Ã™ÂÃ˜Â± Ã™â€žÃ˜ÂªÃ˜Â¬Ã™â€ Ã˜Â¨ Ã˜Â±Ã™Ë†Ã˜Â¨Ã™Ë†Ã˜ÂªÃ˜Â§Ã˜Âª GitHub)
     const AGGREGATOR_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
 
-    // Ø§Ù„ÙƒÙˆÙ„ÙŠÙƒØ´Ù†Ø² Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠØ© Ø¹Ù„Ù‰ Monad (slugs Ø±Ø³Ù…ÙŠØ© Ù…Ù† Real-time Aggregator)
+    // Ã˜Â§Ã™â€žÃ™Æ’Ã™Ë†Ã™â€žÃ™Å Ã™Æ’Ã˜Â´Ã™â€ Ã˜Â² Ã˜Â§Ã™â€žÃ˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã˜Â¹Ã™â€žÃ™â€° Monad (slugs Ã˜Â±Ã˜Â³Ã™â€¦Ã™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator)
     const MONAD_SLUGS = [
       'voting-escrow-dust',
       'skrumpeys',
@@ -1010,17 +1010,17 @@ export const NetworkService = {
       'blocknads-895269975'
     ];
 
-    // Ø¥Ø°Ø§ ÙƒØ§Ù† API Key Ù…ØªÙˆÙØ±Ø§Ù‹ â†’ Ø¬Ù„Ø¨ Ø¨ÙŠØ§Ù†Ø§Øª Ø­Ù‚ÙŠÙ‚ÙŠØ© Ù…Ù† Real-time Aggregator
+    // Ã˜Â¥Ã˜Â°Ã˜Â§ Ã™Æ’Ã˜Â§Ã™â€  API Key Ã™â€¦Ã˜ÂªÃ™Ë†Ã™ÂÃ˜Â±Ã˜Â§Ã™â€¹ Ã¢â€ â€™ Ã˜Â¬Ã™â€žÃ˜Â¨ Ã˜Â¨Ã™Å Ã˜Â§Ã™â€ Ã˜Â§Ã˜Âª Ã˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator
     if (AGGREGATOR_API_KEY && AGGREGATOR_API_KEY.length > 10) {
       try {
         const results = [];
         for (const slug of MONAD_SLUGS) {
           try {
             const [infoRes, statsRes] = await Promise.all([
-              fetch(`https://api.Real-time Aggregator.io/api/v2/collections/${slug}`, {
+              fetch(`https://api.opensea.io/api/v2/collections/${slug}`, {
                 headers: { 'X-API-KEY': AGGREGATOR_API_KEY, 'accept': 'application/json' }
               }),
-              fetch(`https://api.Real-time Aggregator.io/api/v2/collections/${slug}/stats`, {
+              fetch(`https://api.opensea.io/api/v2/collections/${slug}/stats`, {
                 headers: { 'X-API-KEY': AGGREGATOR_API_KEY, 'accept': 'application/json' }
               })
             ]);
@@ -1077,8 +1077,8 @@ export const NetworkService = {
       }
     }
 
-    // --- Fallback: Ø¨ÙŠØ§Ù†Ø§Øª Ø­Ù‚ÙŠÙ‚ÙŠØ© Ø¨Ø¯ÙˆÙ† API Key ---
-    // --- Fallback: Ø¨ÙŠØ§Ù†Ø§Øª Ø­Ù‚ÙŠÙ‚ÙŠØ© Ù…Ù† Real-time Aggregator (Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«) ---
+    // --- Fallback: Ã˜Â¨Ã™Å Ã˜Â§Ã™â€ Ã˜Â§Ã˜Âª Ã˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã˜Â¨Ã˜Â¯Ã™Ë†Ã™â€  API Key ---
+    // --- Fallback: Ã˜Â¨Ã™Å Ã˜Â§Ã™â€ Ã˜Â§Ã˜Âª Ã˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator (Ã˜Â¢Ã˜Â®Ã˜Â± Ã˜ÂªÃ˜Â­Ã˜Â¯Ã™Å Ã˜Â«) ---
     const fallback = [
       { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png', owners: 1240, sales: 8400 },
       { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png', owners: 1390, sales: 1200 },
@@ -1115,11 +1115,11 @@ export const NetworkService = {
    */
   async getMonadNews() {
     return [
-      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for Monadâ€™s Essential Hard Fork', date: 'Mar 17' },
+      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for MonadÃ¢â‚¬â„¢s Essential Hard Fork', date: 'Mar 17' },
       { id: 2, title: 'Bithumb Suspends MON Deposits: Essential Guide to the Monad Network Upgrade', date: 'Mar 13' },
       { id: 3, title: 'Monad Integrates Chainlink CCIP: A Revolutionary Leap for Cross-Chain cbBTC Transfers', date: 'Mar 10' },
       { id: 4, title: 'MON outperforms market as upgrade, staking vaults drive demand', date: 'Feb 19' },
-      { id: 5, title: 'Monad Developerâ€™s Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
+      { id: 5, title: 'Monad DeveloperÃ¢â‚¬â„¢s Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
       { id: 6, title: 'MON rallies to one-week high as Monad holds record value locked', date: 'Jan 02' },
       { id: 7, title: 'Monad adds support for USD1 stablecoin: A Game-Changer for DeFi Liquidity', date: 'Jan 02' }
     ];
