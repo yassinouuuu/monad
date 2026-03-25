@@ -176,6 +176,10 @@ const App = () => {
   const [activePage, setActivePage] = useState('dashboard');
   
   const handlePageChange = (page) => {
+    if (page === 'aimemes') {
+      window.location.href = '/AIMEMES';
+      return;
+    }
     setActivePage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -323,6 +327,12 @@ const App = () => {
              className={`nav-btn ${activePage === 'revenue' ? 'active' : ''}`}
            >
              Revenue
+           </button>
+           <button 
+             onClick={() => handlePageChange('aimemes')}
+             className={`nav-btn font-black text-monad-purple`}
+           >
+             AI MEME TA
            </button>
         </div>
 
