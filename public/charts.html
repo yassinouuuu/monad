@@ -308,7 +308,10 @@
                 priceFormat: { type: 'price', precision: 8, minMove: 0.00000001 }
             });
             volumeSeries = chart.addHistogramSeries({
-                priceFormat: { type: 'volume' }, priceScaleId: '', scaleMargins: { top: 0.85, bottom: 0 },
+                priceFormat: { type: 'volume' }, priceScaleId: ''
+            });
+            chart.priceScale('').applyOptions({
+                scaleMargins: { top: 0.85, bottom: 0 },
             });
 
             new ResizeObserver(entries => {
