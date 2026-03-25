@@ -321,11 +321,21 @@ const App = () => {
              </button>
              
              <div className="absolute top-[35px] left-1/2 -translate-x-1/2 w-48 pt-4 hidden group-hover:block z-[9999]">
-               <div className="bg-[#0f0f15] border border-white/10 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] py-3 overflow-hidden backdrop-blur-3xl">
-                 <div className="px-5 py-2 text-[9px] font-black text-monad-purple uppercase tracking-[0.2em] border-b border-white/5 mb-2 opacity-60">Ecosystem Stats</div>
-                 <button onClick={() => handlePageChange('volume')} className="w-full text-left px-5 py-3 text-[11px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-monad-purple/40"></div> 24H Volume</button>
-                 <button onClick={() => handlePageChange('fees')} className="w-full text-left px-5 py-3 text-[11px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-monad-purple/40"></div> Protocol Fees</button>
-                 <button onClick={() => handlePageChange('revenue')} className="w-full text-left px-5 py-3 text-[11px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-monad-purple/40"></div> Network Rev</button>
+               <div className="bg-[#0b0c14] border border-white/10 rounded-2xl shadow-[0_25px_70px_rgba(0,0,0,0.9)] overflow-hidden backdrop-blur-3xl min-w-[200px]">
+                 <div className="px-6 py-4 border-b border-white/5 bg-white/[0.02]">
+                   <span className="text-[10px] font-black text-monad-purple uppercase tracking-widest">Market Analytics</span>
+                 </div>
+                 <div className="flex flex-col p-2">
+                   <button onClick={() => handlePageChange('volume')} className="w-full text-left px-5 py-3.5 text-xs font-black uppercase text-white hover:bg-monad-purple hover:text-white rounded-xl transition-all cursor-pointer">
+                     Daily Volume
+                   </button>
+                   <button onClick={() => handlePageChange('fees')} className="w-full text-left px-5 py-3.5 text-xs font-black uppercase text-white hover:bg-monad-purple hover:text-white rounded-xl transition-all cursor-pointer">
+                     Protocol Fees
+                   </button>
+                   <button onClick={() => handlePageChange('revenue')} className="w-full text-left px-5 py-3.5 text-xs font-black uppercase text-white hover:bg-monad-purple hover:text-white rounded-xl transition-all cursor-pointer">
+                     Network Revenue
+                   </button>
+                 </div>
                </div>
              </div>
            </div>
