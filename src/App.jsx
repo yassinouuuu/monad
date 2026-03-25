@@ -242,17 +242,17 @@ const App = () => {
         ]);
         
         if (isMounted) {
-          if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_v4_nadfun_cache', JSON.stringify(nad)); }
-          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_v4_smt_cache', JSON.stringify(smt)); }
-          if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_v4_lnad_cache', JSON.stringify(lNad)); }
-          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_v4_lsmt_cache_v2', JSON.stringify(lSmt)); }
-          if (nft) { setNftCollections(nft); localStorage.setItem('monad_v4_nft_cache_v3', JSON.stringify(nft)); }
-          if (newsData) { setNews(newsData); localStorage.setItem('monad_v4_news_cache', JSON.stringify(newsData)); }
-          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_v4_protocols_cache', JSON.stringify(protocolsData)); }
-          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_v4_vol_protocols_cache', JSON.stringify(vol)); }
-          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_v4_fees_protocols_cache', JSON.stringify(fees)); }
-          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_v4_rev_protocols_cache', JSON.stringify(rev)); }
-          if (coin) { setCoinStats(coin); localStorage.setItem('monad_v4_coin_cache', JSON.stringify(coin)); }
+          if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_vFINAL_nadfun_cache', JSON.stringify(nad)); }
+          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_vFINAL_smt_cache', JSON.stringify(smt)); }
+          if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_vFINAL_lnad_cache', JSON.stringify(lNad)); }
+          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_vFINAL_lsmt_cache_v2', JSON.stringify(lSmt)); }
+          if (nft) { setNftCollections(nft); localStorage.setItem('monad_vFINAL_nft_cache_v3', JSON.stringify(nft)); }
+          if (newsData) { setNews(newsData); localStorage.setItem('monad_vFINAL_news_cache', JSON.stringify(newsData)); }
+          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_vFINAL_protocols_cache', JSON.stringify(protocolsData)); }
+          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_vFINAL_vol_protocols_cache', JSON.stringify(vol)); }
+          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_vFINAL_fees_protocols_cache', JSON.stringify(fees)); }
+          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_vFINAL_rev_protocols_cache', JSON.stringify(rev)); }
+          if (coin) { setCoinStats(coin); localStorage.setItem('monad_vFINAL_coin_cache', JSON.stringify(coin)); }
         }
       } catch (err) {
         console.error("Critical Ecosystem Fetch Error:", err);
