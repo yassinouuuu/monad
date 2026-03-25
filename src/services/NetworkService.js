@@ -7,7 +7,7 @@ const provider = new ethers.JsonRpcProvider(RPC_URL);
 let statsCache = null;
 let lastStatsFetch = 0;
 const CACHE_DURATION = 10000; // 10 seconds for heavy API calls
-const LS_STATS_KEY = 'monad_vFINAL_2_stats_cache';
+const LS_STATS_KEY = 'monad_vFINAL_3_stats_cache';
 
 /**
  * Service to fetch live statistics from the Monad Mainnet.
@@ -848,7 +848,7 @@ export const NetworkService = {
               marketCap: jMc,
               platform: 'Primary Ecosystem',
               address: t.token_id,
-              tradingUrl: `https://nad.fun/coin/${t.token_id}`,
+              tradingUrl: `https://nad.fun/tokens/${t.token_id}`,
               logoUrl: t.image_uri || null,
               color: COLORS[i % COLORS.length],
               icon: (t.symbol || '?')[0],
@@ -890,7 +890,7 @@ export const NetworkService = {
              const mc = price * totalSupply;
              return {
                 name: t.name, symbol: t.symbol, price, marketCap: mc, platform: 'Primary Ecosystem', address: t.token_id,
-                tradingUrl: `https://nad.fun/coin/${t.token_id}`,
+                tradingUrl: `https://nad.fun/tokens/${t.token_id}`,
                 logoUrl: t.image_uri || null, color: COLORS[i % COLORS.length], icon: (t.symbol||'?')[0],
                 createdAt: t.created_at || null,
                 displayPrice: price < 0.000001 ? `$${price.toFixed(8)}` : price < 0.01 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,
