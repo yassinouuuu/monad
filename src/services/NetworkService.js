@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+﻿import { ethers } from 'ethers';
 
 const RPC_URL = 'https://rpc.monad.xyz';
 const provider = new ethers.JsonRpcProvider(RPC_URL);
@@ -600,9 +600,9 @@ export const NetworkService = {
       };
 
       const formatChange = (change) => {
-        if (change === null || change === undefined || isNaN(change)) return '▲ 0.0%';
+        if (change === null || change === undefined || isNaN(change)) return 'â–² 0.0%';
         const num = parseFloat(change);
-        const prefix = num >= 0 ? '▲' : '▼';
+        const prefix = num >= 0 ? 'â–²' : 'â–¼';
         return `${prefix} ${Math.abs(num).toFixed(1)}%`;
       };
 
@@ -673,7 +673,7 @@ export const NetworkService = {
         dailyTxChange: formatChange(5.2),
         
         activeWallets: explorerStats?.dailyActiveAccounts || statsCache?.processed?.dailyActiveAccounts || '---',
-        activeWalletsChange: '▲ 5.1%',
+        activeWalletsChange: 'â–² 5.1%',
         lastUpdate: new Date().toLocaleTimeString()
       };
       
@@ -796,7 +796,7 @@ export const NetworkService = {
       const variations = tokens.map(t => {
         // Simple deterministic random based on seed and symbol
         const hash = (seed + t.symbol.charCodeAt(0)) % 21;
-        const factor = 0.9 + (hash / 100); // ±10% variation
+        const factor = 0.9 + (hash / 100); // Â±10% variation
         return {
           ...t,
           volume: t.volume * factor,
@@ -985,13 +985,13 @@ export const NetworkService = {
 
   /**
    * Fetch top Monad NFT collections via Real-time Aggregator API v2.
-   * للتفعيل: ضع API Key من https://Real-time Aggregator.io/account/settings في Real-time Aggregator_API_KEY
+   * Ù„Ù„ØªÙØ¹ÙŠÙ„: Ø¶Ø¹ API Key Ù…Ù† https://Real-time Aggregator.io/account/settings ÙÙŠ AGGREGATOR_API_KEY
    */
   async getMonadNFTs() {
-    // ← المفتاح الخاص بك (مشفر لتجنب روبوتات GitHub)
-    const Real-time Aggregator_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
+    // â† Ø§Ù„Ù…ÙØªØ§Ø­ Ø§Ù„Ø®Ø§Øµ Ø¨Ùƒ (Ù…Ø´ÙØ± Ù„ØªØ¬Ù†Ø¨ Ø±ÙˆØ¨ÙˆØªØ§Øª GitHub)
+    const AGGREGATOR_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
 
-    // الكوليكشنز الحقيقية على Monad (slugs رسمية من Real-time Aggregator)
+    // Ø§Ù„ÙƒÙˆÙ„ÙŠÙƒØ´Ù†Ø² Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠØ© Ø¹Ù„Ù‰ Monad (slugs Ø±Ø³Ù…ÙŠØ© Ù…Ù† Real-time Aggregator)
     const MONAD_SLUGS = [
       'voting-escrow-dust',
       'skrumpeys',
@@ -1010,18 +1010,18 @@ export const NetworkService = {
       'blocknads-895269975'
     ];
 
-    // إذا كان API Key متوفراً → جلب بيانات حقيقية من Real-time Aggregator
-    if (Real-time Aggregator_API_KEY && Real-time Aggregator_API_KEY.length > 10) {
+    // Ø¥Ø°Ø§ ÙƒØ§Ù† API Key Ù…ØªÙˆÙØ±Ø§Ù‹ â†’ Ø¬Ù„Ø¨ Ø¨ÙŠØ§Ù†Ø§Øª Ø­Ù‚ÙŠÙ‚ÙŠØ© Ù…Ù† Real-time Aggregator
+    if (AGGREGATOR_API_KEY && AGGREGATOR_API_KEY.length > 10) {
       try {
         const results = [];
         for (const slug of MONAD_SLUGS) {
           try {
             const [infoRes, statsRes] = await Promise.all([
               fetch(`https://api.Real-time Aggregator.io/api/v2/collections/${slug}`, {
-                headers: { 'X-API-KEY': Real-time Aggregator_API_KEY, 'accept': 'application/json' }
+                headers: { 'X-API-KEY': AGGREGATOR_API_KEY, 'accept': 'application/json' }
               }),
               fetch(`https://api.Real-time Aggregator.io/api/v2/collections/${slug}/stats`, {
-                headers: { 'X-API-KEY': Real-time Aggregator_API_KEY, 'accept': 'application/json' }
+                headers: { 'X-API-KEY': AGGREGATOR_API_KEY, 'accept': 'application/json' }
               })
             ]);
             if (!infoRes.ok || !statsRes.ok) continue;
@@ -1077,8 +1077,8 @@ export const NetworkService = {
       }
     }
 
-    // --- Fallback: بيانات حقيقية بدون API Key ---
-    // --- Fallback: بيانات حقيقية من Real-time Aggregator (آخر تحديث) ---
+    // --- Fallback: Ø¨ÙŠØ§Ù†Ø§Øª Ø­Ù‚ÙŠÙ‚ÙŠØ© Ø¨Ø¯ÙˆÙ† API Key ---
+    // --- Fallback: Ø¨ÙŠØ§Ù†Ø§Øª Ø­Ù‚ÙŠÙ‚ÙŠØ© Ù…Ù† Real-time Aggregator (Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«) ---
     const fallback = [
       { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png', owners: 1240, sales: 8400 },
       { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png', owners: 1390, sales: 1200 },
@@ -1115,11 +1115,11 @@ export const NetworkService = {
    */
   async getMonadNews() {
     return [
-      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for Monad’s Essential Hard Fork', date: 'Mar 17' },
+      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for Monadâ€™s Essential Hard Fork', date: 'Mar 17' },
       { id: 2, title: 'Bithumb Suspends MON Deposits: Essential Guide to the Monad Network Upgrade', date: 'Mar 13' },
       { id: 3, title: 'Monad Integrates Chainlink CCIP: A Revolutionary Leap for Cross-Chain cbBTC Transfers', date: 'Mar 10' },
       { id: 4, title: 'MON outperforms market as upgrade, staking vaults drive demand', date: 'Feb 19' },
-      { id: 5, title: 'Monad Developer’s Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
+      { id: 5, title: 'Monad Developerâ€™s Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
       { id: 6, title: 'MON rallies to one-week high as Monad holds record value locked', date: 'Jan 02' },
       { id: 7, title: 'Monad adds support for USD1 stablecoin: A Game-Changer for DeFi Liquidity', date: 'Jan 02' }
     ];
