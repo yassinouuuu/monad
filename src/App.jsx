@@ -313,20 +313,20 @@ const App = () => {
              DeFi
            </button>
            
-           <div className="relative">
+           <div className="relative group">
              <button 
-               onClick={() => setIsEconomyOpen(!isEconomyOpen)}
+               onClick={(e) => { e.stopPropagation(); setIsEconomyOpen(!isEconomyOpen); }}
                className={`nav-btn flex items-center gap-2 ${['volume', 'fees', 'revenue'].includes(activePage) ? 'active' : ''}`}
              >
-               Econ <ChevronDown size={12} className={`transition-transform ${isEconomyOpen ? 'rotate-180' : ''}`} />
+               Economy <ChevronDown size={12} className={`transition-all duration-300 ${isEconomyOpen ? 'rotate-180' : ''}`} />
              </button>
              
              {isEconomyOpen && (
-               <div className="absolute top-[calc(100%+8px)] left-0 w-44 bg-[#121218] border border-white/10 rounded-xl shadow-2xl py-2 z-[200]">
-                 <div className="px-4 py-2 text-[9px] font-bold text-white/20 uppercase tracking-widest border-b border-white/5 mb-1">Analytics</div>
-                 <button onClick={() => handlePageChange('volume')} className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all">24H Volume</button>
-                 <button onClick={() => handlePageChange('fees')} className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all">Network Fees</button>
-                 <button onClick={() => handlePageChange('revenue')} className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all">Protocol Rev</button>
+               <div className="absolute top-[48px] left-0 w-48 bg-[#0f0f15] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] py-3 z-[9999] overflow-hidden animate-slide-up backdrop-blur-3xl">
+                 <div className="px-5 py-2 text-[9px] font-black text-monad-purple uppercase tracking-[0.2em] border-b border-white/5 mb-2 opacity-60">Market Insights</div>
+                 <button onClick={() => handlePageChange('volume')} className="w-full text-left px-5 py-3 text-[11px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-monad-purple/40"></div> Daily Volume</button>
+                 <button onClick={() => handlePageChange('fees')} className="w-full text-left px-5 py-3 text-[11px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-monad-purple/40"></div> Network Fees</button>
+                 <button onClick={() => handlePageChange('revenue')} className="w-full text-left px-5 py-3 text-[11px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-monad-purple/40"></div> Revenue</button>
                </div>
              )}
            </div>

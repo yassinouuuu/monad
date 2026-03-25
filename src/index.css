@@ -113,13 +113,11 @@ html, body {
   }
   .nav-segment {
     width: 100%;
-    overflow-x: auto;
+    overflow: visible;
+    display: flex;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .nav-segment::-webkit-scrollbar {
-    display: none;
   }
   .nav-btn {
     white-space: nowrap;
