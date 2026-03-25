@@ -185,7 +185,7 @@ const App = () => {
     setActivePage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const [stats, setStats] = useState(() => initFromLS('monad_hub_stats_cache', {
+  const [stats, setStats] = useState(() => initFromLS('monad_v4_stats_cache', {
     tps: '---',
     avgBlockTime: '---',
     latestBlock: '---',
@@ -201,17 +201,17 @@ const App = () => {
     totalAccounts: '---'
   }));
   
-  const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_hub_nadfun_cache', []));
-  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_hub_smt_cache', []));
-  const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_hub_lnad_cache', []));
-  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_hub_lsmt_cache_v2', []));
-  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_hub_nft_cache_v3', []));
-  const [news, setNews] = useState(() => initFromLS('monad_hub_news_cache', []));
-  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_hub_protocols_cache', []));
-  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_hub_vol_protocols_cache', []));
-  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_hub_fees_protocols_cache', []));
-  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_hub_rev_protocols_cache', []));
-  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_hub_coin_cache', {
+  const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_v4_nadfun_cache', []));
+  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_v4_smt_cache', []));
+  const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_v4_lnad_cache', []));
+  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_v4_lsmt_cache_v2', []));
+  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_v4_nft_cache_v3', []));
+  const [news, setNews] = useState(() => initFromLS('monad_v4_news_cache', []));
+  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_v4_protocols_cache', []));
+  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_v4_vol_protocols_cache', []));
+  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_v4_fees_protocols_cache', []));
+  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_v4_rev_protocols_cache', []));
+  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_v4_coin_cache', {
      displayPrice: '$0.0225', displayMcap: '$244.1M', displayChange: '+0.00%', changeColor: 'text-emerald-400'
   }));
 
@@ -242,17 +242,17 @@ const App = () => {
         ]);
         
         if (isMounted) {
-          if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_hub_nadfun_cache', JSON.stringify(nad)); }
-          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_hub_smt_cache', JSON.stringify(smt)); }
-          if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_hub_lnad_cache', JSON.stringify(lNad)); }
-          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_hub_lsmt_cache_v2', JSON.stringify(lSmt)); }
-          if (nft) { setNftCollections(nft); localStorage.setItem('monad_hub_nft_cache_v3', JSON.stringify(nft)); }
-          if (newsData) { setNews(newsData); localStorage.setItem('monad_hub_news_cache', JSON.stringify(newsData)); }
-          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_hub_protocols_cache', JSON.stringify(protocolsData)); }
-          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_hub_vol_protocols_cache', JSON.stringify(vol)); }
-          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_hub_fees_protocols_cache', JSON.stringify(fees)); }
-          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_hub_rev_protocols_cache', JSON.stringify(rev)); }
-          if (coin) { setCoinStats(coin); localStorage.setItem('monad_hub_coin_cache', JSON.stringify(coin)); }
+          if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_v4_nadfun_cache', JSON.stringify(nad)); }
+          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_v4_smt_cache', JSON.stringify(smt)); }
+          if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_v4_lnad_cache', JSON.stringify(lNad)); }
+          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_v4_lsmt_cache_v2', JSON.stringify(lSmt)); }
+          if (nft) { setNftCollections(nft); localStorage.setItem('monad_v4_nft_cache_v3', JSON.stringify(nft)); }
+          if (newsData) { setNews(newsData); localStorage.setItem('monad_v4_news_cache', JSON.stringify(newsData)); }
+          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_v4_protocols_cache', JSON.stringify(protocolsData)); }
+          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_v4_vol_protocols_cache', JSON.stringify(vol)); }
+          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_v4_fees_protocols_cache', JSON.stringify(fees)); }
+          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_v4_rev_protocols_cache', JSON.stringify(rev)); }
+          if (coin) { setCoinStats(coin); localStorage.setItem('monad_v4_coin_cache', JSON.stringify(coin)); }
         }
       } catch (err) {
         console.error("Critical Ecosystem Fetch Error:", err);
