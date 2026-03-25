@@ -174,8 +174,10 @@ const NFTItem = React.memo(({ collection, index }) => {
 
 const App = () => {
   const [activePage, setActivePage] = useState('dashboard');
+  const [isEconomyOpen, setIsEconomyOpen] = useState(false);
   
   const handlePageChange = (page) => {
+    setIsEconomyOpen(false);
     if (page === 'aimemes') {
       window.location.href = '/AIMEMES';
       return;
@@ -296,44 +298,38 @@ const App = () => {
              onClick={() => handlePageChange('memes')}
              className={`nav-btn ${activePage === 'memes' ? 'active' : ''}`}
            >
-             Meme Explorer
+             Memes
            </button>
            <button 
              onClick={() => handlePageChange('nft')}
              className={`nav-btn ${activePage === 'nft' ? 'active' : ''}`}
            >
-             NFT Explorer
+             NFTs
            </button>
            <button 
              onClick={() => handlePageChange('protocols')}
              className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
            >
-             DeFi Rankings
+             DeFi
            </button>
-           <button 
-             onClick={() => handlePageChange('volume')}
-             className={`nav-btn ${activePage === 'volume' ? 'active' : ''}`}
-           >
-             Volume
-           </button>
-           <button 
-             onClick={() => handlePageChange('fees')}
-             className={`nav-btn ${activePage === 'fees' ? 'active' : ''}`}
-           >
-             Fees
-           </button>
-           <button 
-             onClick={() => handlePageChange('revenue')}
-             className={`nav-btn ${activePage === 'revenue' ? 'active' : ''}`}
-           >
-             Revenue
-           </button>
-           <button 
-             onClick={() => handlePageChange('aimemes')}
-             className={`nav-btn font-black text-monad-purple`}
-           >
-             AI MEME TA
-           </button>
+           
+           <div className="relative">
+             <button 
+               onClick={() => setIsEconomyOpen(!isEconomyOpen)}
+               className={`nav-btn flex items-center gap-2 ${['volume', 'fees', 'revenue'].includes(activePage) ? 'active' : ''}`}
+             >
+               Econ <ChevronDown size={12} className={`transition-transform ${isEconomyOpen ? 'rotate-180' : ''}`} />
+             </button>
+             
+             {isEconomyOpen && (
+               <div className="absolute top-[calc(100%+8px)] left-0 w-44 bg-[#121218] border border-white/10 rounded-xl shadow-2xl py-2 z-[200]">
+                 <div className="px-4 py-2 text-[9px] font-bold text-white/20 uppercase tracking-widest border-b border-white/5 mb-1">Analytics</div>
+                 <button onClick={() => handlePageChange('volume')} className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all">24H Volume</button>
+                 <button onClick={() => handlePageChange('fees')} className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all">Network Fees</button>
+                 <button onClick={() => handlePageChange('revenue')} className="w-full text-left px-4 py-2.5 text-[10px] font-black uppercase text-white/50 hover:text-white hover:bg-white/5 transition-all">Protocol Rev</button>
+               </div>
+             )}
+           </div>
         </div>
 
         <div className="hidden lg:flex items-center gap-6 bg-white/[0.02] px-6 py-2 rounded-xl border border-white/5">
