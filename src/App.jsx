@@ -178,10 +178,7 @@ const App = () => {
   
   const handlePageChange = (page) => {
     setIsEconomyOpen(false);
-    if (page === 'aimemes') {
-      window.location.href = '/AIMEMES';
-      return;
-    }
+
     setActivePage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -312,12 +309,7 @@ const App = () => {
            >
              DeFi
            </button>
-           <button 
-             onClick={() => handlePageChange('aimemes')}
-             className={`nav-btn font-black text-monad-purple`}
-           >
-             AI Terminal
-           </button>
+           
            
            <div className="relative group" onMouseEnter={() => setIsEconomyOpen(true)} onMouseLeave={() => setIsEconomyOpen(false)}>
              <button 
