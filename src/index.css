@@ -35,6 +35,16 @@ html, body {
 }
 
 /* Header & Navigation */
+.content-padding {
+  padding-top: 280px;
+}
+
+@media (max-width: 768px) {
+  .content-padding {
+    padding-top: 32px;
+  }
+}
+
 .main-header {
   position: fixed;
   top: 0;

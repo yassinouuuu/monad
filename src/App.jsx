@@ -345,7 +345,7 @@ const App = () => {
       </header>
 
       {/* --- CONTENT AREA --- */}
-      <main className="pt-8 md:pt-[280px] pb-24 px-4 md:px-10 max-w-[1750px] mx-auto w-full">
+      <main className="content-padding pb-24 px-4 md:px-10 max-w-[1750px] mx-auto w-full">
 
         {/* --- TICKERS AREA (Positioned below fixed header) --- */}
         <div className="relative md:fixed md:top-[90px] w-full left-0 right-0 z-[100] flex flex-col pointer-events-none mb-6 md:mb-0">
