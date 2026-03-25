@@ -79,7 +79,7 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
         <span className={`text-[10px] font-black ${color === 'purple' ? 'text-monad-purple/40' : 'text-emerald-400'}`}>
-          {color === 'purple' ? '●' : (parseFloat(coin.displayChange1h) >= 0 ? '▲' : '▼')}
+          {color === 'purple' ? '·' : (parseFloat(coin.displayChange1h) >= 0 ? '+' : '-')}
         </span>
       </div>
     ))}
@@ -461,10 +461,10 @@ const App = () => {
                   { title: 'Monad Market Cap', value: coinStats.displayMcap, change: 'Native Token', icon: <Database size={14} />, color: 'purple' },
                   { title: 'Total Value Locked', value: stats.tvl, change: stats.tvlChange, icon: <TrendingUp size={14} />, color: 'emerald' },
                   { title: '24h DEX Volume', value: stats.volume, change: stats.volumeChange, icon: <Activity size={14} />, color: 'purple', textColor: 'text-monad-purple' },
-                  { title: 'Daily Transactions', value: stats.dailyTx, change: '● LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
+                  { title: 'Daily Transactions', value: stats.dailyTx, change: '· LIVE TICKET', icon: <TrendingUp size={14} />, color: 'emerald', highlight: true },
                   { title: 'Total Network Tx', value: stats.totalTx, change: 'Aggregate Chain Data', icon: <Database size={14} />, color: 'white' },
                   { title: 'Total Addresses', value: stats.totalAccounts, change: 'Unique Identity Layer', icon: <Users size={14} />, color: 'white' },
-                  { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: '▲ LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
+                  { title: 'Active Pulse', value: stats.dailyActiveAccounts || '---', change: '+ LIVE SEC', icon: <TrendingUp size={14} />, color: 'emerald', textColor: 'text-emerald-400', tick: true }
                 ].map((kpi, i) => (
                   <div key={i} className={`glass-card p-6 flex flex-col justify-between min-h-[160px] border-white/5 hover:border-white/20 transition-all ${kpi.highlight ? 'ring-1 ring-emerald-500/20' : ''}`}>
                     <div className="flex items-center justify-between mb-4">
