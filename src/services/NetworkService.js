@@ -7,7 +7,7 @@ const provider = new ethers.JsonRpcProvider(RPC_URL);
 let statsCache = null;
 let lastStatsFetch = 0;
 const CACHE_DURATION = 10000; // 10 seconds for heavy API calls
-const LS_STATS_KEY = 'monad_vFINAL_stats_cache';
+const LS_STATS_KEY = 'monad_vFINAL_2_stats_cache';
 
 /**
  * Service to fetch live statistics from the Monad Mainnet.

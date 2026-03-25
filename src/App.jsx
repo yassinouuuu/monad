@@ -74,7 +74,7 @@ const NewsTicker = React.memo(({ news }) => (
 const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }) => (
   <div className={`ticker-content-${direction} flex items-center`}>
     {[...coins, ...coins].map((coin, i) => (
-      <a key={i} href={coin.tradingUrl} target="_blank" rel="noopener noreferrer" className="ticker-item gap-3 border-r border-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer no-underline">
+      <a key={i} href={coin.tradingUrl || (color === 'emerald' ? `https://nad.fun/coin/${coin.address}` : `https://something.tools/token/${coin.address}`)} target="_blank" rel="noopener noreferrer" className="ticker-item gap-3 border-r border-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer no-underline">
         {coin.logoUrl && <img src={coin.logoUrl} className="w-5 h-5 rounded-md" alt="" />}
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
@@ -185,7 +185,7 @@ const App = () => {
     setActivePage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  const [stats, setStats] = useState(() => initFromLS('monad_vFINAL_stats_cache', {
+  const [stats, setStats] = useState(() => initFromLS('monad_vFINAL_2_stats_cache', {
     tps: '---',
     avgBlockTime: '---',
     latestBlock: '---',
@@ -201,17 +201,17 @@ const App = () => {
     totalAccounts: '---'
   }));
   
-  const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_vFINAL_nadfun_cache', []));
-  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_vFINAL_smt_cache', []));
-  const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_vFINAL_lnad_cache', []));
-  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_vFINAL_lsmt_cache_v2', []));
-  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_vFINAL_nft_cache_v3', []));
-  const [news, setNews] = useState(() => initFromLS('monad_vFINAL_news_cache', []));
-  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_vFINAL_protocols_cache', []));
-  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_vFINAL_vol_protocols_cache', []));
-  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_vFINAL_fees_protocols_cache', []));
-  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_vFINAL_rev_protocols_cache', []));
-  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_vFINAL_coin_cache', {
+  const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_vFINAL_2_nadfun_cache', []));
+  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_vFINAL_2_smt_cache', []));
+  const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_vFINAL_2_lnad_cache', []));
+  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_vFINAL_2_lsmt_cache_v2', []));
+  const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_vFINAL_2_nft_cache_v3', []));
+  const [news, setNews] = useState(() => initFromLS('monad_vFINAL_2_news_cache', []));
+  const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_vFINAL_2_protocols_cache', []));
+  const [volProtocols, setVolProtocols] = useState(() => initFromLS('monad_vFINAL_2_vol_protocols_cache', []));
+  const [feesProtocols, setFeesProtocols] = useState(() => initFromLS('monad_vFINAL_2_fees_protocols_cache', []));
+  const [revProtocols, setRevProtocols] = useState(() => initFromLS('monad_vFINAL_2_rev_protocols_cache', []));
+  const [coinStats, setCoinStats] = useState(() => initFromLS('monad_vFINAL_2_coin_cache', {
      displayPrice: '$0.0225', displayMcap: '$244.1M', displayChange: '+0.00%', changeColor: 'text-emerald-400'
   }));
 
@@ -242,17 +242,17 @@ const App = () => {
         ]);
         
         if (isMounted) {
-          if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_vFINAL_nadfun_cache', JSON.stringify(nad)); }
-          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_vFINAL_smt_cache', JSON.stringify(smt)); }
-          if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_vFINAL_lnad_cache', JSON.stringify(lNad)); }
-          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_vFINAL_lsmt_cache_v2', JSON.stringify(lSmt)); }
-          if (nft) { setNftCollections(nft); localStorage.setItem('monad_vFINAL_nft_cache_v3', JSON.stringify(nft)); }
-          if (newsData) { setNews(newsData); localStorage.setItem('monad_vFINAL_news_cache', JSON.stringify(newsData)); }
-          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_vFINAL_protocols_cache', JSON.stringify(protocolsData)); }
-          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_vFINAL_vol_protocols_cache', JSON.stringify(vol)); }
-          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_vFINAL_fees_protocols_cache', JSON.stringify(fees)); }
-          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_vFINAL_rev_protocols_cache', JSON.stringify(rev)); }
-          if (coin) { setCoinStats(coin); localStorage.setItem('monad_vFINAL_coin_cache', JSON.stringify(coin)); }
+          if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_vFINAL_2_nadfun_cache', JSON.stringify(nad)); }
+          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_vFINAL_2_smt_cache', JSON.stringify(smt)); }
+          if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_vFINAL_2_lnad_cache', JSON.stringify(lNad)); }
+          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_vFINAL_2_lsmt_cache_v2', JSON.stringify(lSmt)); }
+          if (nft) { setNftCollections(nft); localStorage.setItem('monad_vFINAL_2_nft_cache_v3', JSON.stringify(nft)); }
+          if (newsData) { setNews(newsData); localStorage.setItem('monad_vFINAL_2_news_cache', JSON.stringify(newsData)); }
+          if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_vFINAL_2_protocols_cache', JSON.stringify(protocolsData)); }
+          if (vol) { setVolProtocols(vol); localStorage.setItem('monad_vFINAL_2_vol_protocols_cache', JSON.stringify(vol)); }
+          if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_vFINAL_2_fees_protocols_cache', JSON.stringify(fees)); }
+          if (rev) { setRevProtocols(rev); localStorage.setItem('monad_vFINAL_2_rev_protocols_cache', JSON.stringify(rev)); }
+          if (coin) { setCoinStats(coin); localStorage.setItem('monad_vFINAL_2_coin_cache', JSON.stringify(coin)); }
         }
       } catch (err) {
         console.error("Critical Ecosystem Fetch Error:", err);
