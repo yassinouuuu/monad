@@ -600,9 +600,9 @@ export const NetworkService = {
       };
 
       const formatChange = (change) => {
-        if (change === null || change === undefined || isNaN(change)) return 'Ã¢â€“Â² 0.0%';
+        if (change === null || change === undefined || isNaN(change)) return '+ 0.0%';
         const num = parseFloat(change);
-        const prefix = num >= 0 ? 'Ã¢â€“Â²' : 'Ã¢â€“Â¼';
+        const prefix = num >= 0 ? '+' : '-';
         return `${prefix} ${Math.abs(num).toFixed(1)}%`;
       };
 
@@ -673,7 +673,7 @@ export const NetworkService = {
         dailyTxChange: formatChange(5.2),
         
         activeWallets: explorerStats?.dailyActiveAccounts || statsCache?.processed?.dailyActiveAccounts || '---',
-        activeWalletsChange: 'Ã¢â€“Â² 5.1%',
+        activeWalletsChange: '+ 5.1%',
         lastUpdate: new Date().toLocaleTimeString()
       };
       
@@ -796,7 +796,7 @@ export const NetworkService = {
       const variations = tokens.map(t => {
         // Simple deterministic random based on seed and symbol
         const hash = (seed + t.symbol.charCodeAt(0)) % 21;
-        const factor = 0.9 + (hash / 100); // Ã‚Â±10% variation
+        const factor = 0.9 + (hash / 100); // +/-10% variation
         return {
           ...t,
           volume: t.volume * factor,
@@ -991,7 +991,7 @@ export const NetworkService = {
     // Ã¢â€ Â Ã˜Â§Ã™â€žÃ™â€¦Ã™ÂÃ˜ÂªÃ˜Â§Ã˜Â­ Ã˜Â§Ã™â€žÃ˜Â®Ã˜Â§Ã˜Âµ Ã˜Â¨Ã™Æ’ (Ã™â€¦Ã˜Â´Ã™ÂÃ˜Â± Ã™â€žÃ˜ÂªÃ˜Â¬Ã™â€ Ã˜Â¨ Ã˜Â±Ã™Ë†Ã˜Â¨Ã™Ë†Ã˜ÂªÃ˜Â§Ã˜Âª GitHub)
     const AGGREGATOR_API_KEY = atob('YzBlODJkNmU1NmE0NGIzODkwNThmYTNmNTI3MDEyNjQ=');
 
-    // Ã˜Â§Ã™â€žÃ™Æ’Ã™Ë†Ã™â€žÃ™Å Ã™Æ’Ã˜Â´Ã™â€ Ã˜Â² Ã˜Â§Ã™â€žÃ˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã˜Â¹Ã™â€žÃ™â€° Monad (slugs Ã˜Â±Ã˜Â³Ã™â€¦Ã™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator)
+    // Real collections Ã˜Â¹Ã™â€žÃ™â€° Monad (slugs Ã˜Â±Ã˜Â³Ã™â€¦Ã™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator)
     const MONAD_SLUGS = [
       'voting-escrow-dust',
       'skrumpeys',
@@ -1077,8 +1077,8 @@ export const NetworkService = {
       }
     }
 
-    // --- Fallback: Ã˜Â¨Ã™Å Ã˜Â§Ã™â€ Ã˜Â§Ã˜Âª Ã˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã˜Â¨Ã˜Â¯Ã™Ë†Ã™â€  API Key ---
-    // --- Fallback: Ã˜Â¨Ã™Å Ã˜Â§Ã™â€ Ã˜Â§Ã˜Âª Ã˜Â­Ã™â€šÃ™Å Ã™â€šÃ™Å Ã˜Â© Ã™â€¦Ã™â€  Real-time Aggregator (Ã˜Â¢Ã˜Â®Ã˜Â± Ã˜ÂªÃ˜Â­Ã˜Â¯Ã™Å Ã˜Â«) ---
+    // --- Fallback: Real data without API Key ---
+    // --- Fallback: Real data from Aggregator (Ã˜Â¢Ã˜Â®Ã˜Â± Ã˜ÂªÃ˜Â­Ã˜Â¯Ã™Å Ã˜Â«) ---
     const fallback = [
       { name: 'Voting Escrow DUST', slug: 'voting-escrow-dust', floor: 174.00, volume: 369600, change: 12.5, image: 'https://i.seadn.io/s/raw/files/dust.png', owners: 1240, sales: 8400 },
       { name: 'skrumpeys', slug: 'skrumpeys', floor: 2197.30, volume: 10600, change: -5.2, image: 'https://i.seadn.io/s/raw/files/skrumpeys.png', owners: 1390, sales: 1200 },
@@ -1115,11 +1115,11 @@ export const NetworkService = {
    */
   async getMonadNews() {
     return [
-      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for MonadÃ¢â‚¬â„¢s Essential Hard Fork', date: 'Mar 17' },
+      { id: 1, title: 'Upbit Announces Critical MON Suspension: Exchange Halts Deposits for Monad's Essential Hard Fork', date: 'Mar 17' },
       { id: 2, title: 'Bithumb Suspends MON Deposits: Essential Guide to the Monad Network Upgrade', date: 'Mar 13' },
       { id: 3, title: 'Monad Integrates Chainlink CCIP: A Revolutionary Leap for Cross-Chain cbBTC Transfers', date: 'Mar 10' },
       { id: 4, title: 'MON outperforms market as upgrade, staking vaults drive demand', date: 'Feb 19' },
-      { id: 5, title: 'Monad DeveloperÃ¢â‚¬â„¢s Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
+      { id: 5, title: 'Monad Developer's Strategic $30M Token Purchase Plan Signals Bold Confidence in EVM Future', date: 'Jan 30' },
       { id: 6, title: 'MON rallies to one-week high as Monad holds record value locked', date: 'Jan 02' },
       { id: 7, title: 'Monad adds support for USD1 stablecoin: A Game-Changer for DeFi Liquidity', date: 'Jan 02' }
     ];

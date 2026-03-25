@@ -78,8 +78,8 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
         {coin.logoUrl && <img src={coin.logoUrl} className="w-5 h-5 rounded-md" alt="" />}
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
-        <span className={`text-[10px] font-black ${color === 'purple' ? 'text-monad-purple/40' : 'text-emerald-400'}`}>
-          {color === 'purple' ? '·' : (parseFloat(coin.displayChange1h) >= 0 ? '+' : '-')}
+        <span className={`text-[10px] font-black ${parseFloat(coin.displayChange1h) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+          {parseFloat(coin.displayChange1h) >= 0 ? '+' : ''}{coin.displayChange1h}
         </span>
       </div>
     ))}
@@ -433,7 +433,7 @@ const App = () => {
            {/* Price Bar 1 (monadstats assets) */}
            <div className="price-bar bg-black/40 backdrop-blur-md pointer-events-auto border-b border-white/5 flex items-center">
               <div className="bg-emerald-400/10 px-6 h-full flex items-center border-r border-white/5 whitespace-nowrap">
-                 <span className="text-[10px] font-black tracking-[0.3em] text-emerald-400">MONAD ASSETS // ECOSYSTEM</span>
+                 <span className="text-[10px] font-black tracking-[0.3em] text-emerald-400">MONAD ECOSYSTEM</span>
               </div>
               <div className="ticker-container h-full flex-1">
                  <PriceTicker coins={nadFunCoins} direction="right" color="emerald" />
@@ -443,7 +443,7 @@ const App = () => {
            {/* Price Bar 2 (Something assets) */}
            <div className="price-bar bg-black/60 backdrop-blur-xl pointer-events-auto border-b border-white/10 shadow-2xl flex items-center">
               <div className="bg-monad-purple/10 px-6 h-full flex items-center border-r border-white/10 whitespace-nowrap">
-                 <span className="text-[10px] font-black tracking-[0.3em] text-monad-purple">ECOSYSTEM FEED // LIVE</span>
+                 <span className="text-[10px] font-black tracking-[0.3em] text-monad-purple">ECOSYSTEM FEED</span>
               </div>
               <div className="ticker-container h-full flex-1">
                  <PriceTicker coins={smtCoins} direction="left" color="purple" />
