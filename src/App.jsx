@@ -351,6 +351,14 @@ const App = () => {
               <span className="text-[8px] font-black text-white/20 uppercase tracking-widest leading-none">Status</span>
               <span className="text-xs font-black text-white mt-1 uppercase">Nominal</span>
            </div>
+           
+           <button 
+             onClick={() => window.location.href='/AIMEMES'}
+             className="ml-4 flex items-center gap-2 bg-monad-purple px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-lg shadow-purple-500/20 active:scale-95"
+           >
+              <Zap size={12} className="fill-white" />
+              Launch AI Terminal
+           </button>
         </div>
 
       </header>
