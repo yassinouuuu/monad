@@ -76,7 +76,7 @@ const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
         </span>
       )}
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-${isNad ? 'monad-purple' : 'orange-400'}/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={coin.logoUrl} className="w-full h-full object-cover" loading="lazy" alt="" onError={(e) => { e.target.src = 'https://monadstats/logo.png'; }} />
+        <img src={coin.logoUrl} className="w-full h-full object-cover" loading="lazy" width="56" height="56" alt={coin.name || "coin logo"} onError={(e) => { e.target.src = 'https://monadstats/logo.png'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{coin.symbol}</span>
@@ -111,7 +111,7 @@ const NFTItem = React.memo(({ collection, index }) => {
         {(index + 1).toString().padStart(2, '0')}
       </span>
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-monad-purple/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={collection.image} className="w-full h-full object-cover" loading="lazy" alt="" onError={(e) => { e.target.src = 'https://monadstats.vercel.app/logo.svg'; }} />
+        <img src={collection.image} className="w-full h-full object-cover" loading="lazy" width="56" height="56" alt={collection.name || "NFT collection"} onError={(e) => { e.target.src = 'https://monadstats.vercel.app/logo.svg'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{collection.name}</span>
@@ -730,7 +730,7 @@ const App = () => {
                    <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 bg-gradient-to-r from-monad-purple/[0.02] to-transparent">
                       <div className="flex items-center gap-6">
                         <div className="w-16 h-16 rounded-2xl bg-black">
-                           <img src={p.logo} alt="" className="w-full h-full rounded-2xl" />
+                           <img src={p.logo} alt={`${p.name} logo`} width="64" height="64" loading="lazy" className="w-full h-full rounded-2xl" />
                         </div>
                         <div className="flex flex-col">
                            <a href={p.url} target="_blank" className="text-2xl font-black text-white italic uppercase">{p.name}</a>
@@ -758,7 +758,7 @@ const App = () => {
                    <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 bg-gradient-to-r from-emerald-500/[0.02] to-transparent">
                       <div className="flex items-center gap-6">
                         <div className="w-16 h-16 rounded-2xl bg-black">
-                           <img src={p.logo} alt="" className="w-full h-full rounded-2xl" />
+                           <img src={p.logo} alt={`${p.name} logo`} width="64" height="64" loading="lazy" className="w-full h-full rounded-2xl" />
                         </div>
                         <div className="flex flex-col">
                            <a href={p.url} target="_blank" className="text-2xl font-black text-white italic uppercase">{p.name}</a>
@@ -786,7 +786,7 @@ const App = () => {
                    <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 bg-gradient-to-r from-orange-400/[0.02] to-transparent">
                       <div className="flex items-center gap-6">
                         <div className="w-16 h-16 rounded-2xl bg-black">
-                           <img src={p.logo} alt="" className="w-full h-full rounded-2xl" />
+                           <img src={p.logo} alt={`${p.name} logo`} width="64" height="64" loading="lazy" className="w-full h-full rounded-2xl" />
                         </div>
                         <div className="flex flex-col">
                            <a href={p.url} target="_blank" className="text-2xl font-black text-white italic uppercase">{p.name}</a>
