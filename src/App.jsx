@@ -179,7 +179,7 @@ const App = () => {
   const handlePageChange = (page) => {
     setIsEconomyOpen(false);
     if (page === 'aimemes') {
-      window.location.href = '/AIMEMES';
+      window.location.href = '/ai-meme';
       return;
     }
     setActivePage(page);
@@ -447,7 +447,7 @@ const App = () => {
 
            {/* AI Terminal Promotional Banner */}
            <div 
-              onClick={() => { window.location.href='/AIMEMES'; }}
+              onClick={() => { window.location.href='/ai-meme'; }}
               className="relative bg-gradient-to-r from-monad-purple/30 via-monad-purple/10 to-monad-purple/30 backdrop-blur-3xl pointer-events-auto border-t border-b border-monad-purple/50 flex items-center justify-center p-3 shadow-[0_0_50px_rgba(131,110,249,0.3)] overflow-hidden group cursor-pointer hover:bg-monad-purple/20 transition-all"
            >
               {/* Dynamic light sweep effect */}

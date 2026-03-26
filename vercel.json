@@ -1,7 +1,10 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/AIMEMES", "destination": "/ai-meme", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/AIMEMES", "destination": "/AIMEMES.html" },
+    { "source": "/ai-meme", "destination": "/AIMEMES.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
