@@ -75,7 +75,7 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
   <div className={`ticker-content-${direction} flex items-center`}>
     {[...coins, ...coins].map((coin, i) => (
       <a key={i} href={coin.tradingUrl || (color === 'emerald' ? `https://nad.fun/tokens/${coin.address}` : `https://something.tools/token/${coin.address}`)} target="_blank" rel="noopener noreferrer" className="ticker-item gap-3 border-r border-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer no-underline">
-        {coin.logoUrl && <img src={coin.logoUrl} className="w-5 h-5 rounded-md" alt="" />}
+        {coin.logoUrl && <img src={coin.logoUrl} className="w-5 h-5 rounded-md" loading="lazy" alt="" />}
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
         <span className={`text-[10px] font-black ${parseFloat(coin.displayChange1h) >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
@@ -103,7 +103,7 @@ const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
         </span>
       )}
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-${isNad ? 'monad-purple' : 'orange-400'}/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={coin.logoUrl} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://monadstats/logo.png'; }} />
+        <img src={coin.logoUrl} className="w-full h-full object-cover" loading="lazy" alt="" onError={(e) => { e.target.src = 'https://monadstats/logo.png'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{coin.symbol}</span>
@@ -138,7 +138,7 @@ const NFTItem = React.memo(({ collection, index }) => {
         {(index + 1).toString().padStart(2, '0')}
       </span>
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-monad-purple/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={collection.image} className="w-full h-full object-cover" alt="" onError={(e) => { e.target.src = 'https://monadstats.vercel.app/logo.svg'; }} />
+        <img src={collection.image} className="w-full h-full object-cover" loading="lazy" alt="" onError={(e) => { e.target.src = 'https://monadstats.vercel.app/logo.svg'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{collection.name}</span>
