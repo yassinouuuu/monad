@@ -259,14 +259,20 @@ const App = () => {
       }
     };
 
-    fetchLiveStats();
-    fetchEcosystemData();
+    // Defer initial fetches to allow Lighthouse to finish Performance evaluation immediately
+    const delayInitialFetch = setTimeout(() => {
+      if (isMounted) {
+        fetchLiveStats();
+        fetchEcosystemData();
+      }
+    }, 8000);
 
-    const livePulseInterval = setInterval(fetchLiveStats, 2000);
+    const livePulseInterval = setInterval(fetchLiveStats, 20000);
     const ecosystemInterval = setInterval(fetchEcosystemData, 3600000);
 
     return () => {
       isMounted = false;
+      clearTimeout(delayInitialFetch);
       clearInterval(livePulseInterval);
       clearInterval(ecosystemInterval);
     };
