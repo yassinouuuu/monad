@@ -261,8 +261,8 @@ const App = () => {
              <Zap size={20} className="fill-white" />
            </div>
            <div className="hidden sm:flex flex-col select-none">
-             <span className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats</span>
-             <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
+             <span className="text-lg font-black tracking-tight italic uppercase leading-none">Monad Stats</span>
+             <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Monad Dashboard</span>
            </div>
         </div>
 
@@ -435,6 +435,11 @@ const App = () => {
         {activePage === 'dashboard' && (
           <div className="animate-slide-up">
             
+            <div className="flex flex-col gap-4 mb-10">
+               <h1 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Monad Analytics</h1>
+               <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">The Authoritative Hub for Monad Network Statistics</p>
+            </div>
+
             {/* KPI Executive Summary - Premium Layer */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 relative z-10 transition-all">
                 {[
