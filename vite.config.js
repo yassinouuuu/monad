@@ -10,10 +10,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          icons: ['lucide-react'],
-          charts: ['chart.js', 'react-chartjs-2']
+        manualChunks(id) {
+          if (id.includes('node_modules/lucide-react')) return 'icons';
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'vendor';
+          if (id.includes('node_modules/chart.js') || id.includes('node_modules/react-chartjs-2')) return 'charts';
         }
       }
     },
