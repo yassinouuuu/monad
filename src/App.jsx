@@ -6,35 +6,8 @@ import {
   ChevronDown, Filter, Zap, Bell, Smile, ExternalLink,
   PieChart, Settings, LogOut, ChevronRight
 } from 'lucide-react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-} from 'chart.js';
-import { Line, Bar } from 'react-chartjs-2';
 import NetworkService from './services/NetworkService';
-import MemeAgentDemo from './MemeAgentDemo';
 import './index.css';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
-
 const getAge = (createdAt) => {
   if (!createdAt) return '---';
   const now = Math.floor(Date.now() / 1000);
