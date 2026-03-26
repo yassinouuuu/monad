@@ -415,35 +415,7 @@ const App = () => {
 
         {/* --- TICKERS AREA (Positioned below fixed header) --- */}
          <div className="relative md:fixed md:top-[90px] w-full left-0 right-0 z-[50] flex flex-col pointer-events-none mb-6 md:mb-0">
-           {/* News Ticker */}
-           <div className="news-bar pointer-events-auto flex items-center">
-              <div className="bg-white/10 px-6 h-full flex items-center border-r border-white/5 whitespace-nowrap">
-                 <span className="text-[10px] font-black tracking-[0.3em] text-white">BREAKING NEWS</span>
-              </div>
-              <div className="ticker-container px-4 flex items-center gap-6 h-full flex-1">
-                 <NewsTicker news={news} />
-              </div>
-           </div>
-           
-           {/* Price Bar 1 (monadstats assets) */}
-           <div className="price-bar bg-black/40 backdrop-blur-md pointer-events-auto border-b border-white/5 flex items-center">
-              <div className="bg-emerald-400/10 px-6 h-full flex items-center border-r border-white/5 whitespace-nowrap">
-                 <span className="text-[10px] font-black tracking-[0.3em] text-emerald-400">MONAD ECOSYSTEM</span>
-              </div>
-              <div className="ticker-container h-full flex-1">
-                 <PriceTicker coins={nadFunCoins} direction="right" color="emerald" />
-              </div>
-           </div>
 
-           {/* Price Bar 2 (Something assets) */}
-           <div className="price-bar bg-black/60 backdrop-blur-xl pointer-events-auto border-b border-white/10 shadow-2xl flex items-center">
-              <div className="bg-monad-purple/10 px-6 h-full flex items-center border-r border-white/10 whitespace-nowrap">
-                 <span className="text-[10px] font-black tracking-[0.3em] text-monad-purple">ECOSYSTEM FEED</span>
-              </div>
-               <div className="ticker-container h-full flex-1">
-                 <PriceTicker coins={smtCoins} direction="left" color="purple" />
-              </div>
-           </div>
 
            {/* AI Terminal Promotional Banner */}
            <div 
