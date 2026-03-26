@@ -261,8 +261,8 @@ const App = () => {
              <Zap size={20} className="fill-white" />
            </div>
            <div className="hidden sm:flex flex-col select-none">
-             <span className="text-lg font-black tracking-tight italic uppercase leading-none">Monad Stats</span>
-             <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Monad Dashboard</span>
+             <span className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats</span>
+             <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
            </div>
         </div>
 

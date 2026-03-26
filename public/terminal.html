@@ -73,7 +73,7 @@
         .glass { background: rgba(255,255,255,0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.06); }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
 
-        .sidebar { width: 270px; min-width: 260px; background: #0c0e14; border-right: 1px solid rgba(131,110,249,0.1); height: 100vh; display: flex; flex-direction: column; }
+        .sidebar { background: #0c0e14; border-right: 1px solid rgba(131,110,249,0.1); display: flex; flex-direction: column; }
         .coin-item { padding: 10px 12px; cursor: pointer; border-radius: 12px; transition: all 0.2s; border: 1px solid transparent; margin: 2px 6px; }
         .coin-item:hover { background: rgba(131,110,249,0.08); border-color: rgba(131,110,249,0.2); }
         .coin-item.active { background: rgba(131,110,249,0.15); border-color: rgba(131,110,249,0.4); }
@@ -83,7 +83,14 @@
         .tf-btn.active { background: #836ef9; color: #fff; }
 
         .main-chart { height: 400px; width: 100%; }
+        @media (max-width: 768px) { .main-chart { height: 320px; } }
         .corr-chart { height: 150px; width: 100%; }
+
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 40; display: none; }
+        .sidebar-overlay.active { display: block; }
+        
+        .sidebar-mobile { position: fixed; left: -280px; top: 0; bottom: 0; width: 280px; z-index: 50; transition: left 0.3s ease; }
+        .sidebar-mobile.active { left: 0; }
 
         /* Indicator label colors */
         .val-neutral { color: #94a3b8; }
@@ -107,10 +114,26 @@
     </style>
 </head>
 <body>
-<div style="display:flex;height:100vh;overflow:hidden;">
+<div class="flex flex-col lg:flex-row h-screen overflow-hidden">
 
-    <!-- ═══ SIDEBAR ═══ -->
-    <div class="sidebar overflow-y-auto scrollbar-hide flex-shrink-0">
+    <!-- Mobile Header -->
+    <div class="lg:hidden h-14 bg-[#0c0e14] border-b border-purple-900/20 px-4 flex items-center justify-between z-30">
+        <div class="flex items-center gap-3">
+             <div class="p-1.5 bg-purple-600 rounded-lg">
+                 <i data-lucide="bar-chart-2" class="text-white w-4 h-4"></i>
+             </div>
+             <span class="text-xs font-black text-white uppercase tracking-tight">Nexus Terminal</span>
+        </div>
+        <button id="menuBtn" class="p-2 text-gray-400 hover:text-white">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <!-- Overlay Wrapper -->
+    <div id="sidebarOverlay" class="sidebar-overlay lg:hidden"></div>
+
+    <!-- ═══ SIDEBAR (Responsive) ═══ -->
+    <div id="sideBar" class="sidebar sidebar-mobile lg:sidebar-desktop lg:static lg:flex lg:w-[270px] lg:h-full lg:left-0 overflow-y-auto scrollbar-hide flex-shrink-0">
         <div class="p-4 border-b border-purple-900/20 sticky top-0 bg-[#0c0e14] z-10">
             <div class="flex items-center gap-3">
                 <div class="p-2 bg-purple-600 rounded-xl relative">
@@ -205,7 +228,7 @@
             </div>
 
             <!-- CHARTS + PANEL -->
-            <div class="grid xl:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
 
                 <!-- LEFT: Charts -->
                 <div class="xl:col-span-2 space-y-3">
@@ -782,6 +805,35 @@ document.querySelectorAll('.tf-btn').forEach(btn=>{
         if(activeCoin){buildMainChart(activeCoin);buildCorrChart(activeCoin);}
     };
 });
+
+// Mobile Menu Logic
+const menuBtn = document.getElementById('menuBtn');
+const sideBar = document.getElementById('sideBar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+if(menuBtn) {
+    menuBtn.onclick = () => {
+        sideBar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+    };
+}
+
+if(sidebarOverlay) {
+    sidebarOverlay.onclick = () => {
+        sideBar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+    };
+}
+
+// Auto-close sidebar on coin selection (mobile only)
+const originalSelectCoin = selectCoin;
+selectCoin = (id) => {
+    originalSelectCoin(id);
+    if(window.innerWidth < 1024) {
+        sideBar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+    }
+};
 
 fetchTop10();
 setInterval(fetchTop10,60000);
