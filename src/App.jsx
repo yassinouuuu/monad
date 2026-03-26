@@ -440,8 +440,43 @@ const App = () => {
               <div className="bg-monad-purple/10 px-6 h-full flex items-center border-r border-white/10 whitespace-nowrap">
                  <span className="text-[10px] font-black tracking-[0.3em] text-monad-purple">ECOSYSTEM FEED</span>
               </div>
-              <div className="ticker-container h-full flex-1">
+               <div className="ticker-container h-full flex-1">
                  <PriceTicker coins={smtCoins} direction="left" color="purple" />
+              </div>
+           </div>
+
+           {/* AI Terminal Promotional Banner */}
+           <div 
+              onClick={() => { window.location.href='/AIMEMES'; }}
+              className="relative bg-gradient-to-r from-monad-purple/30 via-monad-purple/10 to-monad-purple/30 backdrop-blur-3xl pointer-events-auto border-t border-b border-monad-purple/50 flex items-center justify-center p-3 shadow-[0_0_50px_rgba(131,110,249,0.3)] overflow-hidden group cursor-pointer hover:bg-monad-purple/20 transition-all"
+           >
+              {/* Dynamic light sweep effect */}
+              <div className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+              
+              <div className="flex items-center gap-4 md:gap-8 relative z-10 w-full max-w-7xl mx-auto px-4 justify-between md:justify-center">
+                 
+                 <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-monad-purple flex items-center justify-center shadow-[0_0_20px_rgba(131,110,249,0.8)] group-hover:scale-110 group-hover:rotate-12 transition-all">
+                       <Zap size={16} className="fill-white text-white animate-pulse" />
+                    </div>
+                    <div className="flex items-baseline gap-2">
+                       <span className="text-sm md:text-base font-black italic uppercase tracking-[0.2em] text-white drop-shadow-lg">
+                         Meet <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">AI Terminal v2</span>
+                       </span>
+                       <span className="hidden md:inline-block px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[9px] font-black uppercase tracking-widest shadow-[0_0_15px_rgba(16,185,129,0.6)] animate-pulse">Live Now</span>
+                    </div>
+                 </div>
+                 
+                 <div className="hidden md:flex items-center gap-2 opacity-80">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_white]"></span>
+                    <span className="text-[11px] font-black text-white tracking-[0.3em] uppercase drop-shadow-md">Predictive On-Chain Intelligence</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_white]"></span>
+                 </div>
+
+                 <div className="flex items-center gap-2 bg-white text-monad-purple px-5 py-2 rounded-full border border-white group-hover:bg-transparent group-hover:text-white group-hover:border-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                    <span className="text-[11px] font-black uppercase tracking-widest">Launch Agent</span>
+                    <ChevronRight size={16} className="transform group-hover:translate-x-1 transition-all" />
+                 </div>
               </div>
            </div>
         </div>
