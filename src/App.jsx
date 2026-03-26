@@ -412,7 +412,7 @@ const App = () => {
                     </div>
                     <div className="flex items-baseline gap-2">
                        <span className="text-sm md:text-base font-black italic uppercase tracking-[0.2em] text-white drop-shadow-lg">
-                         Meet <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">AI Terminal v2</span>
+                         Meet <span className="text-white drop-shadow-md">AI Terminal v2</span>
                        </span>
                        <span className="hidden md:inline-block px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[9px] font-black uppercase tracking-widest shadow-[0_0_15px_rgba(16,185,129,0.6)] animate-pulse">Live Now</span>
                     </div>
