@@ -473,9 +473,9 @@ const App = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_white]"></span>
                  </div>
 
-                 <div className="flex items-center gap-2 bg-white text-monad-purple px-5 py-2 rounded-full border border-white group-hover:bg-transparent group-hover:text-white group-hover:border-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                    <span className="text-[11px] font-black uppercase tracking-widest">Launch Agent</span>
-                    <ChevronRight size={16} className="transform group-hover:translate-x-1 transition-all" />
+                 <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md text-white px-5 py-2 rounded-full border border-white/20 group-hover:bg-black/60 group-hover:border-monad-purple transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_20px_rgba(131,110,249,0.8)]">
+                    <span className="text-[11px] font-black uppercase tracking-widest text-[#d8b4fe]">Launch Agent</span>
+                    <ChevronRight size={16} className="text-white transform group-hover:translate-x-1 transition-all" />
                  </div>
               </div>
            </div>
