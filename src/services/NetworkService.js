@@ -1,7 +1,15 @@
-import { ethers } from 'ethers';
-
 const RPC_URL = 'https://rpc.monad.xyz';
-const provider = new ethers.JsonRpcProvider(RPC_URL);
+
+async function rpcCall(method, params = []) {
+  const res = await fetch(RPC_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params })
+  });
+  const json = await res.json();
+  if (json.error) throw new Error(json.error.message);
+  return json.result;
+}
 
 // Simple cache for high-frequency polling
 let statsCache = null;
@@ -18,7 +26,8 @@ export const NetworkService = {
    */
   async getLatestBlock() {
     try {
-      return await provider.getBlockNumber();
+      const result = await rpcCall('eth_blockNumber');
+      return parseInt(result, 16);
     } catch (error) {
       console.error('Error fetching block number:', error);
       return null;
@@ -30,7 +39,13 @@ export const NetworkService = {
    */
   async getBlock(number) {
     try {
-      return await provider.getBlock(number);
+      const hexNum = '0x' + number.toString(16);
+      const result = await rpcCall('eth_getBlockByNumber', [hexNum, true]);
+      if (!result) return null;
+      return {
+        timestamp: parseInt(result.timestamp, 16),
+        transactions: result.transactions || []
+      };
     } catch (error) {
       console.error(`Error fetching block ${number}:`, error);
       return null;
@@ -431,7 +446,8 @@ export const NetworkService = {
    */
   async getGasFees() {
     try {
-      return await provider.getFeeData();
+      const result = await rpcCall('eth_gasPrice');
+      return { gasPrice: BigInt(result) };
     } catch (error) {
       console.error('Error fetching fee data:', error);
       return { gasPrice: 0n };
