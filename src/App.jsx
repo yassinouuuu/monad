@@ -314,6 +314,12 @@ const App = () => {
            >
              Articles
            </button>
+           <button 
+             onClick={() => handlePageChange('aimemes')}
+             className={`nav-btn ${activePage === 'aimemes' ? 'active' : ''}`}
+           >
+             Terminal
+           </button>
            
            <div className="relative group" onMouseEnter={() => setIsEconomyOpen(true)} onMouseLeave={() => setIsEconomyOpen(false)}>
              <button 
