@@ -886,16 +886,16 @@ const App = () => {
         )}
 
         {activePage === 'articles' && (
-          <div className="animate-slide-up" dir="rtl">
+          <div className="animate-slide-up">
              {!selectedArticle ? (
                <>
-                 <div className="flex flex-col gap-4 mb-16 text-right">
-                    <div className="flex items-center gap-3 w-fit bg-emerald-500/5 px-4 py-2 rounded-full border border-emerald-500/20 mr-0 ml-auto">
+                 <div className="flex flex-col gap-4 mb-16">
+                    <div className="flex items-center gap-3 w-fit bg-emerald-500/5 px-4 py-2 rounded-full border border-emerald-500/20">
                        <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                       <span className="text-[10px] font-black text-emerald-400 tracking-[0.2em] uppercase">نشرة يومية محدثة</span>
+                       <span className="text-[10px] font-black text-emerald-400 tracking-[0.2em] uppercase">Daily Updates Live</span>
                     </div>
-                    <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">مركز التقارير اليومي</h2>
-                    <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">تحليلات معمقة // إحصائيات الميمز // أخبار النظام البيئي</p>
+                    <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Daily Report Hub</h2>
+                    <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">Deep Analytics // Meme Insights // Ecosystem News</p>
                  </div>
 
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -915,7 +915,7 @@ const App = () => {
                              {article.date}
                            </div>
                         </div>
-                        <div className="p-6 md:p-8 flex flex-col flex-1 text-right">
+                        <div className="p-6 md:p-8 flex flex-col flex-1">
                            <h3 className="text-xl md:text-2xl font-black text-white italic mb-4 leading-tight group-hover:text-monad-purple transition-colors">
                               {article.title}
                            </h3>
@@ -929,7 +929,7 @@ const App = () => {
                                  ))}
                               </div>
                               <span className="text-[10px] font-black text-monad-purple uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
-                                 قراءة المزيد <ChevronRight size={14} className="rotate-180" />
+                                 Read More <ChevronRight size={14} />
                               </span>
                            </div>
                         </div>
@@ -953,7 +953,7 @@ const App = () => {
                         onClick={() => setSelectedArticle(null)}
                         className="w-fit flex items-center gap-3 text-white/40 hover:text-white transition-colors uppercase font-black text-[10px] tracking-widest mb-10 group"
                      >
-                        <ChevronRight size={16} /> العودة إلى القائمة
+                        <ChevronRight size={16} className="rotate-180" /> Back to History
                         <div className="w-8 h-[1px] bg-white/10 group-hover:w-12 transition-all group-hover:bg-monad-purple"></div>
                      </button>
 
@@ -961,7 +961,7 @@ const App = () => {
                         <div className="relative h-[400px] md:h-[500px]">
                            <img src={selectedArticle.image} className="w-full h-full object-cover" alt={selectedArticle.title} />
                            <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f] via-transparent to-transparent"></div>
-                           <div className="absolute bottom-10 right-10 left-10 text-right">
+                           <div className="absolute bottom-10 left-10 text-left">
                               <span className="text-monad-purple font-black text-sm tracking-widest uppercase mb-4 block">{selectedArticle.date}</span>
                               <h2 className="text-4xl md:text-6xl font-black text-white italic leading-tight drop-shadow-2xl">
                                  {selectedArticle.title}
@@ -969,9 +969,9 @@ const App = () => {
                            </div>
                         </div>
                         
-                        <div className="p-8 md:p-16 text-right">
+                        <div className="p-8 md:p-16 text-left">
                            <div className="prose prose-invert max-w-none">
-                              <p className="text-xl md:text-2xl font-bold text-white/80 mb-10 leading-relaxed italic border-r-4 border-monad-purple pr-6 bg-monad-purple/5 py-4">
+                              <p className="text-xl md:text-2xl font-bold text-white/80 mb-10 leading-relaxed italic border-l-4 border-monad-purple pl-6 bg-monad-purple/5 py-4">
                                  {selectedArticle.summary}
                               </p>
                               <div className="text-white/50 text-lg leading-loose whitespace-pre-line font-medium mb-12">
@@ -979,13 +979,7 @@ const App = () => {
                               </div>
                            </div>
 
-                           <div className="flex flex-wrap gap-3 justify-end pt-10 border-t border-white/5">
-                              {selectedArticle.keywords.map((kw, idx) => (
-                                <span key={idx} className="px-4 py-2 bg-white/5 rounded-xl text-[11px] font-black text-white/40 uppercase tracking-widest border border-white/5 hover:border-monad-purple/30 transition-colors">
-                                  #{kw}
-                                </span>
-                              ))}
-                           </div>
+                           {/* Keywords hidden for clean UI, used for SEO metadata */}
                         </div>
                      </div>
                   </div>

@@ -1,11 +1,33 @@
 [
   {
+    "id": 1774649302336,
+    "date": "March 27, 2026",
+    "title": "Monad Ecosystem Daily: Sustained Liquidity Growth and Network Resilience",
+    "summary": "Our daily deep dive into the Monad network reveals strong TVL performance at $331.28M and expanding DEX volume, signaling a maturing DeFi ecosystem for the high-performance L1.",
+    "content": "As the Monad ecosystem continues to scale, today's network metrics demonstrate a high degree of maturity and sustained interest from institutional and retail liquidity providers alike. Here is a comprehensive overview of the current state of Monad.\n\n### 1. Network Performance Metrics\nThe network maintains its hallmark high throughput and low latency, facilitating seamless transactions even during peak volume hours. \n- **Total Value Locked (TVL):** $331.28 million has been stabilized across core protocols, representing a 0.5% change over the last 24 hours.\n- **Trading Volume:** DEX protocols on Monad have registered a cumulative volume of $46.30 million, reflecting a robust trading environment.\n\n### 2. Market Sentiment & Asset Performance\nThe 'Meme Economy' on Monad remains a central driver of retail engagement. Native tokens like $MONSHI and $MONIKA continue to see high velocity, supported by social volume spikes. Current market sentiment leans heavily bullish as more users migrate towards the hyper-parallelized infrastructure of Monad.\n\n### 3. Top-Tier Protocol Insights\nSeveral applications are emerging as clear leaders in the ecosystem:\n- **Liquid Staking:** Magma and aPriori are leading the charge in LSD infrastructure, allowing users to earn secondary yields while maintaining asset liquidity.\n- **Automated Market Makers:** Uniswap V3 and PancakeSwap Monad are currently capturing the majority of trade routing, providing deep buffers for high-slippage assets.\n\n### 4. Technical Outlook\nWith the ongoing deployment of new validator sets, the network stability remains at status 'Nominal'. We anticipate increased TVL inflows as more bridges integrate native support for Monad assets in the coming weeks.",
+    "image": "/monad_daily_summary_1_1774647927356.png",
+    "keywords": [
+      "Monad Ecosystem",
+      "DeFi Stats",
+      "Network Performance",
+      "Crypto News",
+      "Meme Coins"
+    ]
+  },
+  {
     "id": 1,
     "date": "2026-03-27",
     "title": "تقرير موناد اليومي: انفجار في نظام الميمز ونمو هائل في السيولة",
     "summary": "نقدم لكم ملخصاً شاملاً لأداء شبكة موناد خلال الـ 24 ساعة الماضية، مع التركيز على أفضل عملات الميم وتطورات التطبيقات اللامركزية.",
     "content": "شهدت شبكة موناد (Monad) اليوم نمواً ملحوظاً في مختلف المؤشرات الرئيسية. وفقاً للبيانات المباشرة، استقر سعر عملة موناد (MON) عند مستويات قوية مع زيادة في حجم التداولات اليومية. \n\n### أهم الإحصائيات اليومية:\n- **إجمالي القيمة المقفلة (TVL):** $244.1M تقريباً.\n- **حجم تداول DEX:** يتجاوز الـ $1.2M يومياً.\n- **متوسط الـ TPS:** 1,750 نبضة في الثانية.\n- **رسوم الشبكة:** منخفضة جداً مما يعزز تبني المستخدمين.\n\n### أفضل عملات الميم (حسب القيمة السوقية):\nتتصدر عملات مثل **MONSHI** و **MONIKA** قائمة NadFun، حيث تظهر هذه العملات استقراراً ونمواً في عدد الحاملين (Holders). نلاحظ أيضاً دخول عملات جديدة مثل **DUST** و **APR** في قائمة المراقبة بشعبية متزايدة.\n\n### أعلى العملات ارتفاعاً وانخفاضاً:\n- **الأكثر ارتفاعاً:** عملة **gMON** بنسبة +5.2%.\n- **الأكثر انخفاضاً:** عملة **TCG** بتصحيح طفيف قدره -1.5%.\n\n### أفضل التطبيقات على موناد:\n1. **PancakeSwap (Monad Edition):** يستحوذ على الحصة الأكبر من السيولة.\n2. **Uniswap V3:** يواصل التوسع في خيارات التداول.\n3. **Magma:** بروتوكول السيولة الأسرع نمواً.\n\n**كلمات مفتاحية SEO:** موناد، عملات ميم، تحليل العملات الرقمية، موناد ستاتس، مجمعات السيولة، موناد نيتورك، DeFi، Monad Ecosystem.",
     "image": "/monad_daily_summary_1_1774647927356.png",
-    "keywords": ["Monad", "MemeCoins", "DeFi", "CryptoNews", "موناد", "عملات_ميم"]
+    "keywords": [
+      "Monad",
+      "MemeCoins",
+      "DeFi",
+      "CryptoNews",
+      "موناد",
+      "عملات_ميم"
+    ]
   }
 ]
