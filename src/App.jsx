@@ -898,38 +898,33 @@ const App = () => {
                     <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">Deep Analytics // Meme Insights // Ecosystem News</p>
                  </div>
 
-                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                    {articles.map((article, i) => (
                      <div 
                         key={article.id} 
                         onClick={() => { setSelectedArticle(article); window.scrollTo({top: 0, behavior: 'smooth'}); }}
-                        className="glass-card overflow-hidden border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all group cursor-pointer flex flex-col h-full"
+                        className="glass-card border-white/5 bg-white/[0.01] hover:bg-monad-purple/[0.03] transition-all group cursor-pointer flex flex-col h-full hover:border-monad-purple/30"
                      >
-                        <div className="relative h-56 overflow-hidden">
-                           <img src={article.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={article.title} />
-                           {/* Premium Hover Overlay */}
-                           <div className="absolute inset-0 bg-monad-purple/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
-                              <span className="px-6 py-2 bg-white text-black font-black uppercase text-[10px] tracking-widest rounded-full shadow-2xl">Read Article</span>
+                        <div className="p-10 flex flex-col flex-1">
+                           <div className="flex items-center gap-4 mb-8">
+                              <span className="text-monad-purple font-black text-xs tracking-[0.3em] uppercase">{article.date}</span>
+                              <div className="flex-1 h-[1px] bg-white/5"></div>
                            </div>
-                           <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 text-[9px] font-black text-white uppercase tracking-widest">
-                             {article.date}
-                           </div>
-                        </div>
-                        <div className="p-6 md:p-8 flex flex-col flex-1">
-                           <h3 className="text-xl md:text-2xl font-black text-white italic mb-4 leading-tight group-hover:text-monad-purple transition-colors">
+
+                           <h3 className="text-3xl md:text-plus font-black text-white italic mb-6 leading-[1.2] group-hover:text-white transition-colors">
                               {article.title}
                            </h3>
-                           <p className="text-white/40 text-sm font-medium mb-6 line-clamp-3 leading-relaxed">
+                           <p className="text-white/40 text-lg font-medium mb-10 line-clamp-4 leading-loose">
                               {article.summary}
                            </p>
-                           <div className="mt-auto flex items-center justify-between">
-                              <div className="flex gap-2">
-                                 {article.keywords.slice(0, 2).map((kw, idx) => (
-                                   <span key={idx} className="text-[9px] font-black text-white/20 uppercase">#{kw}</span>
+                           <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
+                              <div className="flex gap-4">
+                                 {article.keywords.slice(0, 3).map((kw, idx) => (
+                                   <span key={idx} className="text-[10px] font-black text-white/10 uppercase tracking-widest">#{kw}</span>
                                  ))}
                               </div>
-                              <span className="text-[10px] font-black text-monad-purple uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
-                                 Read More <ChevronRight size={14} />
+                              <span className="text-[11px] font-black text-monad-purple uppercase tracking-[0.3em] flex items-center gap-2 group-hover:gap-4 transition-all">
+                                 Read Full Report <ChevronRight size={16} />
                               </span>
                            </div>
                         </div>
@@ -957,29 +952,23 @@ const App = () => {
                         <div className="w-8 h-[1px] bg-white/10 group-hover:w-12 transition-all group-hover:bg-monad-purple"></div>
                      </button>
 
-                     <div className="glass-card overflow-hidden border-white/5 bg-white/[0.01]">
-                        <div className="relative h-[400px] md:h-[500px]">
-                           <img src={selectedArticle.image} className="w-full h-full object-cover" alt={selectedArticle.title} />
-                           <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f] via-transparent to-transparent"></div>
-                           <div className="absolute bottom-10 left-10 text-left">
-                              <span className="text-monad-purple font-black text-sm tracking-widest uppercase mb-4 block">{selectedArticle.date}</span>
-                              <h2 className="text-4xl md:text-6xl font-black text-white italic leading-tight drop-shadow-2xl">
-                                 {selectedArticle.title}
-                              </h2>
-                           </div>
+                     <div className="glass-card border-white/5 bg-white/[0.01]">
+                        <div className="p-10 md:p-20 bg-gradient-to-b from-monad-purple/[0.03] to-transparent">
+                           <span className="text-monad-purple font-black text-sm tracking-[0.4em] uppercase mb-8 block">{selectedArticle.date}</span>
+                           <h2 className="text-4xl md:text-7xl font-black text-white italic leading-none drop-shadow-2xl uppercase tracking-tighter">
+                              {selectedArticle.title}
+                           </h2>
                         </div>
                         
-                        <div className="p-8 md:p-16 text-left">
+                        <div className="p-10 md:p-20 pt-0">
                            <div className="prose prose-invert max-w-none">
-                              <p className="text-xl md:text-2xl font-bold text-white/80 mb-10 leading-relaxed italic border-l-4 border-monad-purple pl-6 bg-monad-purple/5 py-4">
+                              <p className="text-2xl md:text-3xl font-black text-white mb-16 leading-tight italic border-l-8 border-monad-purple pl-10 bg-white/[0.02] py-8 rounded-r-3xl">
                                  {selectedArticle.summary}
                               </p>
-                              <div className="text-white/50 text-lg leading-loose whitespace-pre-line font-medium mb-12">
+                              <div className="text-white/60 text-xl leading-relaxed whitespace-pre-line font-medium mb-12">
                                  {selectedArticle.content}
                               </div>
                            </div>
-
-                           {/* Keywords hidden for clean UI, used for SEO metadata */}
                         </div>
                      </div>
                   </div>
