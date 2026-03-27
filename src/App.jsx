@@ -934,7 +934,7 @@ const App = () => {
                    {articles.length === 0 && (
                      <div className="col-span-full p-20 text-center glass-card border-white/5 bg-white/[0.02]">
                         <RefreshCw className="mx-auto mb-6 text-monad-purple animate-spin" size={48} />
-                        <p className="text-white/40 font-black uppercase tracking-widest">جاري تحميل التقارير اليومية...</p>
+                        <p className="text-white/40 font-black uppercase tracking-widest">Loading daily reports...</p>
                      </div>
                    )}
                  </div>
