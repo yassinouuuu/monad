@@ -1,0 +1,29 @@
+name: Daily Monad Hub Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run at midnight daily
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate Daily Report
+        run: node scripts/generate_report.js
+
+      - name: Commit and Push Updates
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/data/articles.json
+          git commit -m "chore: Daily dashboard update [skip ci]" || echo "No changes to commit"
+          git push

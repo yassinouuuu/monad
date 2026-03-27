@@ -151,6 +151,7 @@ const App = () => {
   
   const handlePageChange = (page) => {
     setIsEconomyOpen(false);
+    setSelectedArticle(null); // Reset detail view when switching pages
     if (page === 'aimemes') {
       window.location.href = '/terminal';
       return;
@@ -187,6 +188,8 @@ const App = () => {
   const [coinStats, setCoinStats] = useState(() => initFromLS('monad_vFINAL_3_coin_cache', {
      displayPrice: '$0.0225', displayMcap: '$244.1M', displayChange: '+0.00%', changeColor: 'text-emerald-400'
   }));
+  const [articles, setArticles] = useState(() => initFromLS('monad_vFINAL_3_articles_cache', []));
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -226,6 +229,18 @@ const App = () => {
           if (fees) { setFeesProtocols(fees); localStorage.setItem('monad_vFINAL_3_fees_protocols_cache', JSON.stringify(fees)); }
           if (rev) { setRevProtocols(rev); localStorage.setItem('monad_vFINAL_3_rev_protocols_cache', JSON.stringify(rev)); }
           if (coin) { setCoinStats(coin); localStorage.setItem('monad_vFINAL_3_coin_cache', JSON.stringify(coin)); }
+          
+          // Fetch Daily Dashboard Articles
+          try {
+            const articlesRes = await fetch('/data/articles.json');
+            const articlesData = await articlesRes.json();
+            if (articlesData) {
+              setArticles(articlesData);
+              localStorage.setItem('monad_vFINAL_3_articles_cache', JSON.stringify(articlesData));
+            }
+          } catch (e) {
+            console.warn("Failed to fetch articles:", e);
+          }
         }
       } catch (err) {
         console.error("Critical Ecosystem Fetch Error:", err);
@@ -291,17 +306,19 @@ const App = () => {
            >
              DeFi
            </button>
-            <button 
-              onClick={() => handlePageChange('aimemes')}
-              className={`nav-btn font-black text-monad-purple`}
-            >
-              Terminal
-            </button>
            
+           
+           <button 
+             onClick={() => handlePageChange('articles')}
+             className={`nav-btn ${activePage === 'articles' ? 'active' : ''}`}
+           >
+             Articles
+           </button>
            
            <div className="relative group" onMouseEnter={() => setIsEconomyOpen(true)} onMouseLeave={() => setIsEconomyOpen(false)}>
              <button 
-               className={`nav-btn flex items-center gap-2 ${['volume', 'fees', 'revenue'].includes(activePage) ? 'active' : ''}`}
+               onClick={() => setIsEconomyOpen(!isEconomyOpen)}
+               className={`nav-btn flex items-center gap-2 ${['volume', 'fees', 'revenue', 'aimemes'].includes(activePage) ? 'active' : ''}`}
              >
                Analytics <ChevronDown size={12} className={`transition-all duration-300 ${isEconomyOpen ? 'rotate-180' : ''}`} />
              </button>
@@ -322,6 +339,17 @@ const App = () => {
                  </div>
 
                  <div className="flex flex-col gap-1">
+                   <button 
+                     onClick={() => handlePageChange('aimemes')} 
+                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-[#836ef9] hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                   >
+                     <div className="flex items-center gap-3">
+                       <Zap size={14} className="text-[#836ef9] group-hover/item:text-white transition-colors" />
+                       AI Terminal
+                     </div>
+                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
+                   </button>
+
                    <button 
                      onClick={() => handlePageChange('volume')} 
                      className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
@@ -818,7 +846,6 @@ const App = () => {
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
                  {topProtocols.map((protocol, i) => (
                    <div key={i} className="glass-card flex items-center justify-between p-6 border-white/5 hover:border-emerald-500/20 transition-all cursor-pointer group bg-gradient-to-r from-emerald-500/[0.02] to-transparent relative overflow-hidden">
-                     {/* Rank Number */}
                      <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none group-hover:opacity-10 transition-all font-black italic text-8xl -mt-6">
                        #{i + 1}
                      </div>
@@ -849,6 +876,115 @@ const App = () => {
                    </div>
                  ))}
              </div>
+          </div>
+        )}
+
+        {activePage === 'articles' && (
+          <div className="animate-slide-up" dir="rtl">
+             {!selectedArticle ? (
+               <>
+                 <div className="flex flex-col gap-4 mb-16 text-right">
+                    <div className="flex items-center gap-3 w-fit bg-emerald-500/5 px-4 py-2 rounded-full border border-emerald-500/20 mr-0 ml-auto">
+                       <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                       <span className="text-[10px] font-black text-emerald-400 tracking-[0.2em] uppercase">نشرة يومية محدثة</span>
+                    </div>
+                    <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">مركز التقارير اليومي</h2>
+                    <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">تحليلات معمقة // إحصائيات الميمز // أخبار النظام البيئي</p>
+                 </div>
+
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                   {articles.map((article, i) => (
+                     <div 
+                        key={article.id} 
+                        onClick={() => { setSelectedArticle(article); window.scrollTo({top: 0, behavior: 'smooth'}); }}
+                        className="glass-card overflow-hidden border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all group cursor-pointer flex flex-col h-full"
+                     >
+                        <div className="relative h-56 overflow-hidden">
+                           <img src={article.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={article.title} />
+                           {/* Premium Hover Overlay */}
+                           <div className="absolute inset-0 bg-monad-purple/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                              <span className="px-6 py-2 bg-white text-black font-black uppercase text-[10px] tracking-widest rounded-full shadow-2xl">Read Article</span>
+                           </div>
+                           <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 text-[9px] font-black text-white uppercase tracking-widest">
+                             {article.date}
+                           </div>
+                        </div>
+                        <div className="p-6 md:p-8 flex flex-col flex-1 text-right">
+                           <h3 className="text-xl md:text-2xl font-black text-white italic mb-4 leading-tight group-hover:text-monad-purple transition-colors">
+                              {article.title}
+                           </h3>
+                           <p className="text-white/40 text-sm font-medium mb-6 line-clamp-3 leading-relaxed">
+                              {article.summary}
+                           </p>
+                           <div className="mt-auto flex items-center justify-between">
+                              <div className="flex gap-2">
+                                 {article.keywords.slice(0, 2).map((kw, idx) => (
+                                   <span key={idx} className="text-[9px] font-black text-white/20 uppercase">#{kw}</span>
+                                 ))}
+                              </div>
+                              <span className="text-[10px] font-black text-monad-purple uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+                                 قراءة المزيد <ChevronRight size={14} className="rotate-180" />
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                   ))}
+                   
+                   {articles.length === 0 && (
+                     <div className="col-span-full p-20 text-center glass-card border-white/5 bg-white/[0.02]">
+                        <RefreshCw className="mx-auto mb-6 text-monad-purple animate-spin" size={48} />
+                        <p className="text-white/40 font-black uppercase tracking-widest">جاري تحميل التقارير اليومية...</p>
+                     </div>
+                   )}
+                 </div>
+               </>
+             ) : (
+               <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  {/* DETAIL VIEW */}
+                  <div className="flex flex-col max-w-4xl mx-auto">
+                     
+                     <button 
+                        onClick={() => setSelectedArticle(null)}
+                        className="w-fit flex items-center gap-3 text-white/40 hover:text-white transition-colors uppercase font-black text-[10px] tracking-widest mb-10 group"
+                     >
+                        <ChevronRight size={16} /> العودة إلى القائمة
+                        <div className="w-8 h-[1px] bg-white/10 group-hover:w-12 transition-all group-hover:bg-monad-purple"></div>
+                     </button>
+
+                     <div className="glass-card overflow-hidden border-white/5 bg-white/[0.01]">
+                        <div className="relative h-[400px] md:h-[500px]">
+                           <img src={selectedArticle.image} className="w-full h-full object-cover" alt={selectedArticle.title} />
+                           <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0f] via-transparent to-transparent"></div>
+                           <div className="absolute bottom-10 right-10 left-10 text-right">
+                              <span className="text-monad-purple font-black text-sm tracking-widest uppercase mb-4 block">{selectedArticle.date}</span>
+                              <h2 className="text-4xl md:text-6xl font-black text-white italic leading-tight drop-shadow-2xl">
+                                 {selectedArticle.title}
+                              </h2>
+                           </div>
+                        </div>
+                        
+                        <div className="p-8 md:p-16 text-right">
+                           <div className="prose prose-invert max-w-none">
+                              <p className="text-xl md:text-2xl font-bold text-white/80 mb-10 leading-relaxed italic border-r-4 border-monad-purple pr-6 bg-monad-purple/5 py-4">
+                                 {selectedArticle.summary}
+                              </p>
+                              <div className="text-white/50 text-lg leading-loose whitespace-pre-line font-medium mb-12">
+                                 {selectedArticle.content}
+                              </div>
+                           </div>
+
+                           <div className="flex flex-wrap gap-3 justify-end pt-10 border-t border-white/5">
+                              {selectedArticle.keywords.map((kw, idx) => (
+                                <span key={idx} className="px-4 py-2 bg-white/5 rounded-xl text-[11px] font-black text-white/40 uppercase tracking-widest border border-white/5 hover:border-monad-purple/30 transition-colors">
+                                  #{kw}
+                                </span>
+                              ))}
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+             )}
           </div>
         )}
 
