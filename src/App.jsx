@@ -980,19 +980,11 @@ const App = () => {
       </main>
 
       <footer className="py-12 px-4 md:px-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-[10px] text-white/10 font-black uppercase tracking-[0.4em] relative z-20 text-center md:text-left">
-         <div className="flex items-center gap-8">
-            <div className="flex items-center gap-3">
-               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/40"></div>
-               <span>Terminal-ID: HUB-MON-ALPHA-9</span>
-            </div>
-            <div className="w-[1px] h-4 bg-white/10"></div>
-            <span>System: Stable-Nominal-v1.2</span>
-         </div>
-         <div className="flex items-center gap-6">
-            <span>Aggregated Chain Intelligence</span>
-            <div className="w-[1px] h-4 bg-white/10"></div>
-            <span className="text-white/30">MonadStats Interface &copy; 2026</span>
-         </div>
+          <span className="text-white/30">MonadStats Interface &copy; 2026</span>
+          <div className="flex items-center gap-3">
+             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/40"></div>
+             <span>System: Nominal</span>
+          </div>
       </footer>
 
     </div>
