@@ -977,6 +977,69 @@ const App = () => {
           </div>
         )}
 
+        {activePage === 'visuals' && (
+           <div className="flex flex-col items-center gap-12 py-10 animate-fade-in">
+              {/* SPECIAL VISUAL TEMPLATE (Based on User Photo) */}
+              <div className="w-full max-w-6xl aspect-[16/9] bg-[#e1d5ff] rounded-[40px] shadow-2xl overflow-hidden relative border-8 border-white group">
+                  {/* HEADER */}
+                  <div className="pt-16 pb-12 text-center">
+                      <h1 className="text-5xl md:text-7xl font-black text-black uppercase tracking-tighter">Trending Now on Monad</h1>
+                  </div>
+
+                  {/* SPOTLIGHT CARDS */}
+                  <div className="flex justify-center gap-4 px-10 pb-20 overflow-x-auto scrollbar-hide">
+                      {[
+                        { name: 'aPriori', color: '#1a1a1a', icon: 'https://i.seadn.io/s/raw/files/dust.png' },
+                        { name: 'Chog', color: '#6366f1', icon: 'https://storage.nadapp.net/coin/e0489adc-c3a1-425c-9219-f1e344aa866a' },
+                        { name: 'Neverland', color: '#312e81', icon: 'https://placehold.co/100/312e81/fff?text=N' },
+                        { name: 'Magma', color: '#ea580c', icon: 'https://placehold.co/100/ea580c/fff?text=M' },
+                        { name: 'moncock', color: '#a855f7', icon: 'https://storage.nadapp.net/coin/76a58f0d-02db-4800-845f-79b842b912c9' },
+                        { name: 'LeverUp', color: '#166534', icon: 'https://placehold.co/100/166534/fff?text=L' },
+                        { name: 'Kintsu', color: '#0369a1', icon: 'https://placehold.co/100/0369a1/fff?text=K' },
+                        { name: 'FastLane', color: '#111827', icon: 'https://placehold.co/100/111827/fff?text=F' }
+                      ].map((item, idx) => (
+                        <div key={idx} className="flex flex-col items-center gap-6 flex-shrink-0 animate-slide-up" style={{ animationDelay: `${idx * 100}ms` }}>
+                            {/* THE VERTICAL CARD */}
+                            <div className="w-28 h-56 rounded-[24px] shadow-xl relative overflow-hidden ring-4 ring-white/10" style={{ backgroundColor: item.color }}>
+                                <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-black/20"></div>
+                                {/* Art placeholder/Decoration */}
+                                <div className="absolute top-10 left-1/2 -translate-x-1/2 w-16 h-16 bg-white/5 rounded-2xl blur-xl"></div>
+                            </div>
+                            
+                            {/* CIRCLE ICON + LABEL */}
+                            <div className="flex flex-col items-center gap-4 relative">
+                                <div className="absolute -top-14 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full border-[3px] border-black bg-white p-1 shadow-lg">
+                                    <img src={item.icon} className="w-full h-full rounded-full object-cover" alt={item.name} />
+                                </div>
+                                <span className="text-black font-black text-xs uppercase tracking-widest mt-4">{item.name}</span>
+                            </div>
+                        </div>
+                      ))}
+                  </div>
+
+                  {/* FOOTER */}
+                  <div className="absolute bottom-10 left-10 right-10 flex justify-between items-center px-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 bg-monad-purple rounded-full flex items-center justify-center">
+                            <Zap size={10} className="text-white fill-white" />
+                        </div>
+                        <span className="text-sm font-black text-black/40 uppercase tracking-widest">Monad Media</span>
+                      </div>
+                      <span className="text-sm font-black text-black/40 uppercase tracking-widest">@MediaMonad</span>
+                  </div>
+              </div>
+
+              <div className="flex gap-6">
+                <button className="px-10 py-5 bg-monad-purple text-white font-black uppercase tracking-[0.2em] rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all text-sm">
+                   Download Visual (v1)
+                </button>
+                <div className="p-5 glass-card border-white/5 bg-white/[0.02] text-white/40 text-[10px] uppercase font-black tracking-widest text-center">
+                   This infographic regenerates daily at 00:00 UTC <br/> with live marketcap rankings
+                </div>
+              </div>
+           </div>
+        )}
+
       </main>
 
       <footer className="py-12 px-4 md:px-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-[10px] text-white/10 font-black uppercase tracking-[0.4em] relative z-20 text-center md:text-left">
