@@ -2,7 +2,7 @@ name: Daily Monad Hub Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Run at midnight daily
+    - cron: '0 0,8,16 * * *' # Run 3 times a day (Midnight Stats, 8AM Topics, 4PM Topics)
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -17,13 +17,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Generate Daily Report
-        run: node scripts/generate_report.js
+      - name: Generate Automated Articles
+        run: node scripts/generate_automated_articles.js
 
       - name: Commit and Push Updates
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add public/data/articles.json
-          git commit -m "chore: Daily dashboard update [skip ci]" || echo "No changes to commit"
+          git commit -m "chore: Automated article generation update [skip ci]" || echo "No changes to commit"
           git push

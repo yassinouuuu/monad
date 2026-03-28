@@ -402,7 +402,24 @@ const App = () => {
            </div>
         </div>
 
-        <div className="hidden lg:flex items-center gap-6 bg-white/[0.02] px-6 py-2 rounded-xl border border-white/5">
+        <div className="flex items-center gap-3 sm:gap-6 bg-white/[0.02] px-3 sm:px-6 py-2 rounded-xl border border-white/5">
+           <a 
+             href="https://x.com/Monadstatsapp" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             className="flex items-center gap-2 group/x hover:text-white transition-all no-underline"
+             title="Follow on X"
+           >
+             <div className="p-1.5 bg-white/5 rounded-lg group-hover/x:bg-white/10 transition-colors">
+               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
+                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+               </svg>
+             </div>
+             <span className="hidden xl:inline-block text-[10px] font-black text-white/30 uppercase tracking-widest group-hover/x:text-white transition-colors">Follow on X</span>
+           </a>
+           
+           <div className="w-[1px] h-4 bg-white/10"></div>
+           
            <div className="flex flex-col items-center">
               <span className="text-[8px] font-black text-white/20 uppercase tracking-widest leading-none">Gas / GW</span>
               <span className="text-xs font-black text-monad-purple mt-1">{stats.gasPrice}</span>
@@ -470,6 +487,17 @@ const App = () => {
           <div className="animate-slide-up">
             
             <div className="flex flex-col gap-4 mb-10">
+               <a 
+                 href="https://x.com/Monadstatsapp" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="flex items-center gap-3 w-fit bg-white/[0.03] hover:bg-white/[0.08] px-4 py-2 rounded-full border border-white/10 group transition-all"
+               >
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white group-hover:scale-110 transition-transform" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                  </svg>
+                  <span className="text-[10px] font-black text-white/40 group-hover:text-white uppercase tracking-[0.2em] transition-colors">Join the Community on X</span>
+               </a>
                <h1 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Monad Analytics</h1>
                <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">The Authoritative Hub for Monad Network Statistics</p>
             </div>
@@ -1044,9 +1072,22 @@ const App = () => {
 
       <footer className="py-12 px-4 md:px-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-[10px] text-white/10 font-black uppercase tracking-[0.4em] relative z-20 text-center md:text-left">
           <span className="text-white/30">MonadStats Interface &copy; 2026</span>
-          <div className="flex items-center gap-3">
-             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/40"></div>
-             <span>System: Nominal</span>
+          <div className="flex items-center gap-6">
+            <a 
+              href="https://x.com/Monadstatsapp" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white/20 hover:text-white transition-all group/footer-x"
+            >
+               <svg viewBox="0 0 24 24" className="w-3 h-3 fill-current" aria-hidden="true">
+                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+               </svg>
+               <span>Follow on X</span>
+            </a>
+            <div className="flex items-center gap-3">
+               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/40"></div>
+               <span>System: Nominal</span>
+            </div>
           </div>
       </footer>
 

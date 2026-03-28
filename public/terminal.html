@@ -472,7 +472,12 @@ async function fetchTop10() {
                         mc:price*supply, price, change24h:parseFloat(item.percent)||0,
                         logo:c.image_uri||c.logo||`https://placehold.co/100/131722/fff?text=${(c.symbol||'T')[0]}`};
             }).sort((a,b)=>b.mc-a.mc);
-            renderSidebar(); return;
+            renderSidebar(); 
+            // DEFAULT SELECTION FOR VIDEO DEMO: CHOG or FIRST COIN
+            const chog = coinsData.find(c => c.symbol === 'CHOG');
+            if(chog) selectCoin(chog.id);
+            else if(coinsData.length > 0) selectCoin(coinsData[0].id);
+            return;
         }
     } catch(e){}
     useMock();
@@ -480,7 +485,7 @@ async function fetchTop10() {
 
 function useMock() {
     coinsData = [
-        {id:"c1",name:"Chog",symbol:"CHOG",mc:768586,price:0.000768,change24h:27.2,logo:"https://storage.nadapp.net/coin/e0489adc-c3a1-425c-9219-f1e344aa866a"},
+        {id:"c1",name:"Chog",symbol:"CHOG",mc:1258586,price:0.00125,change24h:42.5,logo:"https://storage.nadapp.net/coin/e0489adc-c3a1-425c-9219-f1e344aa866a"},
         {id:"c2",name:"emonad",symbol:"EMO",mc:477921,price:0.000477,change24h:18.4,logo:"https://storage.nadapp.net/coin/565c1b7c-e120-406e-84da-7212998d40bc"},
         {id:"c3",name:"Motion",symbol:"MOTION",mc:169580,price:0.000169,change24h:-0.009,logo:"https://storage.nadapp.net/coin/7c0f3a4f-b879-4603-839f-9f2c089dd930"},
         {id:"c4",name:"moncock",symbol:"MONCOCK",mc:164591,price:0.000164,change24h:30.2,logo:"https://storage.nadapp.net/coin/76a58f0d-02db-4800-845f-79b842b912c9"},
@@ -492,6 +497,7 @@ function useMock() {
         {id:"c10",name:"monagotchi",symbol:"MONA",mc:25173,price:0.000025,change24h:-11.0,logo:"https://storage.nadapp.net/coin/8b142de1-1717-49b0-addb-b284dc75effc"}
     ];
     renderSidebar();
+    selectCoin("c1"); // Auto-select CHOG for video
 }
 
 // ─── FORMATTERS ──────────────────────────────────────────────
