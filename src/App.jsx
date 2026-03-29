@@ -276,7 +276,7 @@ const App = () => {
              <Zap size={20} className="fill-white" />
            </div>
            <div className="hidden sm:flex flex-col select-none">
-             <span className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats</span>
+             <h1 className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats Dashboard</h1>
              <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
            </div>
         </div>
@@ -498,7 +498,7 @@ const App = () => {
                   </svg>
                   <span className="text-[10px] font-black text-white/40 group-hover:text-white uppercase tracking-[0.2em] transition-colors">Join the Community on X</span>
                </a>
-               <h1 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Monad Analytics</h1>
+               <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Monad Live Analytics</h2>
                <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">The Authoritative Hub for Monad Network Statistics</p>
             </div>
 
@@ -648,6 +648,41 @@ const App = () => {
                   </div>
                </div>
             </div>
+            {/* SEO Prose Section - Solving Thin Content */}
+            <div className="mt-20 border-t border-white/5 pt-20 pb-10">
+               <div className="max-w-4xl mx-auto">
+                  <h3 className="text-2xl font-black italic uppercase text-monad-purple mb-8 tracking-widest">Monad Ecosystem Intelligence</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                     <div className="flex flex-col gap-6">
+                        <p className="text-white/40 text-sm leading-relaxed font-medium">
+                           <strong className="text-white/60">Monad</strong> is an ultra-high performance Ethereum Virtual Machine (EVM) compatible Layer 1 blockchain. Designed to dramatically scale decentralized applications, Monad introduces <span className="text-monad-purple">parallel execution</span> and superscalar pipelining to the EVM, achieving groundbreaking performance metrics of up to 10,000 TPS while retaining full compatibility with existing Ethereum tools and smart contracts.
+                        </p>
+                        <p className="text-white/40 text-sm leading-relaxed font-medium">
+                           This platform serves as the authoritative dashboard for tracking the <strong className="text-white/60">Monad network</strong>. We aggregate live data from across the ecosystem, including real-time MON price feeds, DEX volume rankings, liquidity inflows, and protocol-level revenue statistics. Our goal is to provide institutional-grade transparency for the next generation of Web3 users.
+                        </p>
+                     </div>
+                     <div className="flex flex-col gap-6">
+                        <p className="text-white/40 text-sm leading-relaxed font-medium">
+                           The <span className="text-monad-purple">MON token</span> is the native utility asset of the Monad blockchain, powering transaction fees, network security through staking, and governance participation. By monitoring the MON token price and market cap in real-time, investors can gain insights into the overall valuation and growth trajectory of the Monad ecosystem as it scales to global adoption.
+                        </p>
+                        <ul className="flex flex-col gap-3">
+                           <li className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-white/20">
+                              <div className="w-1.5 h-1.5 rounded-full bg-monad-purple"></div>
+                              10,000 TPS Parallel Execution
+                           </li>
+                           <li className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-white/20">
+                              <div className="w-1.5 h-1.5 rounded-full bg-monad-purple"></div>
+                              1-Second Block Finality
+                           </li>
+                           <li className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-white/20">
+                              <div className="w-1.5 h-1.5 rounded-full bg-monad-purple"></div>
+                              Full Ethereum Tooling Compatibility
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
           </div>
         )}
 
@@ -658,7 +693,7 @@ const App = () => {
                    <div className="h-2 w-2 rounded-full bg-monad-purple animate-pulse"></div>
                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">Liquidity Stream Active</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Meme Ecosystem Hub</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Monad Meme Ecosystem</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Real-time Creation Pipeline  Verified Liquidity</p>
              </div>
              
@@ -755,7 +790,7 @@ const App = () => {
                    <div className="h-2 w-2 rounded-full bg-monad-purple animate-pulse"></div>
                    <span className="text-[10px] font-black text-monad-purple tracking-[0.2em] uppercase">NFT Liquidity Active</span>
                 </div>
-                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">NFT Ecosystem Hub</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Monad NFT Market & Floor</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Collections  Real-time Floor & Volume</p>
              </div>
              
@@ -789,7 +824,7 @@ const App = () => {
         {activePage === 'volume' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Volume Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Monad Volume Rankings</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem Apps by 24h Trading Volume</p>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
@@ -817,7 +852,7 @@ const App = () => {
         {activePage === 'fees' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Fees Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Monad Network Fees</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Protocols Generating Highest Daily Fees on Monad</p>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
@@ -845,7 +880,7 @@ const App = () => {
         {activePage === 'revenue' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Revenue Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Monad Protocol Revenue</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Revenue Generating Protocols (Protocol Earnings)</p>
              </div>
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative z-10 mb-20">
@@ -873,7 +908,7 @@ const App = () => {
         {activePage === 'protocols' && (
           <div className="animate-slide-up">
              <div className="flex flex-col gap-4 mb-16">
-                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">DeFi Rankings</h2>
+                <h2 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white">Monad DeFi Rankings</h2>
                 <p className="text-[11px] font-black text-white/20 uppercase tracking-[0.5em] mt-4">Top Monad Ecosystem DeFi Applications Ranked by TVL</p>
              </div>
 
@@ -922,7 +957,7 @@ const App = () => {
                        <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
                        <span className="text-[10px] font-black text-emerald-400 tracking-[0.2em] uppercase">Daily Updates Live</span>
                     </div>
-                    <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Daily Report Hub</h2>
+                    <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Monad Hub & Articles</h2>
                     <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">Deep Analytics // Meme Insights // Ecosystem News</p>
                  </div>
 
@@ -983,9 +1018,9 @@ const App = () => {
                      <div className="glass-card border-white/5 bg-white/[0.01]">
                         <div className="p-10 md:p-20 bg-gradient-to-b from-monad-purple/[0.03] to-transparent">
                            <span className="text-monad-purple font-black text-sm tracking-[0.4em] uppercase mb-8 block">{selectedArticle.date}</span>
-                           <h2 className="text-4xl md:text-7xl font-black text-white italic leading-none drop-shadow-2xl uppercase tracking-tighter">
+                           <h1 className="text-4xl md:text-7xl font-black text-white italic leading-none drop-shadow-2xl uppercase tracking-tighter">
                               {selectedArticle.title}
-                           </h2>
+                           </h1>
                         </div>
                         
                         <div className="p-10 md:p-20 pt-0">
