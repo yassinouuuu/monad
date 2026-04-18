@@ -206,7 +206,7 @@ const MemeAgentDemo = () => {
                           </div>
                        </div>
                        <iframe 
-                         src={`https://something.tools/token/${selectedCoin.address}?embedded=true`}
+                         src={`https://dexscreener.com/monad/${selectedCoin.address}?embed=1&theme=dark`}
                          className="w-full h-full border-none opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
                          title="Chart"
                        />

@@ -583,7 +583,7 @@ export const NetworkService = {
           if (stored) {
             statsCache = JSON.parse(stored);
             lastStatsFetch = statsCache.timestamp || 0;
-            // Return stored if fresh enough, otherwise proceed to fetch but we have something
+            // Return stored if fresh enough, otherwise proceed to fetch
           }
         } catch (e) {}
       }
@@ -922,86 +922,7 @@ export const NetworkService = {
     return [];
   },
 
-  
-  /**
-   * Fetch top coins from Secondary Ecosystem via confirmed working API.
-   * Increased limit to 100 as requested for a full list.
-   */
-  async getSomethingToolsCoins() {
-    const COLORS = ['#a855f7','#38bdf8','#ef4444','#eab308','#10b981','#3b82f6','#f472b6','#94a3b8','#6366f1','#22c55e','#f59e0b','#2dd4bf','#ec4899','#fb923c','#8b5cf6'];
-    try {
-      const res = await fetch('https://api-monad.something.tools/api/tokensData?page=1&limit=30&sortField=market_cap&sortOrder=DESC');
-      if (res.ok) {
-        const json = await res.json();
-        if (json && json.data && json.data.length > 0) {
-          return json.data.map((m, i) => {
-            const price  = parseFloat(m.price || 0);
-            const mc     = parseFloat(m.market_cap || 0);
-            const change = parseFloat(m.price_change_1h || 0);
-            const sym    = (m.symbol || '?').toUpperCase();
-            const color  = m.migration_status === 2 ? '#a855f7' : COLORS[i % COLORS.length];
-            const addr   = m.mint || m.address || '';
-            const logoUrl = m.image || m.logo || m.icon ||
-              (addr ? `https://cdn.dexscreener.com/token-images/og/monad/${addr.toLowerCase()}?timestamp=${Date.now()}` : null);
-            
-            const jitter = 1 + (Math.random() * 0.0004 - 0.0002);
-            const jPrice = price * jitter;
-            const jMc    = mc * jitter;
 
-            return {
-              name: m.name || sym, symbol: sym, price: jPrice, marketCap: jMc, change1h: change,
-              platform: 'Secondary Ecosystem',
-              address: addr,
-              tradingUrl: `https://something.tools/token/${addr}`,
-              migrated: m.migration_status === 2,
-              logoUrl,
-              color, icon: sym[0],
-              displayPrice: jPrice < 0.00001 ? `$${jPrice.toFixed(8)}` : jPrice < 0.001 ? `$${jPrice.toFixed(6)}` : `$${jPrice.toFixed(4)}`,
-              displayMC: jMc >= 1e6 ? `$${(jMc/1e6).toFixed(2)}M` : jMc >= 1e3 ? `$${(jMc/1e3).toFixed(1)}K` : `$${jMc.toFixed(0)}`,
-              displayChange1h: `${change >= 0 ? '+' : ''}${change.toFixed(2)}%`
-            };
-          });
-        }
-      }
-    } catch (e) {
-      console.warn('Secondary Ecosystem API error:', e);
-    }
-  },
-
-  /**
-   * Fetch absolute NEWEST coins from Secondary Ecosystem via correct 'created_at' stream.
-   */
-  async getLatestSomethingToolsCoins() {
-    const COLORS = ['#a855f7','#38bdf8','#ef4444','#eab308','#10b981'];
-    try {
-      const res = await fetch('https://api-monad.something.tools/api/tokensData?page=1&limit=30&sortField=created_at&sortOrder=DESC&showMigrating=false&includeMigrated=false');
-      if (res.ok) {
-        const json = await res.json();
-        if (json && json.data && json.data.length > 0) {
-          return json.data.map((m, i) => {
-            const price  = parseFloat(m.price || 0);
-            const mc     = parseFloat(m.market_cap || 0);
-            const sym    = (m.symbol || '?').toUpperCase();
-            const addr   = m.mint || m.address || '';
-            const logoUrl = m.image || m.logo || m.icon ||
-              (addr ? `https://cdn.dexscreener.com/token-images/og/monad/${addr.toLowerCase()}?timestamp=${Date.now()}` : null);
-            return {
-              name: m.name || sym, symbol: sym, price, marketCap: mc, platform: 'Secondary Ecosystem', address: addr,
-              tradingUrl: `https://something.tools/token/${addr}`,
-              logoUrl, color: COLORS[i % COLORS.length], icon: sym[0],
-              createdAt: m.created_at ? Math.floor(new Date(m.created_at).getTime() / 1000) : null,
-              displayPrice: price < 0.00001 ? `$${price.toFixed(8)}` : price < 0.001 ? `$${price.toFixed(6)}` : `$${price.toFixed(4)}`,
-              displayMC: mc >= 1e6 ? `$${(mc/1e6).toFixed(2)}M` : mc >= 1e3 ? `$${(mc/1e3).toFixed(1)}K` : `$${mc.toFixed(0)}`,
-              displayChange1h: `+0.00%`
-            };
-          });
-        }
-      }
-    } catch (e) {
-      console.warn('Secondary Ecosystem newest stream API error.', e);
-    }
-    return [];
-  },
 
   /**
    * Fetch top Monad NFT collections via Real-time Aggregator API v2.

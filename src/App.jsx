@@ -47,7 +47,7 @@ const NewsTicker = React.memo(({ news }) => (
 const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }) => (
   <div className={`ticker-content-${direction} flex items-center`}>
     {[...coins, ...coins].map((coin, i) => (
-      <a key={i} href={coin.tradingUrl || (color === 'emerald' ? `https://nad.fun/tokens/${coin.address}` : `https://something.tools/token/${coin.address}`)} target="_blank" rel="noopener noreferrer" className="ticker-item gap-3 border-r border-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer no-underline">
+      <a key={i} href={coin.tradingUrl || `https://nad.fun/tokens/${coin.address}`} target="_blank" rel="noopener noreferrer" className="ticker-item gap-3 border-r border-white/5 h-full hover:bg-white/5 transition-colors cursor-pointer no-underline">
         {coin.logoUrl && <img src={coin.logoUrl} className="w-5 h-5 rounded-md" loading="lazy" alt="" />}
         <span className="text-[11px] font-black text-white/40 uppercase">{coin.symbol}</span>
         <span className={`text-[11px] font-black tracking-widest ${color === 'purple' ? 'text-monad-purple' : ''}`}>{coin.displayPrice}</span>
@@ -62,7 +62,7 @@ const PriceTicker = React.memo(({ coins, direction = 'left', color = 'emerald' }
 const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
   const isNad = type === 'nad';
   const colorClass = isNad ? 'monad-purple' : 'orange-400';
-  const tradeLink = coin.tradingUrl || (isNad ? `https://nad.fun/tokens/${coin.address}` : `https://something.tools/token/${coin.address}`);
+  const tradeLink = coin.tradingUrl || `https://nad.fun/tokens/${coin.address}`;
   
   const changeStr = coin.displayChange1h || '+0.00%';
   const changeValue = parseFloat(changeStr.replace(/[+%]/g, ''));
@@ -76,7 +76,7 @@ const CoinItem = React.memo(({ coin, index, type, isLatest = false }) => {
         </span>
       )}
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-${isNad ? 'monad-purple' : 'orange-400'}/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={coin.logoUrl} className="w-full h-full object-cover" loading="lazy" width="56" height="56" alt={coin.name || "coin logo"} onError={(e) => { e.target.src = 'https://monadstats/logo.png'; }} />
+        <img src={coin.logoUrl} className="w-full h-full object-cover" loading="lazy" width="56" height="56" alt={coin.name || "coin logo"} onError={(e) => { e.target.src = '/logo.svg'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{coin.symbol}</span>
@@ -111,7 +111,7 @@ const NFTItem = React.memo(({ collection, index }) => {
         {(index + 1).toString().padStart(2, '0')}
       </span>
       <div className={`w-14 h-14 rounded-2xl ring-2 ring-white/5 overflow-hidden group-hover:ring-monad-purple/30 transition-all shadow-xl shadow-black/40`}>
-        <img src={collection.image} className="w-full h-full object-cover" loading="lazy" width="56" height="56" alt={collection.name || "NFT collection"} onError={(e) => { e.target.src = 'https://monadstats.vercel.app/logo.svg'; }} />
+        <img src={collection.image} className="w-full h-full object-cover" loading="lazy" width="56" height="56" alt={collection.name || "NFT collection"} onError={(e) => { e.target.src = '/favicon.svg'; }} />
       </div>
       <div className="flex flex-col flex-1 pl-1">
         <span className="font-black text-white text-base leading-none tracking-tight">{collection.name}</span>
@@ -176,9 +176,7 @@ const App = () => {
   }));
   
   const [nadFunCoins, setNadFunCoins] = useState(() => initFromLS('monad_vFINAL_3_nadfun_cache', []));
-  const [smtCoins, setSmtCoins] = useState(() => initFromLS('monad_vFINAL_3_smt_cache', []));
   const [latestNadFun, setLatestNadFun] = useState(() => initFromLS('monad_vFINAL_3_lnad_cache', []));
-  const [latestSmt, setLatestSmt] = useState(() => initFromLS('monad_vFINAL_3_lsmt_cache_v2', []));
   const [nftCollections, setNftCollections] = useState(() => initFromLS('monad_vFINAL_3_nft_cache_v3', []));
   const [news, setNews] = useState(() => initFromLS('monad_vFINAL_3_news_cache', []));
   const [topProtocols, setTopProtocols] = useState(() => initFromLS('monad_vFINAL_3_protocols_cache', []));
@@ -203,11 +201,9 @@ const App = () => {
 
     const fetchEcosystemData = async () => {
       try {
-        const [nad, smt, lNad, lSmt, nft, newsData, protocolsData, vol, fees, rev, coin] = await Promise.all([
+        const [nad, lNad, nft, newsData, protocolsData, vol, fees, rev, coin] = await Promise.all([
           NetworkService.getNadFunCoins(30),
-          NetworkService.getSomethingToolsCoins(30),
           NetworkService.getLatestNadFunCoins(30),
-          NetworkService.getLatestSomethingToolsCoins(30),
           NetworkService.getMonadNFTs(),
           NetworkService.getMonadNews(),
           NetworkService.getTopProtocols(),
@@ -219,9 +215,7 @@ const App = () => {
         
         if (isMounted) {
           if (nad) { setNadFunCoins(nad); localStorage.setItem('monad_vFINAL_3_nadfun_cache', JSON.stringify(nad)); }
-          if (smt) { setSmtCoins(smt); localStorage.setItem('monad_vFINAL_3_smt_cache', JSON.stringify(smt)); }
           if (lNad) { setLatestNadFun(lNad); localStorage.setItem('monad_vFINAL_3_lnad_cache', JSON.stringify(lNad)); }
-          if (lSmt) { setLatestSmt(lSmt); localStorage.setItem('monad_vFINAL_3_lsmt_cache_v2', JSON.stringify(lSmt)); }
           if (nft) { setNftCollections(nft); localStorage.setItem('monad_vFINAL_3_nft_cache_v3', JSON.stringify(nft)); }
           if (newsData) { setNews(newsData); localStorage.setItem('monad_vFINAL_3_news_cache', JSON.stringify(newsData)); }
           if (protocolsData && protocolsData.length > 0) { setTopProtocols(protocolsData); localStorage.setItem('monad_vFINAL_3_protocols_cache', JSON.stringify(protocolsData)); }
@@ -629,23 +623,6 @@ const App = () => {
                         ))}
                      </div>
                   </div>
-
-                  <div className="glass-card overflow-hidden border-orange-400/20 bg-orange-400/[0.02]">
-                     <div className="p-8 border-b border-white/5 flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                           <div className="p-3 bg-orange-400/10 text-orange-400 rounded-2xl">
-                              <Coins size={20} />
-                           </div>
-                           <h4 className="text-xl font-black uppercase tracking-tight italic">Secondary Liquidity</h4>
-                        </div>
-                        <span className="text-[10px] font-black text-orange-400 tracking-widest leading-none">LIVE FEED</span>
-                     </div>
-                     <div className="feed-container p-4 flex flex-col gap-2">
-                        {smtCoins.slice(0, 15).map((coin, i) => (
-                           <CoinItem key={coin.address || i} coin={coin} index={i} type="smt" />
-                        ))}
-                     </div>
-                  </div>
                </div>
             </div>
             {/* SEO Prose Section - Solving Thin Content */}
@@ -700,7 +677,7 @@ const App = () => {
              {/* Platform 1: monadstats */}
              <div className="mb-24">
                 <div className="flex items-center gap-4 mb-10">
-                   <img src="https://monadstats/logo.png" className="w-8 h-8 rounded-lg" alt="" onError={(e) => e.target.style.display='none'} />
+                   <img src="/favicon.svg" className="w-8 h-8 rounded-lg" alt="" onError={(e) => e.target.style.display='none'} />
                    <h3 className="text-3xl font-black italic uppercase text-monad-purple">Primary Ecosystem</h3>
                 </div>
                 
@@ -733,48 +710,6 @@ const App = () => {
                       <div className="flex flex-col gap-3 feed-container h-[700px]">
                          {latestNadFun.map((coin, i) => (
                            <CoinItem key={coin.address || i} coin={coin} type="nad" isLatest={true} />
-                         ))}
-                      </div>
-                   </div>
-                </div>
-             </div>
-
-             {/* Platform 2: monadstats */}
-             <div className="mb-24">
-                <div className="flex items-center gap-4 mb-10">
-                   <div className="w-8 h-8 rounded-lg bg-orange-400"></div>
-                   <h3 className="text-3xl font-black italic uppercase text-orange-400">Secondary Ecosystem</h3>
-                </div>
-                
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
-                   {/* Top 30 SMT */}
-                   <div className="glass-card p-8 bg-orange-400/[0.02] border-orange-400/10">
-                      <div className="flex items-center justify-between mb-8">
-                         <div className="flex items-center gap-4 uppercase font-black italic text-orange-400 tracking-widest text-sm">
-                            <Coins size={18} />
-                            Top 30 by MCAP
-                         </div>
-                         <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Ecosystem Leaders</span>
-                      </div>
-                      <div className="flex flex-col gap-3 feed-container h-[700px]">
-                         {smtCoins.map((coin, i) => (
-                           <CoinItem key={coin.address || i} coin={coin} index={i} type="smt" />
-                         ))}
-                      </div>
-                   </div>
-
-                   {/* Latest SMT */}
-                   <div className="glass-card p-8 bg-white/[0.01] border-white/5">
-                      <div className="flex items-center justify-between mb-8">
-                         <div className="flex items-center gap-4 uppercase font-black italic text-white/40 tracking-widest text-sm">
-                            <RefreshCw size={18} />
-                            New Drops
-                         </div>
-                         <span className="text-[10px] font-black text-white/10 uppercase tracking-[0.2em]">Streaming Feed</span>
-                      </div>
-                      <div className="flex flex-col gap-3 feed-container h-[700px]">
-                         {latestSmt.map((coin, i) => (
-                           <CoinItem key={coin.address || i} coin={coin} type="smt" isLatest={true} />
                          ))}
                       </div>
                    </div>
