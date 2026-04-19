@@ -261,178 +261,185 @@ const App = () => {
   }, []);
 
   return (
-    <div className="bg-[#0b0b0f] text-white selection:bg-monad-purple/30 selection:text-white">
+    <div className="bg-[#050508] text-white min-h-screen relative selection:bg-monad-purple/30">
       
       {/* --- TOP FIXED HEADER --- */}
       <header className="main-header" style={{ overflow: 'visible', zIndex: 1000 }}>
-        <div className="flex items-center gap-4">
-           <div className="w-10 h-10 bg-monad-purple rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20 rotate-3 transform hover:rotate-0 transition-all">
-             <Zap size={20} className="fill-white" />
+        <div className="flex items-center gap-5">
+           <div className="relative group/logo">
+              <div className="w-11 h-11 bg-gradient-to-br from-monad-purple to-purple-700 rounded-2xl flex items-center justify-center shadow-[0_0_25px_rgba(131,110,249,0.3)] group-hover/logo:shadow-[0_0_35px_rgba(131,110,249,0.5)] transition-all duration-500 group-hover/logo:rotate-6">
+                <Zap size={20} className="fill-white drop-shadow-lg" />
+              </div>
+              <div className="absolute -inset-1 bg-monad-purple/20 rounded-2xl blur-xl opacity-0 group-hover/logo:opacity-100 transition-opacity duration-500"></div>
            </div>
            <div className="hidden sm:flex flex-col select-none">
-             <h1 className="text-lg font-black tracking-tight italic uppercase leading-none">MonadStats Dashboard</h1>
-             <span className="text-[8px] font-black text-monad-purple uppercase tracking-[0.3em] mt-1 opacity-60">Live Terminal</span>
+              <h1 className="text-lg font-black tracking-tight italic uppercase leading-none bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">MonadStats</h1>
+              <div className="flex items-center gap-2 mt-1.5">
+                <div className="relative w-1.5 h-1.5 rounded-full bg-emerald-400">
+                  <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping"></div>
+                </div>
+                <span className="text-[8px] font-black text-monad-purple/60 uppercase tracking-[0.3em]">Live Terminal</span>
+              </div>
            </div>
         </div>
 
-        <div className="nav-segment">
-           <button 
-             onClick={() => handlePageChange('dashboard')}
-             className={`nav-btn ${activePage === 'dashboard' ? 'active' : ''}`}
-           >
-             Dashboard
-           </button>
-           <button 
-             onClick={() => handlePageChange('memes')}
-             className={`nav-btn ${activePage === 'memes' ? 'active' : ''}`}
-           >
-             Memes
-           </button>
-           <button 
-             onClick={() => handlePageChange('nft')}
-             className={`nav-btn ${activePage === 'nft' ? 'active' : ''}`}
-           >
-             NFTs
-           </button>
-           <button 
-             onClick={() => handlePageChange('protocols')}
-             className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
-           >
-             DeFi
-           </button>
-           
-           
-           <button 
-             onClick={() => handlePageChange('articles')}
-             className={`nav-btn ${activePage === 'articles' ? 'active' : ''}`}
-           >
-             Articles
-           </button>
-           <button 
-             onClick={() => handlePageChange('aimemes')}
-             className={`nav-btn ${activePage === 'aimemes' ? 'active' : ''}`}
-           >
-             Terminal
-           </button>
-           
-           <div className="relative group" onMouseEnter={() => setIsEconomyOpen(true)} onMouseLeave={() => setIsEconomyOpen(false)}>
-             <button 
-               onClick={() => setIsEconomyOpen(!isEconomyOpen)}
-               className={`nav-btn flex items-center gap-2 ${['volume', 'fees', 'revenue', 'aimemes'].includes(activePage) ? 'active' : ''}`}
-             >
-               Analytics <ChevronDown size={12} className={`transition-all duration-300 ${isEconomyOpen ? 'rotate-180' : ''}`} />
-             </button>
-             
-             <div className="absolute top-[40px] left-1/2 -translate-x-1/2 w-64 pt-4 hidden group-hover:block z-[9999] animate-in fade-in zoom-in-95 duration-200">
-               <div className="bg-[#0b0c14]/90 border border-white/10 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.9)] overflow-hidden backdrop-blur-3xl p-1.5">
-                 
-                 <div className="px-5 py-4 border-b border-white/5 mb-1.5 bg-gradient-to-r from-monad-purple/10 to-transparent rounded-t-xl">
-                   <div className="flex items-center gap-3">
-                      <div className="p-2 bg-monad-purple/10 rounded-lg">
-                        <Activity size={14} className="text-monad-purple" />
-                      </div>
-                      <div className="flex flex-col">
-                        <span className="text-[10px] font-black text-white uppercase tracking-widest leading-none">Economics</span>
-                        <span className="text-[8px] font-bold text-white/30 uppercase mt-1">Live Metrics</span>
-                      </div>
-                   </div>
-                 </div>
-
-                 <div className="flex flex-col gap-1">
-                   <button 
-                     onClick={() => handlePageChange('aimemes')} 
-                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-[#836ef9] hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
-                   >
-                     <div className="flex items-center gap-3">
-                       <Zap size={14} className="text-[#836ef9] group-hover/item:text-white transition-colors" />
-                       AI Terminal
-                     </div>
-                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
-                   </button>
-
-                   <button 
-                     onClick={() => handlePageChange('volume')} 
-                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
-                   >
-                     <div className="flex items-center gap-3">
-                       <BarChart3 size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
-                       Daily Volume
-                     </div>
-                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
-                   </button>
-
-                   <button 
-                     onClick={() => handlePageChange('fees')} 
-                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
-                   >
-                     <div className="flex items-center gap-3">
-                       <Coins size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
-                       Network Fees
-                     </div>
-                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
-                   </button>
-
-                   <button 
-                     onClick={() => handlePageChange('revenue')} 
-                     className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
-                   >
-                     <div className="flex items-center gap-3">
-                       <TrendingUp size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
-                       Protocol Revenue
-                     </div>
-                     <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
-                   </button>
-                 </div>
-
-                 <div className="mt-1.5 p-3 bg-white/5 rounded-b-xl border-t border-white/5">
-                    <div className="flex items-center justify-between opacity-40">
-                       <span className="text-[8px] font-black uppercase">Live Updates</span>
-                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+         <div className="nav-segment">
+            <button 
+              onClick={() => handlePageChange('dashboard')}
+              className={`nav-btn ${activePage === 'dashboard' ? 'active' : ''}`}
+            >
+              Dashboard
+            </button>
+            <button 
+              onClick={() => handlePageChange('memes')}
+              className={`nav-btn ${activePage === 'memes' ? 'active' : ''}`}
+            >
+              Memes
+            </button>
+            <button 
+              onClick={() => handlePageChange('nft')}
+              className={`nav-btn ${activePage === 'nft' ? 'active' : ''}`}
+            >
+              NFTs
+            </button>
+            <button 
+              onClick={() => handlePageChange('protocols')}
+              className={`nav-btn ${activePage === 'protocols' ? 'active' : ''}`}
+            >
+              DeFi
+            </button>
+            
+            
+            <button 
+              onClick={() => handlePageChange('articles')}
+              className={`nav-btn ${activePage === 'articles' ? 'active' : ''}`}
+            >
+              Articles
+            </button>
+            <button 
+              onClick={() => handlePageChange('aimemes')}
+              className={`nav-btn ${activePage === 'aimemes' ? 'active' : ''}`}
+            >
+              Terminal
+            </button>
+            
+            <div className="relative group" onMouseEnter={() => setIsEconomyOpen(true)} onMouseLeave={() => setIsEconomyOpen(false)}>
+              <button 
+                onClick={() => setIsEconomyOpen(!isEconomyOpen)}
+                className={`nav-btn flex items-center gap-2 ${['volume', 'fees', 'revenue', 'aimemes'].includes(activePage) ? 'active' : ''}`}
+              >
+                Analytics <ChevronDown size={12} className={`transition-all duration-300 ${isEconomyOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              <div className="absolute top-[40px] left-1/2 -translate-x-1/2 w-64 pt-4 hidden group-hover:block z-[9999] animate-in fade-in zoom-in-95 duration-200">
+                <div className="bg-[#08081a]/95 border border-white/8 rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_100px_rgba(131,110,249,0.08)] overflow-hidden backdrop-blur-3xl p-1.5">
+                  
+                  <div className="px-5 py-4 border-b border-white/5 mb-1.5 bg-gradient-to-r from-monad-purple/10 to-transparent rounded-t-xl">
+                    <div className="flex items-center gap-3">
+                       <div className="p-2 bg-monad-purple/10 rounded-lg">
+                         <Activity size={14} className="text-monad-purple" />
+                       </div>
+                       <div className="flex flex-col">
+                         <span className="text-[10px] font-black text-white uppercase tracking-widest leading-none">Economics</span>
+                         <span className="text-[8px] font-bold text-white/30 uppercase mt-1">Live Metrics</span>
+                       </div>
                     </div>
-                 </div>
+                  </div>
 
+                  <div className="flex flex-col gap-1">
+                    <button 
+                      onClick={() => handlePageChange('aimemes')} 
+                      className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-[#836ef9] hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Zap size={14} className="text-[#836ef9] group-hover/item:text-white transition-colors" />
+                        AI Terminal
+                      </div>
+                      <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
+                    </button>
+
+                    <button 
+                      onClick={() => handlePageChange('volume')} 
+                      className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <BarChart3 size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
+                        Daily Volume
+                      </div>
+                      <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
+                    </button>
+
+                    <button 
+                      onClick={() => handlePageChange('fees')} 
+                      className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Coins size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
+                        Network Fees
+                      </div>
+                      <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
+                    </button>
+
+                    <button 
+                      onClick={() => handlePageChange('revenue')} 
+                      className="group/item relative w-full text-left px-4 py-3 text-[11px] font-black uppercase text-white/60 hover:text-white hover:bg-white/[0.03] rounded-xl transition-all flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <TrendingUp size={14} className="text-white/20 group-hover/item:text-monad-purple transition-colors" />
+                        Protocol Revenue
+                      </div>
+                      <ChevronRight size={12} className="opacity-0 group-hover/item:opacity-40 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
+                    </button>
+                  </div>
+
+                  <div className="mt-1.5 p-3 bg-white/5 rounded-b-xl border-t border-white/5">
+                     <div className="flex items-center justify-between opacity-40">
+                        <span className="text-[8px] font-black uppercase">Live Updates</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                     </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+         </div>
+
+         <div className="flex items-center gap-3 sm:gap-5 bg-white/[0.02] px-4 sm:px-5 py-2.5 rounded-2xl border border-white/[0.04]">
+            <a 
+              href="https://x.com/Monadstatsapp" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 group/x hover:text-white transition-all no-underline"
+              title="Follow on X"
+            >
+              <div className="p-1.5 bg-white/5 rounded-lg group-hover/x:bg-monad-purple/20 transition-colors">
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                </svg>
+              </div>
+            </a>
+            
+            <div className="w-[1px] h-5 bg-white/[0.06]"></div>
+            
+            <div className="flex flex-col items-center gap-0.5">
+               <span className="text-[7px] font-bold text-white/15 uppercase tracking-widest leading-none">Gas</span>
+               <span className="text-[11px] font-black text-monad-purple font-outfit tabular-nums">{stats.gasPrice}</span>
+            </div>
+            <div className="w-[1px] h-5 bg-white/[0.06]"></div>
+            <div className="flex flex-col items-center gap-0.5">
+               <span className="text-[7px] font-bold text-white/15 uppercase tracking-widest leading-none">TPS</span>
+               <span className="text-[11px] font-black text-emerald-400 font-outfit tabular-nums">{stats.tps}</span>
+            </div>
+            <div className="w-[1px] h-5 bg-white/[0.06]"></div>
+            <div className="flex items-center gap-1.5">
+               <div className="relative w-1.5 h-1.5 rounded-full bg-emerald-400">
+                 <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75"></div>
                </div>
-             </div>
-           </div>
-        </div>
+               <span className="text-[9px] font-black text-emerald-400/80 uppercase">Live</span>
+            </div>
+         </div>
 
-        <div className="flex items-center gap-3 sm:gap-6 bg-white/[0.02] px-3 sm:px-6 py-2 rounded-xl border border-white/5">
-           <a 
-             href="https://x.com/Monadstatsapp" 
-             target="_blank" 
-             rel="noopener noreferrer"
-             className="flex items-center gap-2 group/x hover:text-white transition-all no-underline"
-             title="Follow on X"
-           >
-             <div className="p-1.5 bg-white/5 rounded-lg group-hover/x:bg-white/10 transition-colors">
-               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current" aria-hidden="true">
-                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-               </svg>
-             </div>
-             <span className="hidden xl:inline-block text-[10px] font-black text-white/30 uppercase tracking-widest group-hover/x:text-white transition-colors">Follow on X</span>
-           </a>
-           
-           <div className="w-[1px] h-4 bg-white/10"></div>
-           
-           <div className="flex flex-col items-center">
-              <span className="text-[8px] font-black text-white/20 uppercase tracking-widest leading-none">Gas / GW</span>
-              <span className="text-xs font-black text-monad-purple mt-1">{stats.gasPrice}</span>
-           </div>
-           <div className="w-[1px] h-4 bg-white/10"></div>
-           <div className="flex flex-col items-center">
-              <span className="text-[8px] font-black text-white/20 uppercase tracking-widest leading-none">TPS / Pulse</span>
-              <span className="text-xs font-black text-emerald-400 mt-1">{stats.tps}</span>
-           </div>
-           <div className="w-[1px] h-4 bg-white/10"></div>
-           <div className="flex flex-col items-center">
-              <span className="text-[8px] font-black text-white/20 uppercase tracking-widest leading-none">Status</span>
-              <span className="text-xs font-black text-white mt-1 uppercase">Nominal</span>
-           </div>
-           
-           
-        </div>
-
-      </header>
+       </header>
 
       {/* --- CONTENT AREA --- */}
       <main className="content-padding pb-24 px-4 md:px-10 max-w-[1750px] mx-auto w-full">
@@ -480,21 +487,45 @@ const App = () => {
         {activePage === 'dashboard' && (
           <div className="animate-slide-up">
             
-            <div className="flex flex-col gap-4 mb-10">
-               <a 
-                 href="https://x.com/Monadstatsapp" 
-                 target="_blank" 
-                 rel="noopener noreferrer"
-                 className="flex items-center gap-3 w-fit bg-white/[0.03] hover:bg-white/[0.08] px-4 py-2 rounded-full border border-white/10 group transition-all"
-               >
-                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white group-hover:scale-110 transition-transform" aria-hidden="true">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-                  </svg>
-                  <span className="text-[10px] font-black text-white/40 group-hover:text-white uppercase tracking-[0.2em] transition-colors">Join the Community on X</span>
-               </a>
-               <h2 className="text-4xl md:text-7xl font-black italic uppercase tracking-tighter text-white">Monad Live Analytics</h2>
-               <p className="text-[12px] font-black text-white/20 uppercase tracking-[0.6em] mt-2">The Authoritative Hub for Monad Network Statistics</p>
-            </div>
+             {/* Hero Section with ambient orbs */}
+             <div className="relative flex flex-col gap-5 mb-14">
+                {/* Decorative floating orbs */}
+                <div className="absolute -top-20 -right-20 w-96 h-96 bg-monad-purple/[0.04] rounded-full blur-[100px] pointer-events-none" style={{animation: 'float 8s ease-in-out infinite'}}></div>
+                <div className="absolute -bottom-10 -left-32 w-72 h-72 bg-indigo-500/[0.03] rounded-full blur-[80px] pointer-events-none" style={{animation: 'float 10s ease-in-out infinite 2s'}}></div>
+                
+                <a 
+                  href="https://x.com/Monadstatsapp" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 w-fit bg-white/[0.02] hover:bg-monad-purple/10 px-5 py-2.5 rounded-full border border-white/[0.06] hover:border-monad-purple/30 group transition-all duration-500"
+                >
+                   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-white/50 group-hover:fill-white group-hover:scale-110 transition-all duration-300" aria-hidden="true">
+                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                   </svg>
+                   <span className="text-[10px] font-black text-white/30 group-hover:text-white uppercase tracking-[0.2em] transition-colors">Join the Community on X</span>
+                   <ChevronRight size={12} className="text-white/15 group-hover:text-monad-purple group-hover:translate-x-1 transition-all" />
+                </a>
+                <h2 className="text-4xl md:text-7xl lg:text-8xl font-black italic uppercase tracking-tighter leading-[0.85]">
+                  <span className="bg-gradient-to-r from-white via-white to-white/40 bg-clip-text text-transparent">Monad Live</span>
+                  <br />
+                  <span className="bg-gradient-to-r from-monad-purple via-purple-400 to-indigo-400 bg-clip-text text-transparent">Analytics</span>
+                </h2>
+                <p className="text-[11px] font-bold text-white/15 uppercase tracking-[0.5em] mt-1 max-w-xl">The Authoritative Hub for Monad Network Statistics</p>
+                
+                {/* Mini stats ribbon */}
+                <div className="flex flex-wrap items-center gap-3 mt-2">
+                  {[
+                    { label: 'Block', value: stats.latestBlock || '---', color: 'text-white/60' },
+                    { label: 'TPS', value: stats.tps, color: 'text-emerald-400' },
+                    { label: 'Gas', value: `${stats.gasPrice} Gwei`, color: 'text-monad-purple' },
+                  ].map((s, i) => (
+                    <div key={i} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.02] border border-white/[0.04]">
+                      <span className="text-[8px] font-black text-white/20 uppercase tracking-widest">{s.label}</span>
+                      <span className={`text-[11px] font-black font-outfit tabular-nums ${s.color}`}>{s.value}</span>
+                    </div>
+                  ))}
+                </div>
+             </div>
 
             {/* KPI Executive Summary - Premium Layer */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8 relative z-10 transition-all">
@@ -1040,25 +1071,79 @@ const App = () => {
 
       </main>
 
-      <footer className="py-12 px-4 md:px-10 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 text-[10px] text-white/10 font-black uppercase tracking-[0.4em] relative z-20 text-center md:text-left">
-          <span className="text-white/30">MonadStats Interface &copy; 2026</span>
-          <div className="flex items-center gap-6">
-            <a 
-              href="https://x.com/Monadstatsapp" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white/20 hover:text-white transition-all group/footer-x"
-            >
-               <svg viewBox="0 0 24 24" className="w-3 h-3 fill-current" aria-hidden="true">
-                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-               </svg>
-               <span>Follow on X</span>
-            </a>
-            <div className="flex items-center gap-3">
-               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/40"></div>
-               <span>System: Nominal</span>
+      {/* === PREMIUM FOOTER === */}
+      <footer className="relative z-20 border-t border-white/[0.04] mt-20">
+         {/* Glow line at top of footer */}
+         <div className="absolute top-0 left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-transparent via-monad-purple/20 to-transparent"></div>
+         
+         <div className="max-w-[1750px] mx-auto px-4 md:px-10 py-16">
+            <div className="flex flex-col md:flex-row items-start justify-between gap-10 md:gap-20">
+               {/* Brand */}
+               <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                     <div className="w-9 h-9 bg-gradient-to-br from-monad-purple to-purple-700 rounded-xl flex items-center justify-center shadow-lg shadow-monad-purple/20">
+                       <Zap size={16} className="fill-white" />
+                     </div>
+                     <span className="text-base font-black italic uppercase tracking-tight bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">MonadStats</span>
+                  </div>
+                  <p className="text-[10px] text-white/15 font-medium leading-relaxed max-w-xs">
+                    Institutional-grade analytics for the Monad blockchain. Real-time data, DeFi rankings, and ecosystem intelligence.
+                  </p>
+               </div>
+               
+               {/* Links */}
+               <div className="flex gap-16">
+                  <div className="flex flex-col gap-3">
+                     <span className="text-[9px] font-black text-white/25 uppercase tracking-[0.2em]">Platform</span>
+                     <button onClick={() => handlePageChange('dashboard')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">Dashboard</button>
+                     <button onClick={() => handlePageChange('memes')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">Memes</button>
+                     <button onClick={() => handlePageChange('nft')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">NFTs</button>
+                     <button onClick={() => handlePageChange('protocols')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">DeFi</button>
+                  </div>
+                  <div className="flex flex-col gap-3">
+                     <span className="text-[9px] font-black text-white/25 uppercase tracking-[0.2em]">Analytics</span>
+                     <button onClick={() => handlePageChange('volume')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">Volume</button>
+                     <button onClick={() => handlePageChange('fees')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">Fees</button>
+                     <button onClick={() => handlePageChange('revenue')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">Revenue</button>
+                     <button onClick={() => handlePageChange('aimemes')} className="text-[10px] font-bold text-white/20 hover:text-monad-purple transition-colors text-left uppercase tracking-widest">AI Terminal</button>
+                  </div>
+               </div>
+
+               {/* Social & status */}
+               <div className="flex flex-col gap-4">
+                  <span className="text-[9px] font-black text-white/25 uppercase tracking-[0.2em]">Connect</span>
+                  <a 
+                    href="https://x.com/Monadstatsapp" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 px-4 py-2.5 bg-white/[0.02] hover:bg-monad-purple/10 rounded-xl border border-white/[0.05] hover:border-monad-purple/20 transition-all duration-300 group/fx"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white/30 group-hover/fx:fill-white transition-colors" aria-hidden="true">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                    </svg>
+                    <span className="text-[10px] font-black text-white/25 group-hover/fx:text-white transition-colors uppercase tracking-widest">Follow on X</span>
+                  </a>
+                  <div className="flex items-center gap-2.5 px-4 py-2">
+                    <div className="relative w-1.5 h-1.5 rounded-full bg-emerald-400">
+                      <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75"></div>
+                    </div>
+                    <span className="text-[9px] font-black text-emerald-400/50 uppercase tracking-widest">All Systems Nominal</span>
+                  </div>
+               </div>
             </div>
-          </div>
+
+            {/* Bottom bar */}
+            <div className="mt-14 pt-6 border-t border-white/[0.03] flex flex-col md:flex-row items-center justify-between gap-4">
+               <span className="text-[9px] font-bold text-white/10 uppercase tracking-[0.3em]">MonadStats &copy; {new Date().getFullYear()} &mdash; Built for the Monad Community</span>
+               <div className="flex items-center gap-4 text-[8px] font-bold text-white/8 uppercase tracking-widest">
+                  <span>v3.0</span>
+                  <div className="w-[1px] h-3 bg-white/[0.05]"></div>
+                  <span>Real-time Data</span>
+                  <div className="w-[1px] h-3 bg-white/[0.05]"></div>
+                  <span>Decentralized</span>
+               </div>
+            </div>
+         </div>
       </footer>
 
     </div>
